@@ -9,7 +9,7 @@ module. It's what lets the angle motor know its true position on power-up, witho
 "home" against a hard stop.
 
 The live reading shows up on the dashboard under `Mechanisms/swerve/modules/<name>/encoder`
-(degrees) — use it to find the value for `absoluteEncoderOffset` in each module's JSON. See
+(degrees). Use it to find the value for `absoluteEncoderOffset` in each module's JSON. See
 [Telemetry, Simulation & Vision](../../explanation/telemetry-and-vision.md) for the full NT tree.
 
 ## Absolute Encoder Checklist

@@ -24,9 +24,9 @@ Default closed-loop PID + feedforward gains shared by every module. Parsed into
 | `p`   | number | yes      | Proportional gain.                                                    |
 | `i`   | number | yes      | Integral gain.                                                        |
 | `d`   | number | yes      | Derivative gain.                                                      |
-| `s`   | number | no       | `kS` — static friction feedforward (`SimpleMotorFeedforward`).         |
-| `v`   | number | no       | `kV` — velocity feedforward. If left as `0` for the **drive** motor, the parser auto-derives it from the motor's free speed. |
-| `a`   | number | no       | `kA` — acceleration feedforward.                                       |
+| `s`   | number | no       | `kS`: static friction feedforward (`SimpleMotorFeedforward`).          |
+| `v`   | number | no       | `kV`: velocity feedforward. If left as `0` for the **drive** motor, the parser auto-derives it from the motor's free speed. |
+| `a`   | number | no       | `kA`: acceleration feedforward.                                        |
 
 Both `drive` and `angle` are required top-level keys.
 
@@ -38,7 +38,7 @@ separately from your real robot's gains, without needing to swap files by hand.
 
 {% hint style="warning" %}
 There is no more `f` (feedforward) or `iz` (integral zone) field, and no more `output` min/max clamp
-object — gains are now expressed as plain PID plus a `SimpleMotorFeedforward`-style `s`/`v`/`a`. See
+object. Gains are now expressed as plain PID plus a `SimpleMotorFeedforward`-style `s`/`v`/`a`. See
 [Schema Changes](../schema-changes.md).
 {% endhint %}
 

@@ -1,12 +1,12 @@
 # Your First Swerve Robot
 
 This tutorial takes a team from a bare WPILib project to a driving swerve robot using YAGSL. Follow
-the five steps in order — each one builds on the last, and by the end your robot will be driving
+the five steps in order. Each one builds on the last, and by the end your robot will be driving
 under field-relative control with a tuned configuration.
 
 {% hint style="warning" %}
 Swerve drives are complicated and will not "just work" on the first try. If you've never brought up
-a swerve drive before, budget more than one sitting for this — gathering accurate information about
+a swerve drive before, budget more than one sitting for this because gathering accurate information about
 your robot and calibrating hardware always takes longer than expected. If you've done this before,
 expect this tutorial to take about 30 minutes plus PID tuning time.
 {% endhint %}
@@ -30,14 +30,14 @@ as an alternative. YAGSL supports a much wider range of hardware and mixes vendo
 
 ## The five steps
 
-1. [Gather your robot information](01-gather-your-robot-information.md) — collect the CAN IDs,
+1. [Gather your robot information](01-gather-your-robot-information.md): collect the CAN IDs,
    gear ratios, and module locations you'll need before you touch any software.
 2. [Install YAGSL](02-install-yagsl.md): add the YAGSL vendordep for your command framework, the
    YAMS vendordep it requires, and the vendordeps for the hardware your robot has.
-3. [Generate your configuration](03-generate-your-configuration.md) — use
+3. [Generate your configuration](03-generate-your-configuration.md): use
    [config.yagsl.com](https://config.yagsl.com) to turn your robot information into a config
    directory.
-4. [Verify and calibrate your hardware](04-verify-and-calibrate-hardware.md) — confirm every motor,
+4. [Verify and calibrate your hardware](04-verify-and-calibrate-hardware.md): confirm every motor,
    encoder, and gyro reports direction correctly, and capture absolute encoder offsets.
 5. [Deploy and drive](05-deploy-and-drive.md): wire up `SwerveParser` in a subsystem (Commands v2)
    or mechanism (Commands v3), bind your controller, and take your robot for its first drive.

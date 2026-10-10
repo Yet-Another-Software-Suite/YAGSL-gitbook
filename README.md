@@ -28,18 +28,18 @@ both WPILib Commands v2 and Commands v3, each with its own vendordep. See the
 
 ## This documentation is organized into four sections
 
-* **[Tutorial](tutorial/README.md)** — never used YAGSL before? Start here. A single linear
+* **[Tutorial](tutorial/README.md)**: never used YAGSL before? Start here. A single linear
   walkthrough from a bare WPILib project to a driving swerve robot.
-* **[How-to Guides](how-to/how-to.md)** — already have a robot running? Task-focused recipes for
+* **[How-to Guides](how-to/how-to.md)**: already have a robot running? Task-focused recipes for
   tuning PIDF, determining inversion, diagnosing drift, and other work you'll come back to.
-* **[Reference](reference/reference.md)** — precise JSON schema field tables, supported hardware
+* **[Reference](reference/reference.md)**: precise JSON schema field tables, supported hardware
   type strings, and where to find the YAMS API docs.
-* **[Explanation](explanation/explanation.md)** — swerve drive theory and the reasoning behind how
+* **[Explanation](explanation/explanation.md)**: swerve drive theory and the reasoning behind how
   YAGSL and YAMS behave.
 
 {% hint style="info" %}
 Upgrading an existing robot from before **2026.8.05**? Your `swerve/` config directory uses the old
-schema — see [Schema Changes](reference/schema-changes.md) before you do anything else.
+schema. See [Schema Changes](reference/schema-changes.md) before you do anything else.
 {% endhint %}
 
 ## Get started

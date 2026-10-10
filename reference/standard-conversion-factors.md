@@ -15,12 +15,12 @@ a module's own `gearing` field (module-level `gearing` wins if both are present)
 }
 ```
 
-- `drive.gearRatio` — motor revolutions per wheel revolution, as `X` where the ratio is `X:1`.
-- `drive.diameter` — wheel diameter in **inches**.
-- `angle.gearRatio` — motor revolutions per full azimuth revolution, as `X:1`.
+- `drive.gearRatio`: motor revolutions per wheel revolution, as `X` where the ratio is `X:1`.
+- `drive.diameter`: wheel diameter in **inches**.
+- `angle.gearRatio`: motor revolutions per full azimuth revolution, as `X:1`.
 
-The config generator at [config.yagsl.com](https://config.yagsl.com) has these built in as presets
-— you generally won't need to type these by hand, but they're listed here for reference and for
+The config generator at [config.yagsl.com](https://config.yagsl.com) has these built in as presets.
+You generally won't need to type these by hand, but they're listed here for reference and for
 teams hand-editing JSON.
 
 ## MAX Swerve

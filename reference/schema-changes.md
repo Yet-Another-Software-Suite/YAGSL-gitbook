@@ -180,7 +180,7 @@ without an exception. Diff it against this page.
 
 | Old (≤ 2026.4.1)                          | New (≥ 2026.8.05)                        | Notes |
 | ------------------------------------------- | ------------------------------------------- | ------- |
-| `imu: {type, id, canbus}`                   | `gyro: {type, id, canbus}`                  | Renamed. Old `type` values like `"pigeon2"`, `"pigeon"`, `"navx"` also changed shape — see below. |
+| `imu: {type, id, canbus}`                   | `gyro: {type, id, canbus}`                  | Renamed. Old `type` values like `"pigeon2"`, `"pigeon"`, `"navx"` also changed shape. See below. |
 | `invertedIMU: boolean`                      | `gyroInvert: boolean`                       | Renamed. |
 | *(none)*                                    | `gyroAxis: "yaw"\|"pitch"\|"roll"`          | New, optional, defaults to `"yaw"`. |
 | `modules: string[]`                         | `modules: string[]`                         | Unchanged. |
@@ -204,7 +204,7 @@ without an exception. Diff it against this page.
 }
 ```
 
-Note the `type` string itself changed too — old bare names (`"pigeon2"`, `"pigeon"`, `"navx"`) became
+Note the `type` string itself changed too. Old bare names (`"pigeon2"`, `"pigeon"`, `"navx"`) became
 explicit `<device>_<connection>` strings (`"pigeon2_can"`). See
 [Device Type Strings](json-schema/device-types.md) for the current, complete list.
 
@@ -212,10 +212,10 @@ explicit `<device>_<connection>` strings (`"pigeon2_can"`). See
 
 | Old (≤ 2026.4.1)                              | New (≥ 2026.8.05)                                | Notes |
 | ------------------------------------------------ | ---------------------------------------------------- | ------- |
-| `encoder: {type, id, canbus}`                     | `absoluteEncoder: {type, id, channel, canbus}`        | Renamed, and gained a `channel` field for analog/DIO-connected encoders. `type` strings changed (`"cancoder"` → `"cancoder_can"`, etc.) — see [Device Type Strings](json-schema/device-types.md). |
+| `encoder: {type, id, canbus}`                     | `absoluteEncoder: {type, id, channel, canbus}`        | Renamed, and gained a `channel` field for analog/DIO-connected encoders. `type` strings changed (`"cancoder"` → `"cancoder_can"`, etc.). See [Device Type Strings](json-schema/device-types.md). |
 | `absoluteEncoderOffset: number`                   | `absoluteEncoderOffset: number`                       | Unchanged (degrees). |
 | *(none)*                                          | `absoluteEncoderInverted: boolean`                    | New, optional, defaults to `false`. |
-| `drive` / `angle`: `{type, id, canbus}`           | Same shape, but `type` strings changed to `<controller>_<motor>` (e.g. `"sparkmax_neo"` unchanged, but `"talonfx"` alone became `"talonfx_krakenx60"` etc. — the motor is now part of the type string). | See [Device Type Strings](json-schema/device-types.md). |
+| `drive` / `angle`: `{type, id, canbus}`           | Same shape, but `type` strings changed to `<controller>_<motor>` (e.g. `"sparkmax_neo"` unchanged, but `"talonfx"` alone became `"talonfx_krakenx60"` etc.; the motor is now part of the type string). | See [Device Type Strings](json-schema/device-types.md). |
 | *(module-level conversion lived only in `physicalproperties.json`)* | `gearing: {drive: {gearRatio, diameter}, angle: {gearRatio}}` (optional, per-module override) | New: a module can now override the shared gearing without touching `physicalproperties.json`. |
 | `inverted: {drive, angle}`                        | `inverted: {drive, angle}`                            | Unchanged. |
 | `location: {front, left}`                         | `location: {front, left}`                             | Unchanged (inches). |
@@ -249,7 +249,7 @@ explicit `<device>_<connection>` strings (`"pigeon2_can"`). See
 
 | Old (≤ 2026.4.1)                                | New (≥ 2026.8.05)                                    | Notes |
 | --------------------------------------------------- | -------------------------------------------------------- | ------- |
-| `conversionFactors: {drive: {gearRatio, diameter, factor}, angle: {gearRatio, factor}}` | `gearing: {drive: {gearRatio, diameter}, angle: {gearRatio}}` | Renamed and simplified — the precomputed `factor` override is gone; YAMS derives the conversion internally from `gearRatio`/`diameter`. |
+| `conversionFactors: {drive: {gearRatio, diameter, factor}, angle: {gearRatio, factor}}` | `gearing: {drive: {gearRatio, diameter}, angle: {gearRatio}}` | Renamed and simplified. The precomputed `factor` override is gone; YAMS derives the conversion internally from `gearRatio`/`diameter`. |
 | `currentLimit: {drive, angle}`                       | `statorCurrentLimit: {drive, angle}`                      | Renamed. Defaults are now `40`/`20` if omitted. |
 | `friction: {drive, angle}`                           | *(removed)*                                               | No longer configurable via JSON. |
 | `steerRotationalInertia: number`                     | *(removed)*                                               | No longer configurable via JSON. |
@@ -313,7 +313,7 @@ motor sim itself rather than being team-configurable per robot via this file.
 }
 ```
 
-You'll need to re-tune from scratch rather than porting old `p`/`i`/`d` values directly — the old
+You'll need to re-tune from scratch rather than porting old `p`/`i`/`d` values directly because the old
 gains were tuned against a different internal control loop (raw `f`/`iz`) than the new
 feedforward-based one. See [How to Tune PIDF Gains](../how-to/tune-pidf-gains.md).
 
@@ -324,7 +324,7 @@ Pre-2026.8.05 YAGSL read a `controllerproperties.json` with an `angleJoystickRad
 build field-relative driving with heading lock. **Both the file and the class are gone.**
 
 ```json
-// This file no longer does anything — delete it.
+// This file no longer does anything. Delete it.
 {
   "angleJoystickRadiusDeadband": 0.5,
   "heading": { "p": 0.4, "i": 0, "d": 0.01 }
@@ -342,7 +342,7 @@ and the [tutorial's driving step](../tutorial/05-deploy-and-drive.md) for the cu
 This isn't just a field-rename. Some previously-supported gyro and motor-controller hardware has
 **no equivalent type string at all** in the current parser
 (`swervelib.core.parser.deserializer.reflections`).
-If your old config used one of these, there's no direct migration — you need different hardware or
+If your old config used one of these, there's no direct migration; you need different hardware or
 a custom fork:
 
 - **Gyros:** the SPI/I2C/USB-serial NavX2 (`navx`, `navx_spi`, `navx_i2c`, `navx_mxp_serial`,
@@ -350,7 +350,7 @@ a custom fork:
   are all gone. The gyro types are `pigeon2_can`, `canandgyro_can`, `navx3_can`,
   `systemcore_internal` (2027) and `custom`. See [Gyroscopes](hardware/gyroscopes.md) for which of
   them are available in the current release.
-- **Motor controllers:** `talonsrx` and brushed `sparkmax_brushed` are gone — only the five
+- **Motor controllers:** `talonsrx` and brushed `sparkmax_brushed` are gone. Only the five
   brushless controller families (`talonfx`, `talonfxs`, `sparkmax`, `sparkflex`, `nova`) are
   supported now, each paired with a brushless motor. See
   [Device Type Strings](json-schema/device-types.md).
@@ -376,13 +376,13 @@ just JSON. This is a real capability change, not a documentation gap. For a gyro
    `gyroAxis: "yaw"`.
 3. Rename `encoder`→`absoluteEncoder` in every module file, add a `channel` (usually `0` if CAN),
    add `absoluteEncoderInverted: false`.
-4. Update every `type` string to the new `<device>_<connection>` convention — see
+4. Update every `type` string to the new `<device>_<connection>` convention. See
    [Device Type Strings](json-schema/device-types.md).
 5. Replace `conversionFactors`→`gearing` in `physicalproperties.json`, dropping any `factor`
    override. Replace `currentLimit`→`statorCurrentLimit`.
 6. Delete `controllerproperties.json`; move any heading-lock behavior into robot code via
    `SwerveInputStream`.
-7. Re-tune PIDF from scratch using the new `p`/`i`/`d`/`s`/`v`/`a` shape — old gains don't transfer.
+7. Re-tune PIDF from scratch using the new `p`/`i`/`d`/`s`/`v`/`a` shape; old gains don't transfer.
 8. Delete any `rampRate`/`friction`/`robotMass`/`steerRotationalInertia`/
    `wheelGripCoefficientOfFriction`/`optimalVoltage` fields. They're ignored now.
 9. Continue with the [2027 migration checklist](#id-2027-migration-checklist) above.

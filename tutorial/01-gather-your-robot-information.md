@@ -1,6 +1,6 @@
 # 1. Gather your robot information
 
-YAGSL is configured entirely from information about *your* robot — there is no universal constants
+YAGSL is configured entirely from information about *your* robot. There is no universal constants
 file that works for everyone. Before opening [config.yagsl.com](https://config.yagsl.com), collect
 everything in this step. Having it all on hand up front saves you from re-measuring later.
 
@@ -35,7 +35,7 @@ Every device's `canbus` value is read the same way, whichever vendor made it: le
 
 ### Measuring module locations
 
-Measure in CAD if you can, for precision — otherwise, use this technique from Team 5010:
+Measure in CAD if you can, for precision; otherwise, use this technique from Team 5010:
 
 1. Lay the robot on its side and rotate the wheels perpendicular to the direction you're measuring.
 2. Measure to the *outside* of each wheel and subtract one wheel width to get the center-to-center
@@ -52,7 +52,7 @@ robot's center, in inches:
 | Back Left (BL) | − | + |
 | Back Right (BR) | − | − |
 
-## Inversion and offsets — record placeholders now, fill in later
+## Inversion and offsets: record placeholders now, fill in later
 
 You won't be able to determine these until your code is deployed (that happens in
 [step 4](04-verify-and-calibrate-hardware.md)), but it helps to have a table ready:
@@ -64,7 +64,7 @@ You won't be able to determine these until your code is deployed (that happens i
 | Back Left (BL) | | | | |
 | Back Right (BR) | | | | |
 
-Also note whether your gyroscope needs to be inverted — it must report an **increasing** yaw while
+Also note whether your gyroscope needs to be inverted. It must report an **increasing** yaw while
 the robot rotates counterclockwise.
 
 {% hint style="info" %}

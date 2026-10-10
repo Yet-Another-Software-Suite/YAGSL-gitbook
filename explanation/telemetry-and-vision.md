@@ -52,7 +52,7 @@ public enum TelemetryVerbosity {
 ```
 
 {% hint style="info" %}
-This enum replaces the old `NONE`/`LOW`/`INFO`/`POSE`/`HIGH`/`MACHINE` levels from pre-2026 YAGSL. If you're migrating an older robot project, map your old verbosity choice down to the nearest of `LOW`/`MID`/`HIGH` — see [Schema Changes](../reference/schema-changes.md).
+This enum replaces the old `NONE`/`LOW`/`INFO`/`POSE`/`HIGH`/`MACHINE` levels from pre-2026 YAGSL. If you're migrating an older robot project, map your old verbosity choice down to the nearest of `LOW`/`MID`/`HIGH`. See [Schema Changes](../reference/schema-changes.md).
 {% endhint %}
 
 ```java
@@ -69,7 +69,7 @@ drive = SwerveParser.createSwerveDrive(cfg);
 Telemetry is only published while your code calls `drive.updateTelemetry()` every loop: from the subsystem's `periodic()` in Commands v2, or from `robotPeriodic()` in Commands v3, where a `Mechanism` has no `periodic()` of its own.
 
 {% hint style="warning" %}
-Higher telemetry verbosity can induce some lag on the robot and slow down loop cycle times — be deliberate about what you choose, especially in competition.
+Higher telemetry verbosity can induce some lag on the robot and slow down loop cycle times. Be deliberate about what you choose, especially in competition.
 {% endhint %}
 
 ### Reading module telemetry while bringing up a robot

@@ -10,7 +10,7 @@ Swerve steering/angle/azimuth motors have PID wrapping enabled at the topmost an
 
 ## The basic idea
 
-YAGSL reads PIDF values from [`pidfproperties.json`](../reference/json-schema/pidfproperties-json.md) in your module folder — generate or edit it with **[config.yagsl.com](https://config.yagsl.com)**.
+YAGSL reads PIDF values from [`pidfproperties.json`](../reference/json-schema/pidfproperties-json.md) in your module folder. Generate or edit it with **[config.yagsl.com](https://config.yagsl.com)**.
 
 This has been hashed and boiled down to the simplest form like this before:
 
@@ -31,7 +31,7 @@ Manual tuning typically follows this process:
 2. Increase $$P$$ until the output **starts** to **oscillate** **around** the setpoint.
 3. Increase $$D$$ as much as possible **without** introducing **jittering** to the response.
 
-For the drive motor, also set the feedforward terms (`s`, `v`, `a` — see below) before fine-tuning `P`; a good feedforward means `P` only has to correct small errors.
+For the drive motor, also set the feedforward terms (`s`, `v`, `a`; see below) before fine-tuning `P`; a good feedforward means `P` only has to correct small errors.
 
 ## WPILib walkthrough
 
@@ -52,7 +52,7 @@ Tuning position, like the steering/angle/azimuth motors!
 ## The current `pidfproperties.json` shape
 
 {% hint style="info" %}
-The schema changed in YAGSL 2026.8.05 — `f` and `iz` (integral zone) and the old `output` clamp are gone. Feedforward is now expressed as `s`/`v`/`a` (`kS`/`kV`/`kA`, matching WPILib's `SimpleMotorFeedforward`). See the [schema changes reference](../reference/schema-changes.md) if you're migrating an older config by hand.
+The schema changed in YAGSL 2026.8.05; `f` and `iz` (integral zone) and the old `output` clamp are gone. Feedforward is now expressed as `s`/`v`/`a` (`kS`/`kV`/`kA`, matching WPILib's `SimpleMotorFeedforward`). See the [schema changes reference](../reference/schema-changes.md) if you're migrating an older config by hand.
 {% endhint %}
 
 ```json
@@ -78,7 +78,7 @@ The schema changed in YAGSL 2026.8.05 — `f` and `iz` (integral zone) and the o
 
 If you leave drive `v` (kV) at `0`, YAGSL auto-derives it from the drive motor's free speed and your gearing, so a reasonable feedforward exists even before you've tuned anything by hand.
 
-You can also add a `pidfproperties_sim.json` alongside it — YAGSL will load that one instead when running in simulation (`RobotBase.isSimulation()`), so you can use looser gains in sim without touching your competition robot's config.
+You can also add a `pidfproperties_sim.json` alongside it. YAGSL will load that one instead when running in simulation (`RobotBase.isSimulation()`), so you can use looser gains in sim without touching your competition robot's config.
 
 ## Starting points
 
@@ -109,7 +109,7 @@ The right PIDF values vary per-robot, but these are reasonable starting points t
 {% endtab %}
 
 {% tab title="TalonFX" %}
-When the drive motor `type` for every module is `talonfx_*` (or alike — `krakenx60`, `falcon500`) this is a reasonable starting point:
+When the drive motor `type` for every module is `talonfx_*` (or alike: `krakenx60`, `falcon500`) this is a reasonable starting point:
 
 ```json
 {

@@ -12,7 +12,7 @@ YAMS stores a maximum module speed, plus an optional maximum chassis linear and 
 
 `SwerveParser` works out the maximum module speed for you from each drive motor's free speed, its gear ratio and the wheel diameter, and applies the slowest module's value with `SwerveDriveConfig.withMaximumModuleSpeed(...)`, so every module can reach what it is asked for. The same number gives the drive motors a default feedforward `kV` when `pidfproperties.json` leaves the drive `v` at `0`.
 
-The maximum speed represents the physical maximum speed of the robot — it is not a "slow mode" throttle (use `SwerveInputStream.withScaleTranslation`/`withScaleRotation`, or scale your controller input directly, for that).
+The maximum speed represents the physical maximum speed of the robot. It is not a "slow mode" throttle (use `SwerveInputStream.withScaleTranslation`/`withScaleRotation`, or scale your controller input directly, for that).
 
 To also cap the chassis as a whole, set it once via `SwerveDriveConfig.withMaximumChassisSpeed(LinearVelocity, AngularVelocity)`:
 

@@ -12,7 +12,7 @@ description: How does Swerve Drive work?
 * Make sure the magnets (if you're using them) are glued in right!
 * Set aside time, assume you will mess up building 1 module or otherwise need a spare during competitions.
 * Programming a Swerve Drive is hard, and while YAGSL/YAMS try to make it easier there are many things you must know to fully understand what you are doing!
-* Use the right tools for the job! Debugging a Swerve Drive is difficult enough by text only, try out a dashboard like [AdvantageScope](https://github.com/Mechanical-Advantage/AdvantageScope/tree/main) — it has excellent visualization tools that are sure to help you out! See [how to set up AdvantageScope](../how-to/set-up-advantagescope.md).
+* Use the right tools for the job! Debugging a Swerve Drive is difficult enough by text only, try out a dashboard like [AdvantageScope](https://github.com/Mechanical-Advantage/AdvantageScope/tree/main). It has excellent visualization tools that are sure to help you out! See [how to set up AdvantageScope](../how-to/set-up-advantagescope.md).
 
 ## The Basics
 
@@ -20,7 +20,7 @@ Swerve Drives move around by moving each wheel to a specific angle/azimuth and r
 
 ## What is a Swerve Drive?
 
-A Swerve Drive typically consists of 4 Swerve Modules (which are in essence a drive motor, an angle/azimuth motor, and an absolute encoder), and a gyroscope (centered is best). The motors, absolute encoders, and gyroscope do not matter and can all work together with varying degrees of success. As a rule of thumb, if you can stick to one system do it (all REV, all CTRE) — this will give you the best feature set, however they are not required to be the same! For all other use cases YAGSL is the best choice because it (and YAMS underneath it) was built with abstraction in mind, making all sensors and motor controllers functionally equivalent.
+A Swerve Drive typically consists of 4 Swerve Modules (which are in essence a drive motor, an angle/azimuth motor, and an absolute encoder), and a gyroscope (centered is best). The motors, absolute encoders, and gyroscope do not matter and can all work together with varying degrees of success. As a rule of thumb, if you can stick to one system do it (all REV, all CTRE). This will give you the best feature set, however they are not required to be the same! For all other use cases YAGSL is the best choice because it (and YAMS underneath it) was built with abstraction in mind, making all sensors and motor controllers functionally equivalent.
 
 #### TL;DR
 
@@ -85,7 +85,7 @@ public class SwerveDrive {
 </code></pre>
 
 {% hint style="info" %}
-The order defines what the output order of module angle/azimuth's and speeds will be! This is exactly why each module JSON file has a `location` field — see the [JSON Schema reference](../reference/json-schema/module-json.md).
+The order defines what the output order of module angle/azimuth's and speeds will be! This is exactly why each module JSON file has a `location` field. See the [JSON Schema reference](../reference/json-schema/module-json.md).
 {% endhint %}
 
 ### `SwerveModuleVelocity`
@@ -108,7 +108,7 @@ public void drive()
 </code></pre>
 
 {% hint style="danger" %}
-Swerve Drive code does not work without [`SwerveDriveOdometry`](https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/kinematics/SwerveDriveOdometry.html) or [`SwerveDrivePoseEstimator`](https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/estimator/SwerveDrivePoseEstimator.html) to keep track of module positions and angles! YAMS's `SwerveDrive` maintains a `SwerveDrivePoseEstimator` for you — see [Telemetry, Simulation & Vision](telemetry-and-vision.md).
+Swerve Drive code does not work without [`SwerveDriveOdometry`](https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/kinematics/SwerveDriveOdometry.html) or [`SwerveDrivePoseEstimator`](https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/estimator/SwerveDrivePoseEstimator.html) to keep track of module positions and angles! YAMS's `SwerveDrive` maintains a `SwerveDrivePoseEstimator` for you. See [Telemetry, Simulation & Vision](telemetry-and-vision.md).
 {% endhint %}
 
 ### `SwerveDriveOdometry`
@@ -118,7 +118,7 @@ Life isn't that easy. You have to keep continuous track of the robot's current p
 Odometry must be updated every single loop, just like a subsystem's `periodic()`. YAMS's `SwerveDrive` does this for you inside `drive.updateTelemetry()`, which is why your subsystem (Commands v2) or robot class (Commands v3) must call it every loop. You don't need to call a separate odometry update method yourself, but understanding *why* it must happen every loop is essential for debugging drift and lag.
 
 {% hint style="info" %}
-`SwerveDriveOdometry` can be replaced by `SwerveDrivePoseEstimator`, which additionally fuses vision measurements — this is what YAMS uses. See [Telemetry, Simulation & Vision](telemetry-and-vision.md).
+`SwerveDriveOdometry` can be replaced by `SwerveDrivePoseEstimator`, which additionally fuses vision measurements; this is what YAMS uses. See [Telemetry, Simulation & Vision](telemetry-and-vision.md).
 {% endhint %}
 
 ## Conclusion

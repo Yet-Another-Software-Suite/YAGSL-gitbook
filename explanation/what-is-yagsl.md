@@ -18,7 +18,7 @@ YAGSL 2027 is built on WPILib 2027 (`2027_alpha7`, Java 25) and runs on the Syst
 
 ## How the pieces fit together
 
-1. You describe your robot's hardware as JSON files (`swervedrive.json`, and per-module files under `modules/`) — generated for you by **[config.yagsl.com](https://config.yagsl.com)**, or hand-written if you prefer.
+1. You describe your robot's hardware as JSON files (`swervedrive.json`, and per-module files under `modules/`), generated for you by **[config.yagsl.com](https://config.yagsl.com)**, or hand-written if you prefer.
 2. `SwerveParser.parse(directory)` reads that JSON. `SwerveParser` is `swervelib.commands2.SwerveParser` or `swervelib.commands3.SwerveParser`, depending on your command framework. Both extend the framework agnostic `swervelib.core.parser.SwerveParser`, which resolves each device string (e.g. `sparkflex_neo`, `cancoder_can`) to the right vendor hardware wrapper and builds a YAMS `SwerveModuleConfig`/`SmartMotorControllerConfig` per module.
 3. `SwerveParser.createSwerveDrive(SwerveDriveConfig)` hands those configs to YAMS, which constructs and returns a ready-to-drive `SwerveDrive` for your command framework, bound to the `Subsystem` (Commands v2) or `Mechanism` (Commands v3) in your `SwerveDriveConfig`.
 4. From there, everything (kinematics, odometry, telemetry, simulation, vision fusion, driver-input shaping via `SwerveInputStream`) is YAMS's API, documented in the [YAMS API reference](../reference/api-reference.md). YAGSL only exists at the boundary between "JSON describing my robot" and "a working `SwerveDrive` object."
@@ -64,7 +64,7 @@ YAGSL is published as two vendordeps, `yagsl_commands2.json` and `yagsl_commands
 The only library a YAGSL vendordep requires is the matching YAMS vendordep. Hardware vendor libraries (Phoenix 6, REVLib, ReduxLib, ThriftyLib and so on) are optional: the classes that touch a vendor's API are loaded by reflection, and only when your JSON configuration uses one of that vendor's devices. A robot with only CTRE hardware never needs REVLib installed, and the other way around. If a configuration names a device whose vendor library is missing, creating the swerve drive fails when the robot program starts.
 
 {% hint style="info" %}
-If you already know YAMS, or you outgrow what the JSON schema can express, you can always construct `SwerveDriveConfig`/`SwerveModuleConfig` yourself and skip `SwerveParser` entirely — it is a convenience layer, not a requirement.
+If you already know YAMS, or you outgrow what the JSON schema can express, you can always construct `SwerveDriveConfig`/`SwerveModuleConfig` yourself and skip `SwerveParser` entirely. It is a convenience layer, not a requirement.
 {% endhint %}
 
 ## Our Philosophy
@@ -80,6 +80,6 @@ Do you have multiple robots and don't want to change any code to get them to wor
 ## Goals of this documentation
 
 * Teach the fundamentals of a `SwerveDrive` and `SwerveModule` so you can debug and reason about your robot, even though YAMS builds the actual objects for you. See [Swerve Drive Kinematics](swerve-drive-kinematics.md) and [Swerve Modules](swerve-modules.md).
-* Walk you through generating a configuration and bringing up your first YAGSL-driven robot — see the [Tutorial](../tutorial/README.md).
-* Give you task-focused recipes for the debugging work every swerve team eventually needs — see the [How-to Guides](../how-to/how-to.md).
-* Document the current JSON schema and hardware support precisely — see the [Reference](../reference/reference.md) section.
+* Walk you through generating a configuration and bringing up your first YAGSL-driven robot. See the [Tutorial](../tutorial/README.md).
+* Give you task-focused recipes for the debugging work every swerve team eventually needs. See the [How-to Guides](../how-to/how-to.md).
+* Document the current JSON schema and hardware support precisely. See the [Reference](../reference/reference.md) section.

@@ -17,7 +17,7 @@ YAMS's `SmartMotorController` abstraction. See [Schema Changes](../schema-change
 * [ ] Motor is updated to the latest firmware.
 * [ ] Motor has a unique CAN ID that matches its module JSON.
 * [ ] Wheels are aligned forwards with all bevels facing the same way before first enable.
-* [ ] PID is tuned — see [Tune PIDF Gains](../../how-to/tune-pidf-gains.md).
+* [ ] PID is tuned. See [Tune PIDF Gains](../../how-to/tune-pidf-gains.md).
 
 ## Configuring a motor
 
@@ -153,8 +153,8 @@ vendordep.
 
 ### General motor tips (apply regardless of controller)
 
-- Confirm CCW+ rotation on the bench before mounting — see [When to Invert](../../how-to/determine-inversion.md).
+- Confirm CCW+ rotation on the bench before mounting. See [When to Invert](../../how-to/determine-inversion.md).
 - Tune one drive motor and one angle motor fully before copying gains to the other three modules;
   see [Tune PIDF Gains](../../how-to/tune-pidf-gains.md).
 - Current limits and gearing live in `physicalproperties.json` (or a per-module `gearing`
-  override) — see [physicalproperties.json Reference](../json-schema/physicalproperties-json.md).
+  override). See [physicalproperties.json Reference](../json-schema/physicalproperties-json.md).

@@ -39,7 +39,7 @@ All of these need to be set correctly in order to configure a Swerve Module prop
 
 #### TL;DR
 
-1. Motors can break in many ways and are only expected to operate in one way — refer here while debugging.
+1. Motors can break in many ways and are only expected to operate in one way. Refer here while debugging.
 2. Swerve Modules contain **drive gears**, **steering gears**, **drive motor**, **steering motor**, and an **absolute encoder**.
 
 ## Checklist
@@ -65,7 +65,7 @@ The Absolute Encoder offsets determine where the module should point on boot. Wh
 Sometimes if the offset is off just a little bit a module will be dragged, which could **result in penalties**.
 {% endhint %}
 
-This offset is the `absoluteEncoderOffset` field in each module's JSON config — see the [JSON Schema reference](../reference/json-schema/module-json.md) for the exact field, and the [inversion how-to](../how-to/determine-inversion.md) for the practical procedure to find it.
+This offset is the `absoluteEncoderOffset` field in each module's JSON config. See the [JSON Schema reference](../reference/json-schema/module-json.md) for the exact field, and the [inversion how-to](../how-to/determine-inversion.md) for the practical procedure to find it.
 
 ## Inversion
 
@@ -75,7 +75,7 @@ Depending on your swerve module, your motors and/or absolute encoder may need to
 When the inversion state of your steering/angle/azimuth motor is incorrect, the Swerve Module **WILL** spin out of control when any input is given, and sometimes even at rest.
 {% endhint %}
 
-Inversion is configured per-module via the `inverted.drive` / `inverted.angle` and `absoluteEncoderInverted` fields — see [When to Invert?](../how-to/determine-inversion.md).
+Inversion is configured per-module via the `inverted.drive` / `inverted.angle` and `absoluteEncoderInverted` fields. See [When to Invert?](../how-to/determine-inversion.md).
 
 ## Conversion Factor / Gearing
 
@@ -109,13 +109,13 @@ All of this is the long way of showing you that math is important, and your gear
 Getting this wrong **COULD** cause the motor to spin out of control, or your odometry will always be slightly off, resulting in more exaggerated motion while driving around.
 {% endhint %}
 
-Rather than compute a raw conversion factor yourself, the JSON config expresses `gearRatio` and `diameter` directly (per-module override in `modules/<name>.json`, or the shared default in `physicalproperties.json`) and YAMS derives the conversion internally — see the [JSON Schema reference](../reference/json-schema/physicalproperties-json.md) and [Standard Conversion Factors](../reference/standard-conversion-factors.md) for common COTS module ratios.
+Rather than compute a raw conversion factor yourself, the JSON config expresses `gearRatio` and `diameter` directly (per-module override in `modules/<name>.json`, or the shared default in `physicalproperties.json`) and YAMS derives the conversion internally. See the [JSON Schema reference](../reference/json-schema/physicalproperties-json.md) and [Standard Conversion Factors](../reference/standard-conversion-factors.md) for common COTS module ratios.
 
 ## PID Control
 
 PID stands for Proportional-Integral-Derivative. Swerve Drives should try to use the most up-to-date feedback available, typically the motor controller's on-board PID/closed-loop control.
 
-WPILib has a great guide to learning PIDs — the turret position example is exactly how steering motors are controlled.
+WPILib has a great guide to learning PIDs. The turret position example is exactly how steering motors are controlled.
 
 {% embed url="https://docs.wpilib.org/en/stable/docs/software/advanced-controls/introduction/introduction-to-pid.html" %}
 
@@ -123,11 +123,11 @@ There are 2 PID loops involved in a Swerve Module: one for the drive motor, the 
 
 #### Drive Motor PID
 
-Tune it as if it were a flywheel — this is documented here:
+Tune it as if it were a flywheel. This is documented here:
 
 {% embed url="https://docs.wpilib.org/en/stable/docs/software/advanced-controls/introduction/tuning-flywheel.html" %}
 
-The drive motor also benefits from a feedforward, so the PID doesn't have to work against the minimum voltage needed to overcome friction and the robot's weight — see `s`/`v`/`a` in [pidfproperties.json](../reference/json-schema/pidfproperties-json.md).
+The drive motor also benefits from a feedforward, so the PID doesn't have to work against the minimum voltage needed to overcome friction and the robot's weight. See `s`/`v`/`a` in [pidfproperties.json](../reference/json-schema/pidfproperties-json.md).
 
 #### Steering Motor PID
 
@@ -146,7 +146,7 @@ See [How to Tune PIDF Gains](../how-to/tune-pidf-gains.md) for concrete starting
 
 ## Current Limiting
 
-You must limit the current of your motors to avoid pulling too much power and browning out — typically 20A for steering motors, and 40A for drive motors (the `statorCurrentLimit` field in [physicalproperties.json](../reference/json-schema/physicalproperties-json.md)).
+You must limit the current of your motors to avoid pulling too much power and browning out, typically 20A for steering motors, and 40A for drive motors (the `statorCurrentLimit` field in [physicalproperties.json](../reference/json-schema/physicalproperties-json.md)).
 
 {% hint style="warning" %}
 SPARK MAX can only apply stator current limits.
