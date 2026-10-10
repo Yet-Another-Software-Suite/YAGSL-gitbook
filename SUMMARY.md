@@ -22,6 +22,7 @@
 * [Determine inversion](how-to/determine-inversion.md)
 * [Verify your module locations](how-to/verify-module-locations.md)
 * [Use a custom gyro](how-to/use-a-custom-gyro.md)
+* [Put devices on a different CAN bus](how-to/choose-a-can-bus.md)
 * [Drive to a pose](how-to/drive-to-a-pose.md)
 * [Set up PathPlanner](how-to/setup-pathplanner.md)
 * [Access raw hardware devices](how-to/access-raw-hardware-devices.md)
@@ -47,7 +48,7 @@
 * [Standard Conversion Factors](reference/standard-conversion-factors.md)
 * [Vendordep Installation](reference/vendordep-installation.md)
 * [API Reference](reference/api-reference.md)
-* [Schema Changes (Migrating from pre-2026.8.05)](reference/schema-changes.md)
+* [Schema Changes (Migrating to 2027 and from pre-2026.8.05)](reference/schema-changes.md)
 * [Swerve Drive Drift: Causes and Tuning Order](reference/swerve-drift-causes.md)
 
 ## Explanation

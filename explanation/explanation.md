@@ -7,8 +7,8 @@ or [How-to Guides](../how-to/how-to.md).
 - [What is YAGSL?](what-is-yagsl.md)
 - [Swerve Drive Kinematics](swerve-drive-kinematics.md)
 - [Swerve Modules](swerve-modules.md)
-- [Module Behaviors](module-behaviors.md) — cosine compensation, heading correction, module
+- [Module Behaviors](module-behaviors.md): cosine compensation, heading correction, module
   auto-synchronization, offset offloading
-- [Chassis Control](chassis-control.md) — max speed, chassis speed discretization, lock pose
+- [Chassis Control](chassis-control.md): max speed, chassis speed discretization, lock pose
 - [Telemetry, Simulation & Vision](telemetry-and-vision.md)
-- [Changelog](changelog.md)
+- [Changelog](changelog.md): what changed in each release, including the WPILib 2027 port

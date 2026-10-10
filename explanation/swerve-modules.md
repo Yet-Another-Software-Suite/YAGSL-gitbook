@@ -32,7 +32,7 @@ Smart Motor Controllers typically have the following features:
 * [ ] Greased gears attached to the shaft.
 * [ ] Ramp up to speed at a configurable rate to avoid using too much power instantly.
 * [ ] Have integrated PID loops which can control the output based on a connected sensor's input (typically an encoder).
-* [ ] Are connected to a CAN bus — by default the `rio`, but if a [CANivore](https://store.ctr-electronics.com/canivore/) is connected it could be the name of the CANivore as long as the motor controller supports it.
+* [ ] Are connected to a CAN bus. By default that is the SystemCore's `can_s0`, but it could be another SystemCore bus (`can_s1` to `can_s4`), or the name of a [CANivore](https://store.ctr-electronics.com/canivore/) if one is connected and the motor controller supports it.
 * [ ] Rotate the wheel in more than one shaft rotation, proportional to the gears.
 
 All of these need to be set correctly in order to configure a Swerve Module properly. If one of these is not set correctly you might experience behavior that you won't easily be able to identify.
@@ -85,7 +85,7 @@ Math time! Remember dimensional analysis?
 Kahn Academy Explanation of Dimensional Analysis for unit conversions
 {% endembed %}
 
-Swerve Modules are given a `SwerveModuleState` object to set the velocity (meters per second) and angle (degrees) of the module. This means native units (rotations, and rotations per minute) must be converted to velocity and angle units, using the gear ratio between the motor and the wheel/steering mechanism.
+Swerve Modules are given a `SwerveModuleVelocity` object (WPILib 2027's name for `SwerveModuleState`) to set the velocity (meters per second) and angle (degrees) of the module. This means native units (rotations, and rotations per minute) must be converted to velocity and angle units, using the gear ratio between the motor and the wheel/steering mechanism.
 
 The steering conversion takes _**rotations**_ of the rotor (or absolute encoder, if attached to the motor controller's dataport) and converts them to _**degrees**_.
 

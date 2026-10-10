@@ -1,26 +1,201 @@
 # Changelog
 
-{% hint style="warning" %}
-YAGSL was rewritten as a JSON-config parser around YAMS's `SwerveDrive` between versions `2026.4.1` and `2026.8.05`. Every entry below this notice describes the **old**, pre-rewrite architecture (a self-contained `SwerveDrive`/`SwerveModule`/`SwerveController` implementation, `controllerproperties.json`, `imu`/`encoder`-named JSON fields, etc.) — none of it reflects the current API. If you're trying to understand what changed in the rewrite itself, see [Schema Changes](../reference/schema-changes.md) instead. This history is kept for archaeology: understanding *why* a given behavior exists, and crediting the contributors who built it.
+{% hint style="info" %}
+YAGSL was rewritten as a JSON-config parser around YAMS's `SwerveDrive` between versions `2026.4.1` and `2026.8.05`, and ported to WPILib 2027 and the SystemCore in `2026.10.08`. Entries from `2026.8.05` onward describe the current architecture. Everything from `2026.4.1` down is the old, pre-rewrite library, kept under [Pre-rewrite history](#pre-rewrite-history).
 {% endhint %}
 
 ## Pull Requests are always reviewed!
 
 I highly encourage anyone who wants to help make YAGSL better to create pull requests with any modifications you have made that increases your quality of life.
 
-{% embed url="https://github.com/BroncBotz3481/YAGSL-Example/pulls?q=is%3Apr+is%3Aclosed" %}
-
 {% embed url="https://github.com/Yet-Another-Software-Suite/YAGSL/pulls?q=is%3Apr+is%3Aclosed" %}
+
+{% embed url="https://github.com/BroncBotz3481/YAGSL-Example/pulls?q=is%3Apr+is%3Aclosed" %}
 
 ## Contributing
 
-YAGSL development is done on the `dev` branch of the YAGSL repository here at `yagsl/java/swervelib`.
+YAGSL development is done on the `main` branch of the [YAGSL repository](https://github.com/Yet-Another-Software-Suite/YAGSL), with the library source at `yagsl/java/swervelib`.
 
-{% embed url="https://github.com/BroncBotz3481/YAGSL-Example/tree/dev" %}
-YAGSL-Example dev branch
+{% embed url="https://github.com/Yet-Another-Software-Suite/YAGSL" %}
+YAGSL repository
 {% endembed %}
 
-All PR's should be based off of and merged into here. YAGSL is propagated often to the other repositories.
+All PR's should be based off of and merged into `main`.
+
+## 2026.10.09
+
+Install from `https://cdn.yassrobotics.com/yagsl_commands2.json` or `https://cdn.yassrobotics.com/yagsl_commands3.json`. See [Install YAGSL](../tutorial/02-install-yagsl.md).
+
+* **Vendordeps and artifacts now come from `cdn.yassrobotics.com`**, so networks that block `github.io` can still install, update and download YAGSL. The vendordep JSON URLs are `https://cdn.yassrobotics.com/yagsl_commands2.json` and `https://cdn.yassrobotics.com/yagsl_commands3.json`, and `https://cdn.yassrobotics.com/` is the only maven URL. The old `yet-another-software-suite.github.io/YAGSL` vendordep and maven URLs are stale. ([#57](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/57))
+* **The YAGSL vendordeps require only YAMS.** `yagsl_commands2.json` requires YAMS (Commands v2) and `yagsl_commands3.json` requires YAMS (Commands v3). REVLib, Phoenix 6, ReduxLib and ThriftyLib are no longer required: YAGSL loads a vendor's device classes through reflection only when a JSON configuration uses that vendor's devices, so you install vendor libraries for the hardware you have.
+* **`canbus` is read the same way for every vendor** through the new `swervelib.core.parser.CANBuses`. ([#59](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/59))
+
+  | `canbus`          | Bus                                                              |
+  | ----------------- | ---------------------------------------------------------------- |
+  | `""` (or missing) | `can_s0` (bus 0)                                                 |
+  | `"0"` to `"4"`    | `can_s0` to `can_s4`, so `"1"` is `can_s1`                       |
+  | `"5"` to `"24"`   | Motioncore `can_d0` to `can_d19`                                 |
+  | anything else     | passed to the vendor, such as a CANivore's name for CTRE devices |
+
+  * **Behavior change:** CTRE devices with an empty `canbus` are now on `can_s0`, like every other vendor. Before, Phoenix 6 put them on its SystemCore default, `can_s2`. Configurations whose CTRE devices are on `can_s2` need `"canbus": "2"`.
+  * **Behavior change:** REV devices no longer take port names such as `"CAN_S1"`. Use `"1"`.
+  * REV and Thrifty devices reject anything other than a bus number, with an error that explains the bus numbers. A bus number that does not exist, such as `"25"`, also gives a clear error.
+  * Redux devices take bus numbers too. ReduxLib bus strings such as `"socketcan:can_s1"` still work, since they are passed through.
+* **Thrifty Nova is supported again**, through YAMS's `NovaWrapper` on ThriftyLib 2027. ([#58](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/58))
+  * Motor types are `nova_<motor>`: `nova_minion` and `nova_pulsar` select those motors on the Nova, and anything else, such as `nova_neo`, is run as a NEO.
+  * An absolute encoder attached to the Nova's data port (`revthroughbore_attached`, `canandmag_attached`, `srxmag_attached`, `thrifty_attached`, `andymarkhexbore_attached`, `dutycycle_attached`) sets the Nova's absolute encoder type and direction, and is used as the external feedback encoder.
+  * Attached `analog_attached` encoders are now supported on a Nova.
+  * The `canbus` of a Nova must be empty or a bus number, since ThriftyLib does not take bus names.
+* **SystemCore IMU added as a gyro.** Set the gyro `type` to `systemcore_internal` to use the IMU built into the SystemCore. It needs no vendordep, ignores `id` and `canbus`, and is created with a flat mount orientation. ([#56](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/56))
+* The Commands v2 and Commands v3 vendordeps are no longer listed as direct requirements of the YAGSL vendordeps. They come in through YAMS.
+* Built against YAMS `2026.10.09`.
+
+## 2026.10.08
+
+**YAGSL 2027.** The library, vendordep build and examples were ported to WPILib 2027 (`2027_alpha7`), Java 25 and the SystemCore, on top of YAMS's 2027 core/commands split. ([#55](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/55))
+
+Breaking changes for robot code:
+
+* **WPILib 2027.** WPILib Java packages are `org.wpilib.*` (`edu.wpi.first.*` no longer exists), and several types were renamed. The ones you meet with YAGSL are `ChassisSpeeds`, now `ChassisVelocities`, and `SwerveModuleState`, now `SwerveModuleVelocity`.
+* **Two vendordeps, one per command framework.** Install exactly one, they conflict with each other.
+
+  | Vendordep              | Artifacts                       | Command framework |
+  | ---------------------- | ------------------------------- | ----------------- |
+  | `yagsl_commands2.json` | `YAGSL-core`, `YAGSL-commands2` | Commands v2       |
+  | `yagsl_commands3.json` | `YAGSL-core`, `YAGSL-commands3` | Commands v3       |
+
+  `YAGSL-java` is replaced by `YAGSL-core` plus `YAGSL-commands2` or `YAGSL-commands3`. Remove the old `yagsl.json` from your `vendordeps` folder.
+* **Packages.** Command framework agnostic code moved to `swervelib.core`: `swervelib.parser` is now `swervelib.core.parser`, and `swervelib.telemetry` is now `swervelib.core.telemetry`.
+* **Entry point.** Create the drive with `swervelib.commands2.SwerveParser` or `swervelib.commands3.SwerveParser`. They return the matching YAMS `SwerveDrive` (`yams.commands2.swerve.SwerveDrive` or `yams.commands3.swerve.SwerveDrive`). `SwerveParser.parse(directory)` works as before.
+* **YAMS packages.** YAMS classes are now under `yams.core.*`, `yams.commands2.*` and `yams.commands3.*`. For example `yams.mechanisms.config.SwerveDriveConfig` is now `yams.commands2.config.SwerveDriveConfig`, `yams.mechanisms.swerve.utility.SwerveInputStream` is now `yams.commands2.swerve.SwerveInputStream`, and `SmartMotorControllerConfig.TelemetryVerbosity` is now `yams.core.telemetry.enums.TelemetryVerbosity`.
+* **Gyro API.** `SwerveDrive.getGyroAngle()` is removed, use `getGyroRotation3d()`. `SwerveDriveConfig.withGyro` takes a `Supplier<Rotation3d>`, for example `withGyro(gyro::getRotation3d)`.
+
+Other changes:
+
+* Gyros now hand YAMS their full `Rotation3d` attitude. The heading axis from `gyroAxis` is applied in one place (YAMS's `GyroAxis`, through `withGyroHeadingAxis`), and inversion is left to YAMS's `withGyroInverted`. This fixes the Canandgyro being inverted twice.
+* JSON parsing moved from Jackson, which WPILib 2027 no longer ships, to WPILib's avaje-jsonb. The parsing code is generated at compile time and ships in `YAGSL-core`. Your JSON files do not change, and properties the schema does not know, such as `$schema`, are still ignored.
+* The `canbus` field now selects the bus for REV devices as well (see `2026.10.09` for the final rules).
+* The azimuth motor controller is created once per module. It was created twice before, which made YAMS register duplicate alerts and throw.
+* Releases now attach `<version>-YAGSL-Offline.zip`, which extracts into the WPILib `2027_alpha7` home folder for offline installs, plus `example-commands2.zip` and `example-commands3.zip`.
+* The example is now two projects, [`examples/commands2`](https://github.com/Yet-Another-Software-Suite/YAGSL/tree/main/examples/commands2) and [`examples/commands3`](https://github.com/Yet-Another-Software-Suite/YAGSL/tree/main/examples/commands3).
+
+Not available yet on `2027_alpha7`:
+
+* StudicaLib and the AndyMark library have no 2027 vendordep, so the `navx3_can` gyro and the `andymarkhexbore_can` encoder fail at startup.
+* YALL (Limelight) and PhotonLib have no 2027 vendordep, so the example's vision subsystems are parked outside the build.
+* Thrifty Nova was unavailable in this release. It returned in `2026.10.09`.
+
+## 2026.10.03
+
+* Fixed the maximum module speed calculation. The motor's free speed is now reduced through the drive gearing to get the wheel speed, and the drive desaturates towards the slowest module so every module can reach its commanded speed.
+* Added simulation tests for the example's vision subsystem.
+
+## 2026.9.27
+
+* `SwerveParser` no longer forces module state optimization on. Control it with `SwerveDriveConfig.withModuleStateOptimization(boolean)`.
+
+## 2026.9.17
+
+* SmartIO encoders (`*_dio` and `*_analog` absolute encoders) now read their port from the `channel` field, not `id`. ([#54](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/54))
+
+## 2026.9.16
+
+* Fixed attached absolute encoders so `absoluteEncoderOffset` is applied as the external encoder's zero offset.
+* Updated to YAMS `2026.9.16`.
+
+## 2026.9.02.1
+
+* Telemetry settings from your `SwerveDriveConfig` are passed down to the modules and their motor controllers: the modules follow the drive's telemetry verbosity when one is given, and the DataLog names follow the drive's `SwerveDriveTelemetryConfig.withDataLogName(...)`.
+* Trimmed the per-motor telemetry. Drive motors publish stator and supply current plus `measurement/position` and `measurement/velocity`. Azimuth motors publish stator and supply current, `mechanism/position` and `mechanism/velocity`, and the external encoder position and velocity.
+
+## 2026.8.31
+
+* Telemetry is configured with YAMS's `SwerveDriveTelemetryConfig` and `SwerveModuleTelemetryConfig`. When you only give a telemetry verbosity, YAGSL still writes the DataLog under `Swerve/`.
+* The example gained vision simulation, with telemetry fixes from YAMS.
+
+## 2026.8.25
+
+* `SwerveParser` methods are static: call `SwerveParser.parse(directory)` and then `SwerveParser.createSwerveDrive(config)`, with no instance to create. By [@DanPeled](https://github.com/DanPeled) in [#52](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/52)
+* Added `SwerveParser.createSwerveDriveDevices(config)`, which returns the `SwerveDrive` together with the raw vendor devices YAGSL created (motor controllers, absolute encoders and the gyro). See [Access raw hardware devices](../how-to/access-raw-hardware-devices.md).
+* The examples were merged into a single example project, which now includes vision and autonomous.
+
+## 2026.8.18
+
+* Added the `custom` gyro type, for supplying your own gyro in code. See [Use a custom gyro](../how-to/use-a-custom-gyro.md).
+
+## 2026.8.17
+
+* `SwerveParser` now controls which telemetry fields the swerve drive exposes.
+* Fixed the DataLog location.
+
+## 2026.8.05
+
+First release of the rewritten YAGSL: a JSON configuration parser that builds a YAMS `SwerveDrive`. The JSON schema changed, see [Schema Changes](../reference/schema-changes.md).
+
+* Cleaned up `createSwerveDrive` by [@DanPeled](https://github.com/DanPeled) in [#48](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/48)
+* Fixed to use correct imports by [@DanPeled](https://github.com/DanPeled) in [#49](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/49)
+* Added cosine compensation, drive and angle feedforward support, and an automatic theoretical drive feedforward when the drive `v` gain is `0`.
+* Added `pidfproperties_sim.json`, which replaces `pidfproperties.json` in simulation.
+* Module telemetry names no longer include the `.json` suffix.
+* Added attached absolute encoder support for REV, CTRE and Thrifty Nova motor controllers, plus the `analog`, `analog5v`, `dutycycle` and `splineencoder` encoder types.
+* All vendor devices are created through reflection.
+
+## Pre-rewrite history
+
+{% hint style="warning" %}
+Every entry below this notice describes the **old**, pre-rewrite architecture (a self-contained `SwerveDrive`/`SwerveModule`/`SwerveController` implementation, `controllerproperties.json`, `imu`/`encoder`-named JSON fields, etc.). None of it reflects the current API. If you're trying to understand what changed in the rewrite itself, see [Schema Changes](../reference/schema-changes.md) instead. This history is kept for archaeology: understanding *why* a given behavior exists, and crediting the contributors who built it.
+{% endhint %}
+
+## 2026.4.1
+
+* `setActiveOverride` should be public, not protected. by [@twisterjafla](https://github.com/twisterjafla) in [#43](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/43)
+
+## 2026.3.12
+
+* Adds overrides to activity when `shouldClock` is set to false. by [@twisterjafla](https://github.com/twisterjafla) in [#34](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/34)
+* Fix drive base to vision pose fusion by [@Chris7898](https://github.com/Chris7898) in [#36](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/36)
+* EmptyOpponent by [@konnorreynolds](https://github.com/konnorreynolds) in [#38](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/38)
+* Alert fix in [#41](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/41)
+* Change `aimTarget` to use `Supplier<Pose2d>` by [@Hello2Krish19](https://github.com/Hello2Krish19) in [#40](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/40)
+
+## 2026.3.5
+
+* Fixed SparkFlex sim motor issue in [#29](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/29)
+* Added offset to `calculateAngularVelocity` by [@Kfir-bot](https://github.com/Kfir-bot) in [#30](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/30)
+* An offset can be added to the aiming functionality by [@J-Kistner](https://github.com/J-Kistner) in [#32](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/32)
+* Studica update and REV fix in [#33](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/33)
+
+## 2026.2.21
+
+* Do not round location values parsed from JSON by [@Scaratech](https://github.com/Scaratech) in [#22](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/22)
+* Update incorrect default command by [@XM2TBE](https://github.com/XM2TBE) in [#25](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/25)
+* Refactor `blueAlliance` variable initialization by [@XM2TBE](https://github.com/XM2TBE) in [#24](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/24)
+* Fix some simulation issues by [@clrozeboom](https://github.com/clrozeboom) in [#26](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/26)
+* Fix broken link in README by [@nickmcski](https://github.com/nickmcski) in [#18](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/18)
+
+## 2026.2.03
+
+* Fix ThriftyLib crash in [#17](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/17)
+* Made CTRE device creation reflective in [#20](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/20)
+
+## 2026.1.24
+
+* Removed an extra println by [@twisterjafla](https://github.com/twisterjafla) in [#11](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/11)
+* Changes where MapleSim publishes goal poses by [@twisterjafla](https://github.com/twisterjafla) in [#13](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/13)
+* Disable bump collision by [@konnorreynolds](https://github.com/konnorreynolds) in [#16](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/16)
+
+## 2026.1.14
+
+* Updated vendordep error messages for clarity by [@twisterjafla](https://github.com/twisterjafla) in [#10](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/10)
+* Made Studica device creation reflective.
+
+## 2026.1.13
+
+* Additional example projects, reworked alliance based gyro zeroing by [@HolyArtist31656](https://github.com/HolyArtist31656) in [#1](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/1)
+* Fixed unneeded alliance flipping by [@HolyArtist31656](https://github.com/HolyArtist31656) in [#2](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/2)
+* Updates to Thrifty API for ThriftyNova code by [@clrozeboom](https://github.com/clrozeboom) in [#4](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/4)
+* MapleSim update by [@konnorreynolds](https://github.com/konnorreynolds) in [#8](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/8)
+* Adds rebuilt by [@twisterjafla](https://github.com/twisterjafla) in [#9](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/9)
 
 ## 2025.8.0
 

@@ -5,13 +5,12 @@ description: Supported gyroscope/IMU types for swervedrive.json's gyro field
 # Gyroscopes
 
 {% hint style="danger" %}
-**Hardware support narrowed in the 2026.8.05 rewrite.** YAGSL now only instantiates gyros over
-**CAN**. The roboRIO SPI/I2C/USB-serial NavX (original NavX2 `navx`/`navx_spi`/`navx_i2c`/
-`navx_mxp_serial`/`navx_usb`), the original CTRE **Pigeon** (gen 1), and the analog SPI gyros
-(**ADXRS450**, **ADIS16448**, **ADIS16470**) are **not supported** by the current parser. If your
-robot uses one of those devices, see [Schema Changes](../schema-changes.md) — you'll need to
-either move to a supported CAN gyro or use the [`custom` gyro type](#custom-gyro) below to keep
-wiring it up yourself.
+**Hardware support narrowed in the 2026.8.05 rewrite.** YAGSL only builds CAN gyros and, since
+2027, the IMU inside the SystemCore. The SPI/I2C/USB-serial NavX (original NavX2 `navx`/`navx_spi`/
+`navx_i2c`/`navx_mxp_serial`/`navx_usb`), the original CTRE **Pigeon** (gen 1), and the SPI gyros
+(**ADXRS450**, **ADIS16448**, **ADIS16470**) are **not supported** by the parser. If your robot
+uses a gyro that isn't in the table below, see [Schema Changes](../schema-changes.md) and use the
+[`custom` gyro type](#custom-gyro) to wire it up yourself.
 {% endhint %}
 
 ## Gyroscope Checklist
@@ -37,53 +36,63 @@ In `swervedrive.json` the gyro is one object plus two drive-wide settings:
 }
 ```
 
-- `gyro.type` — one of the supported types below, formatted `vendor_connection`, or `custom` to
+- `gyro.type`: one of the supported types below, formatted `vendor_connection`, or `custom` to
   configure the gyro yourself (see [Custom Gyro](#custom-gyro)).
-- `gyro.id` — CAN ID of the device (ignored where not applicable).
-- `gyro.canbus` — CAN bus name. Use `""` for your control system's default bus (`rio` on a
-  roboRIO), or a CANivore name if the device is on one — see
+- `gyro.id`: CAN ID of the device (ignored where not applicable).
+- `gyro.canbus`: the CAN bus the device is on. Use `""` for the SystemCore bus `can_s0`, or the bus
+  number, such as `"1"` for `can_s1`. A Pigeon 2 also takes a CANivore's name. See
   [Control system and CAN buses](../json-schema/README.md#control-system-and-can-buses).
-- `gyroAxis` — which physical axis of the sensor to read as robot heading: `yaw` (default),
-  `pitch`, or `roll`. Only change this if the sensor is mounted on an edge or angle.
-- `gyroInvert` — invert the heading reading. If your robot spins out of control with no controller
+- `gyroAxis`: which axis of the sensor points up through the robot and is read as the heading:
+  `yaw` (default), `pitch`, or `roll`. Only change this if the sensor is mounted on an edge or
+  angle.
+- `gyroInvert`: invert the heading reading. If your robot spins out of control with no controller
   input, invert this.
 
+The parser hands YAMS the gyro's full 3D attitude (a `Supplier<Rotation3d>`) untouched. YAMS then
+applies `gyroAxis` (`SwerveDriveConfig.withGyroHeadingAxis`) and `gyroInvert`
+(`SwerveDriveConfig.withGyroInverted`) in one place, so no gyro is inverted twice. Read the result
+in robot code with `SwerveDrive.getGyroRotation3d()`; the old `getGyroAngle()` is gone.
+
 {% hint style="warning" %}
-Only CTRE devices support the `canbus` option for a CANivore. If your device is on your control
-system's default CAN bus (`rio` on a roboRIO), use `""`. If it's on a CANivore, `canbus` must
-match the CANivore's configured name.
+**CTRE default bus changed in 2027.** A Pigeon 2 with `"canbus": ""` is now on `can_s0`, like every
+other vendor's devices. It used to end up on `can_s2`; if yours is wired to `can_s2`, set
+`"canbus": "2"`.
 {% endhint %}
 
 ## Supported gyroscope types
 
-| Device | `type` | Communication |
-|---|---|---|
-| [Pigeon 2](#pigeon-2) | `pigeon2_can` | CAN; supports CANivore |
-| [Canandgyro](https://docs.reduxrobotics.com/canandgyro/getting-started) | `canandgyro_can` | CAN; default bus only, no CANivore |
-| [NavX3-CAN](#navx3-can) | `navx3_can` | CAN 2.0 / CAN FD |
-| SystemCore internal IMU | `systemcore_internal` | *listed in the config schema but not yet implemented — the parser throws if selected. Do not use yet.* |
-| [Custom](#custom-gyro) | `custom` | *any* — you construct and supply the gyro yourself |
+| Device | `type` | Communication | Vendor library |
+|---|---|---|---|
+| [Pigeon 2](#pigeon-2) | `pigeon2_can` | CAN; bus number or CANivore name | Phoenix 6 |
+| [Canandgyro](#canandgyro) | `canandgyro_can` | CAN; bus number or ReduxLib bus string | ReduxLib |
+| [SystemCore IMU](#systemcore-imu) | `systemcore_internal` | Built into the SystemCore; `id` and `canbus` are ignored | none (part of WPILib) |
+| [NavX3-CAN](#navx3-can) | `navx3_can` | CAN. *Not available in the 2027 builds yet, see [below](#navx3-can).* | StudicaLib |
+| [Custom](#custom-gyro) | `custom` | *any*: you construct and supply the gyro yourself | whatever your gyro needs |
 
-If you need a gyro not on this list — including the older roboRIO SPI/I2C/USB-serial NavX (AHRS)
-devices called out in the hint above, which the CAN-only parser no longer builds — use the
-`custom` type below.
+The vendor library is loaded by reflection only when your config uses that gyro, so install the one
+for the gyro you have. See [Vendordep Installation](../vendordep-installation.md).
+
+If you need a gyro not on this list, use the `custom` type below.
 
 ## Custom Gyro
 
 {% hint style="info" %}
-This is the reference summary — for a full walkthrough see
+This is the reference summary. For a full walkthrough see
 [How to use a custom gyro](../../how-to/use-a-custom-gyro.md).
 {% endhint %}
 
 Set `gyro.type` to `custom` and YAGSL's parser skips gyro configuration entirely: it never calls
-`SwerveDriveConfig.withGyro()`/`withGyroInverted()`, and `gyroAxis`/`gyroInvert` in
-`swervedrive.json` are ignored. You're expected to call `withGyro()`/`withGyroInverted()` yourself
-on the `SwerveDriveConfig` you pass into `SwerveParser.createSwerveDrive(...)` — everything else in
-the config (modules, motor controllers, encoders) is still built normally from the JSON.
+`SwerveDriveConfig.withGyro()`/`withGyroHeadingAxis()`/`withGyroInverted()`, and
+`gyroAxis`/`gyroInvert` in `swervedrive.json` are ignored. You're expected to call them yourself on
+the `SwerveDriveConfig` you pass into `SwerveParser.createSwerveDrive(...)`. Everything else in the
+config (modules, motor controllers, encoders) is still built normally from the JSON.
 
-This is the escape hatch for any gyro the parser doesn't build for you — most commonly the roboRIO
-SPI-mounted [Studica AHRS](https://www.studica.com/navx2-micro) (the classic NavX2), since only the
-CAN-based NavX3 is supported directly.
+`withGyro()` takes a `Supplier<Rotation3d>`: the gyro's full attitude, not just a heading angle.
+Most vendor gyros and WPILib's `OnboardIMU` have a `getRotation3d()` you can pass directly.
+
+This is the escape hatch for any gyro the parser doesn't build for you. The example below uses it
+for a SystemCore that is mounted vertically, since `systemcore_internal` always assumes a
+SystemCore mounted flat.
 
 ```json title="swervedrive.json"
 {
@@ -94,33 +103,95 @@ CAN-based NavX3 is supported directly.
 }
 ```
 
+{% tabs %}
+{% tab title="Commands v2" %}
 ```java title="SwerveDriveSubsystem.java"
-import com.studica.frc.AHRS;
-import static edu.wpi.first.units.Units.Degrees;
+import org.wpilib.hardware.imu.OnboardIMU;
+import org.wpilib.hardware.imu.OnboardIMU.MountOrientation;
+import swervelib.commands2.SwerveParser;
+import yams.commands2.config.SwerveDriveConfig;
+import yams.core.mechanisms.config.enums.GyroAxis;
+import yams.core.telemetry.enums.TelemetryVerbosity;
 
-// Onboard MXP SPI port is the common mounting for a roboRIO AHRS.
-private final AHRS gyro = new AHRS(AHRS.NavXComType.kMXP_SPI);
+// SystemCore mounted vertically, with its long edge parallel to the ground.
+private final OnboardIMU gyro = new OnboardIMU(MountOrientation.LANDSCAPE);
 
 public SwerveDriveSubsystem() {
-  SwerveDriveConfig cfg = new SwerveDriveConfig()
+  var cfg = new SwerveDriveConfig()
       .withSubsystem(this)
-      .withTelemetry(TelemetryVerbosity.HIGH)
-      // AHRS reports CW+; YAGSL/YAMS expect CCW+, so negate it here instead of relying on
-      // gyroInvert (which is ignored for a "custom" gyro).
-      .withGyro(() -> Degrees.of(-gyro.getAngle()))
+      .withTelemetry("swerve", TelemetryVerbosity.HIGH)
+      .withGyro(gyro::getRotation3d)
+      // gyroAxis and gyroInvert are ignored for a "custom" gyro, so set them here.
+      .withGyroHeadingAxis(GyroAxis.YAW)
       .withGyroInverted(false);
 
-  drive = new SwerveParser(new File(Filesystem.getDeployDirectory(), "swerve/base"))
-      .createSwerveDrive(cfg);
+  SwerveParser.parse(new File(Filesystem.getDeployDirectory(), "swerve/base"));
+  drive = SwerveParser.createSwerveDrive(cfg);
 }
 ```
+{% endtab %}
+
+{% tab title="Commands v3" %}
+```java title="SwerveDriveMechanism.java"
+import org.wpilib.hardware.imu.OnboardIMU;
+import org.wpilib.hardware.imu.OnboardIMU.MountOrientation;
+import swervelib.commands3.SwerveParser;
+import yams.commands3.config.SwerveDriveConfig;
+import yams.core.mechanisms.config.enums.GyroAxis;
+import yams.core.telemetry.enums.TelemetryVerbosity;
+
+// SystemCore mounted vertically, with its long edge parallel to the ground.
+private final OnboardIMU gyro = new OnboardIMU(MountOrientation.LANDSCAPE);
+
+public SwerveDriveMechanism() {
+  var cfg = new SwerveDriveConfig()
+      .withMechanism(this)
+      .withTelemetry("swerve", TelemetryVerbosity.HIGH)
+      .withGyro(gyro::getRotation3d)
+      // gyroAxis and gyroInvert are ignored for a "custom" gyro, so set them here.
+      .withGyroHeadingAxis(GyroAxis.YAW)
+      .withGyroInverted(false);
+
+  SwerveParser.parse(new File(Filesystem.getDeployDirectory(), "swerve/base"));
+  drive = SwerveParser.createSwerveDrive(cfg);
+}
+```
+{% endtab %}
+{% endtabs %}
 
 {% hint style="warning" %}
-Because `withGyroInverted()` is never called by the parser for a `custom` gyro, do any inversion
-you need directly in the `Supplier<Angle>` you pass to `withGyro()`, as shown above.
+Because the parser never calls `withGyroInverted()` for a `custom` gyro, a gyro that reads
+clockwise positive needs `.withGyroInverted(true)` on your own config. Don't also negate the
+attitude inside the supplier, or the heading is inverted twice.
 {% endhint %}
 
+## SystemCore IMU
+
+`systemcore_internal` uses the IMU built into the SystemCore through WPILib's
+`org.wpilib.hardware.imu.OnboardIMU`. It needs no vendor library and no wiring, and `id` and
+`canbus` are ignored.
+
+```json
+"gyro": { "type": "systemcore_internal", "id": 0, "canbus": "" }
+```
+
+**Checklist**
+
+* [ ] SystemCore is mounted **flat** (parallel to the ground). The parser always creates the IMU
+  with `MountOrientation.FLAT`.
+* [ ] SystemCore is mounted rigidly and as close to the robot's center as practical.
+
+If your SystemCore is mounted vertically (`MountOrientation.LANDSCAPE` or `PORTRAIT`), create the
+`OnboardIMU` yourself with a [custom gyro](#custom-gyro), as shown above.
+
 ## NavX3-CAN
+
+{% hint style="danger" %}
+**Not available in the 2027 builds yet.** StudicaLib has no `2027_alpha7` release, so the YAGSL
+2027 artifacts are built without the NavX3 device class. `navx3_can` is still accepted by the
+schema, but creating the drive with it fails. Until StudicaLib is released for 2027, use another
+gyro or supply the NavX yourself through a [custom gyro](#custom-gyro).
+{% endhint %}
 
 {% hint style="info" %}
 NavX3-CAN supports CAN 2.0 and has CAN-FD capability. See Studica's notes for CAN-FD
@@ -137,17 +208,18 @@ requirements.
 * [ ] Use Studica Hardware Manager to find the CAN ID (often ships as `0`) and enter it in your
   config.
 
+The parser creates the NavX3 from its CAN ID only; `canbus` is ignored for this device.
+
 NavX3-CAN ships factory-calibrated. For higher accuracy, re-calibrate with Studica Hardware
-Manager — it auto-detects sensor orientation during calibration. Connect CAN-H/CAN-L to the robot
-bus and make sure the bus is properly terminated.
+Manager, which auto-detects sensor orientation during calibration. Connect CAN-H/CAN-L to the
+robot bus and make sure the bus is properly terminated.
 
 ## Pigeon 2
 
 - [Product page](https://store.ctr-electronics.com/pigeon-2/)
 - [Hardware reference](https://pro.docs.ctr-electronics.com/en/latest/docs/hardware-reference/pigeon2/index.html)
-- Upgradeable via [Tuner X](https://v6.docs.ctr-electronics.com/en/latest/docs/tuner/index.html) —
-  pay attention to the LED status code when debugging. Any settings changed in Tuner X are
-  overwritten on startup by YAGSL.
+- Upgradeable via [Tuner X](https://v6.docs.ctr-electronics.com/en/latest/docs/tuner/index.html).
+  Pay attention to the LED status code when debugging.
 
 **Checklist**
 
@@ -155,21 +227,29 @@ bus and make sure the bus is properly terminated.
 * [ ] Pigeon 2 is mounted as close to the robot's center as possible.
 * [ ] Updated to the latest firmware, on a unique CAN ID.
 * [ ] Calibrated once installed on the robot.
+* [ ] **Phoenix 6** vendordep installed.
 
-Communicates over CAN and can be paired with a [CANivore](https://store.ctr-electronics.com/canivore/)
-to keep it off your control system's default CAN bus — [set a CANivore name](https://pro.docs.ctr-electronics.com/en/latest/docs/canivore/canivore-setup.html)
+Communicates over CAN. Set `canbus` to `""` for `can_s0` or to the bus number of another SystemCore
+bus. It can also be paired with a [CANivore](https://store.ctr-electronics.com/canivore/):
+[set a CANivore name](https://pro.docs.ctr-electronics.com/en/latest/docs/canivore/canivore-setup.html)
 and use it as `canbus`.
 
 ## Canandgyro
 
 - [Getting started](https://docs.reduxrobotics.com/canandgyro/getting-started)
 - CAN only; does not support CANivore.
+- Requires the **ReduxLib** vendordep.
+- `canbus` is `""` for `can_s0` or a bus number. Any other value is handed to ReduxLib as a bus
+  string, such as `"socketcan:can_s1"`.
+- If you are coming from an older YAGSL version where you had to flip `gyroInvert` to work around
+  the Canandgyro being inverted twice, re-check it: the inversion is now only applied once, by
+  YAMS.
 
 ---
 
 ### General gyro tips (still apply regardless of device)
 
-- Mount the gyro as close to the robot's center of rotation as practical — off-center mounting
+- Mount the gyro as close to the robot's center of rotation as practical. Off-center mounting
   couples translational vibration into the heading reading.
 - Always keep the robot still for a few seconds after power-on if your device does an on-the-fly
   calibration; moving during that window produces a bad heading for the rest of the match.

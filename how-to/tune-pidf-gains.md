@@ -134,4 +134,62 @@ When the drive motor `type` for every module is `talonfx_*` (or alike — `krake
 {% endtab %}
 {% endtabs %}
 
-Once you have a reasonable starting point, use **[config.yagsl.com](https://config.yagsl.com)** to regenerate `pidfproperties.json` with your updated numbers, or hand-edit the file directly — both work, since the parser only cares about the final JSON.
+Once you have a reasonable starting point, use **[config.yagsl.com](https://config.yagsl.com)** to regenerate `pidfproperties.json` with your updated numbers, or hand-edit the file directly. Both work, since the parser only cares about the final JSON.
+
+## Live tuning
+
+You don't have to redeploy for every gain change. YAMS publishes the drive's gains and setpoints to NetworkTables, so you can change them from a dashboard (Elastic, AdvantageScope) while the robot runs. The **Tuning Guide** at [config.yagsl.com](https://config.yagsl.com) walks through the full process; these are the pieces it uses.
+
+Live tuning needs `TelemetryVerbosity.HIGH` on the drive and both drive-to-pose controllers. YAMS only publishes the tuning command when both controllers are configured, even if you only want to tune the modules:
+
+```java
+var cfg = new SwerveDriveConfig()
+    .withSubsystem(this) // withMechanism(this) on Commands v3
+    .withTranslationController(new PIDController(4, 0, 0))
+    .withRotationController(new PIDController(3, 0, 0))
+    .withTelemetry("swerve", new SwerveDriveTelemetryConfig(TelemetryVerbosity.HIGH));
+```
+
+1. **Start in simulation**, or with the robot on blocks. Tuning moves the robot.
+2. **Enable Utility mode** (formerly Test) and make sure nothing else is commanding the drive. The Commands v2 example holds the drive with an idle command so the default drive command can't fight the tuning command:
+
+   ```java
+   RobotModeTriggers.utility().whileTrue(Commands.idle(swerve).withName("Live Tuning"));
+   ```
+3. **Start the tuning command** YAMS publishes under `Mechanisms/swerve/tuning` (click it in your dashboard, or set its `running` entry to `true`). Values under `Tuning/swerve/` only take effect while it runs.
+4. **Turn on one tuning mode** below and adjust its values. Only one mode drives at a time; if you enable more than one, auto-align wins over drive tuning, and drive tuning wins over azimuth tuning.
+5. **Copy the gains you settle on back** into `pidfproperties.json` (module gains) or your `SwerveDriveConfig` (drive-to-pose controllers). Live values are not saved and are gone on the next code restart.
+
+`swerve` in these paths is the telemetry name from `withTelemetry("swerve", ...)`.
+
+| Key (under `Tuning/swerve/`)                 | What it does                                                                        | Unit you type            |
+| -------------------------------------------- | ----------------------------------------------------------------------------------- | ------------------------ |
+| `modules/drive/enabled`                      | Drive tuning: drive every module at `modules/drive/velocity`                        | boolean                  |
+| `modules/drive/velocity`                     | Drive velocity setpoint                                                             | meters per second        |
+| `modules/drive/inplace`                      | Point the modules tangent to the robot, so a positive velocity spins it in place (counter-clockwise) instead of driving straight | boolean |
+| `modules/drive/feedback/p`, `/i`, `/d`       | Drive motor PID (`drive.p`/`i`/`d` in `pidfproperties.json`)                        | same as the JSON         |
+| `modules/drive/feedforward/s`, `/v`, `/a`    | Drive motor feedforward (`drive.s`/`v`/`a`)                                         | same as the JSON         |
+| `modules/azimuth/enabled`                    | Azimuth tuning: point every module at `modules/azimuth/angle`                       | boolean                  |
+| `modules/azimuth/angle`                      | Azimuth angle setpoint                                                              | degrees                  |
+| `modules/azimuth/feedback/p`, `/i`, `/d`     | Azimuth motor PID (`angle.p`/`i`/`d`)                                               | same as the JSON         |
+| `modules/azimuth/feedforward/s`, `/v`, `/a`  | Azimuth motor feedforward (`angle.s`/`v`/`a`)                                       | same as the JSON         |
+| `autoalign/enabled`                          | Auto-align tuning: drive to `autoalign/setpoint/*` with the drive-to-pose controllers | boolean                |
+| `autoalign/setpoint/x`, `/y`, `/rot`         | Auto-align target pose (field relative, blue origin)                                | meters, meters, degrees  |
+| `autoalign/translation/p`, `/i`, `/d`        | Translation controller (see [drive to a pose](drive-to-a-pose.md))                  | per meter of error       |
+| `autoalign/rotation/p`, `/i`, `/d`           | Rotation controller                                                                 | per radian of error      |
+
+{% hint style="warning" %}
+**The units you type are not the units you read back.** YAMS' tunable fields use the units people think in: **degrees** and **RPM** for rotating mechanisms, **meters** and **meters per second** for linear ones (a swerve drive wheel is linear, so its velocity setpoint is in m/s). The read-only telemetry it publishes next to them, under `Mechanisms/swerve/...`, is in **rotations** and **rotations per second** (meters and m/s for linear measurements). So an azimuth setpoint of `90` (degrees) shows up as a `mechanism/position` of `0.25` (rotations). Check which table you're looking at before deciding a loop is "off by 360."
+{% endhint %}
+
+| Quantity                           | Tunable (under `Tuning/`) | Read-only telemetry (under `Mechanisms/`) |
+| ---------------------------------- | ------------------------- | ----------------------------------------- |
+| Angular position                   | degrees                   | rotations                                 |
+| Angular velocity                   | RPM                       | rotations per second                      |
+| Linear position                    | meters                    | meters                                    |
+| Linear velocity                    | meters per second         | meters per second                         |
+| Gyro heading, absolute encoder     | n/a                       | degrees                                   |
+
+{% hint style="info" %}
+The example README lists one known issue for this release: dashboard auto-align only drives correctly while the robot faces 0° (away from the blue driver station). Zero the gyro facing 0° before enabling `autoalign/enabled`. The `driveToPose` commands themselves are not affected.
+{% endhint %}

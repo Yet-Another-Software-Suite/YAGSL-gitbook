@@ -71,6 +71,14 @@ above) and watch `Mechanisms/swerve/gyro`.
 
 See the [gyroscope reference](../reference/hardware/gyroscopes.md) for the full list of supported `gyro.type` values.
 
+{% hint style="info" %}
+If the gyro is mounted on its side, so that turning the robot shows up as the sensor's roll or pitch, set `gyroAxis` to `roll` or `pitch` first and then run this check. `gyroInvert` is applied to the heading after the axis is chosen. Both are ignored for a [`custom` gyro](use-a-custom-gyro.md), which sets them in Java instead.
+{% endhint %}
+
+{% hint style="warning" %}
+Re-run this check after updating to YAGSL 2027, especially with a Redux Canandgyro. Older releases inverted a Canandgyro's heading twice; inversion is now applied exactly once, by `gyroInvert`, so a config that compensated for the old behavior needs `gyroInvert` flipped.
+{% endhint %}
+
 ## 3. Spin test — catch drive motor inversion and module swaps
 
 Still with the robot lifted off the ground, deploy code and drive with a joystick input that

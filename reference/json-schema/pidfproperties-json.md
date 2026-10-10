@@ -1,8 +1,8 @@
 # modules/pidfproperties.json (and pidfproperties_sim.json)
 
 Default closed-loop PID + feedforward gains shared by every module. Parsed into
-`swervelib.parser.json.PIDFPropertiesJson` (each of `drive`/`angle` is a
-`swervelib.parser.PIDFConfig`).
+`swervelib.core.parser.json.PIDFPropertiesJson` (each of `drive`/`angle` is a
+`swervelib.core.parser.PIDFConfig`).
 
 ```json
 {
@@ -33,7 +33,7 @@ Both `drive` and `angle` are required top-level keys.
 ## `pidfproperties_sim.json`
 
 Optional. If present, `SwerveParser` uses it instead of `pidfproperties.json` whenever
-`RobotBase.isSimulation()` is `true` — same shape as above. Use it to tune simulation gains
+`RobotBase.isSimulation()` is `true`. It has the same shape as above. Use it to tune simulation gains
 separately from your real robot's gains, without needing to swap files by hand.
 
 {% hint style="warning" %}

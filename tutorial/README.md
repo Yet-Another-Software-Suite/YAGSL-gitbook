@@ -13,7 +13,9 @@ expect this tutorial to take about 30 minutes plus PID tuning time.
 
 ## Prerequisites
 
-* A WPILib **Command-Based Robot (Java)** project (new or existing).
+* WPILib 2027 (`2027_alpha7`) installed, and a WPILib Java robot project (new or existing) that uses
+  either Commands v2 or Commands v3. YAGSL supports both, see [Install YAGSL](02-install-yagsl.md).
+* A SystemCore robot controller.
 * Your swerve modules are physically assembled and wired (motors, absolute encoders, gyroscope all
   on the robot).
 * You know how to deploy code to your robot and open a driver dashboard (Shuffleboard, Elastic, or
@@ -30,15 +32,15 @@ as an alternative. YAGSL supports a much wider range of hardware and mixes vendo
 
 1. [Gather your robot information](01-gather-your-robot-information.md) — collect the CAN IDs,
    gear ratios, and module locations you'll need before you touch any software.
-2. [Install YAGSL](02-install-yagsl.md) — add the YAGSL vendordep and any hardware vendordeps your
-   robot needs.
+2. [Install YAGSL](02-install-yagsl.md): add the YAGSL vendordep for your command framework, the
+   YAMS vendordep it requires, and the vendordeps for the hardware your robot has.
 3. [Generate your configuration](03-generate-your-configuration.md) — use
    [config.yagsl.com](https://config.yagsl.com) to turn your robot information into a config
    directory.
 4. [Verify and calibrate your hardware](04-verify-and-calibrate-hardware.md) — confirm every motor,
    encoder, and gyro reports direction correctly, and capture absolute encoder offsets.
-5. [Deploy and drive](05-deploy-and-drive.md) — wire up `SwerveParser` in a subsystem, bind your
-   controller, and take your robot for its first drive.
+5. [Deploy and drive](05-deploy-and-drive.md): wire up `SwerveParser` in a subsystem (Commands v2)
+   or mechanism (Commands v3), bind your controller, and take your robot for its first drive.
 
 Once you're driving, see the **How-to Guides** section for tuning PIDF gains, diagnosing drift, and
 other tasks you'll come back to as you keep developing.

@@ -10,7 +10,7 @@ Most robot code never needs this page. `SwerveDrive`, `SwerveModule`, and YAMS's
 configuration. Reach for `createSwerveDriveDevices` when you need to call a vendor-specific
 method (a CTRE `TalonFXConfigurator` option, a REV `SparkMax` signal, a `CANcoder`-specific
 setting) that `SmartMotorController` doesn't expose, or when you need real hardware, not a
-wrapper, for something like MegaTag2 vision fusion (see the example below).
+wrapper, for something like gyro angular rates (see the example below).
 {% endhint %}
 
 `SwerveParser.createSwerveDrive(config)` hands you back a fully-built `SwerveDrive`. Everything
@@ -21,15 +21,37 @@ hardware, but also gives you the raw vendor objects it created along the way, al
 
 ## 1. Call `createSwerveDriveDevices` instead of `createSwerveDrive`
 
+{% tabs %}
+{% tab title="Commands v2" %}
 ```java title="SwerveDriveSubsystem.java"
-import swervelib.parser.SwerveParser;
-import swervelib.parser.SwerveParser.SwerveDriveDevices;
+import swervelib.commands2.SwerveParser;
+import swervelib.core.parser.SwerveParser.SwerveDriveDevices;
+import yams.commands2.swerve.SwerveDrive;
 
 SwerveParser.parse(new File(Filesystem.getDeployDirectory(), "swerve/base"));
-SwerveDriveDevices devices = SwerveParser.createSwerveDriveDevices(cfg);
+SwerveDriveDevices<SwerveDrive> devices = SwerveParser.createSwerveDriveDevices(cfg);
 
 drive = devices.swerveDrive();
 ```
+{% endtab %}
+
+{% tab title="Commands v3" %}
+```java title="SwerveDriveMechanism.java"
+import swervelib.commands3.SwerveParser;
+import swervelib.core.parser.SwerveParser.SwerveDriveDevices;
+import yams.commands3.swerve.SwerveDrive;
+
+SwerveParser.parse(new File(Filesystem.getDeployDirectory(), "swerve/base"));
+SwerveDriveDevices<SwerveDrive> devices = SwerveParser.createSwerveDriveDevices(cfg);
+
+drive = devices.swerveDrive();
+```
+{% endtab %}
+{% endtabs %}
+
+`SwerveDriveDevices` and `SwerveModuleDevices` are nested in the command framework agnostic
+`swervelib.core.parser.SwerveParser`; the `SwerveParser` you call is still the one from
+`swervelib.commands2` or `swervelib.commands3`, matching your vendordep.
 
 {% hint style="danger" %}
 Call **either** `createSwerveDrive(...)` **or** `createSwerveDriveDevices(...)` for a given
@@ -40,28 +62,39 @@ same ID).
 
 ## 2. Read the devices back out
 
-`SwerveDriveDevices` is a record with three components:
+`SwerveDriveDevices<D>` is a record with three components:
 
 | Component     | Type                     | Notes                                                                                        |
 | -------------- | ------------------------ | ---------------------------------------------------------------------------------------------- |
-| `swerveDrive`  | `SwerveDrive`            | The same object `createSwerveDrive(...)` would have returned. Use it exactly as normal.        |
-| `gyro`         | `Object`                 | The raw gyro device (e.g. a CTRE `Pigeon2`), or `null` if `gyro.type` is `"custom"`. See below. |
+| `swerveDrive`  | `D` (your `SwerveDrive`) | The same object `createSwerveDrive(...)` would have returned: `yams.commands2.swerve.SwerveDrive` or `yams.commands3.swerve.SwerveDrive`. Use it exactly as normal. |
+| `gyro`         | `Object`                 | The raw gyro device, or `null` if `gyro.type` is `"custom"`. See the table below.              |
 | `modules`      | `SwerveModuleDevices[]`  | One entry per module, in the same order as the `modules` array in `swervedrive.json`.          |
+
+The gyro object depends on `gyro.type`:
+
+| `gyro.type`           | Raw device                                        |
+| --------------------- | ------------------------------------------------- |
+| `pigeon2_can`         | CTRE `com.ctre.phoenix6.hardware.Pigeon2`         |
+| `canandgyro_can`      | Redux `com.reduxrobotics.canandgyro.Canandgyro`   |
+| `navx3_can`           | Studica `com.studica.frc.Navx` (not usable yet: StudicaLib has no `2027_alpha7` build) |
+| `systemcore_internal` | WPILib `org.wpilib.hardware.imu.OnboardIMU`       |
+| `custom`              | `null`                                            |
 
 Each `SwerveModuleDevices` is in turn:
 
 | Component         | Type     | Notes                                                                                                                                     |
 | ------------------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `drive`             | `Object` | Raw drive motor controller (e.g. a REV `SparkMax`/`SparkFlex`, or a CTRE `TalonFX`/`TalonFXS`).                                          |
+| `drive`             | `Object` | Raw drive motor controller (a REV `SparkMax`/`SparkFlex`, a CTRE `TalonFX`/`TalonFXS`, or a Thrifty `Nova`).                              |
 | `azimuth`           | `Object` | Raw azimuth/angle motor controller.                                                                                                     |
-| `absoluteEncoder`   | `Object` | Raw absolute encoder device: a separate device (e.g. `CANcoder`, `AnalogEncoder`, `DutyCycleEncoder`), or the same object as `azimuth` if the encoder is attached to the azimuth controller. |
+| `absoluteEncoder`   | `Object` | Raw absolute encoder device. For a separate device, that device (`CANcoder`, `Canandmag`, WPILib `AnalogEncoder`/`DutyCycleEncoder`, ...). For an `_attached` encoder, the vendor's accessor for it rather than a second device: the SPARK's absolute encoder or analog sensor object on REV, and on a Nova just the `FeedbackSensorType.ABS` marker (read the encoder through the `Nova` in `azimuth`). |
 
 Cast each `Object` to whatever vendor type you know it to be from your `swervedrive.json`/module
 JSON `type` strings (see [Device Type Strings](../reference/json-schema/device-types.md)):
 
 ```java
-import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.hardware.TalonFX;
+import swervelib.core.parser.SwerveParser.SwerveModuleDevices;
 
 SwerveModuleDevices frontLeft = devices.modules()[0];
 
@@ -78,17 +111,24 @@ module in a loop can throw `ClassCastException` if the vendors aren't actually u
 per-module against what that module's JSON actually specifies.
 {% endhint %}
 
-## 3. Example: full 3-axis gyro data for MegaTag2
+{% hint style="info" %}
+YAGSL only loads a vendor's classes when your JSON uses that vendor's devices, but your own cast
+is ordinary Java: the vendor library you cast to (Phoenix 6, REVLib, ReduxLib, ThriftyLib, ...)
+has to be installed as a vendordep in your project.
+{% endhint %}
 
-`SwerveDrive.getGyroAngle()` only ever gives you yaw, which is genuinely all MegaTag2 requires
-(see [How to use a custom gyro](use-a-custom-gyro.md#optional-angular-velocity-for-skew-correction)
-for the same point applied to skew correction). But if your gyro is a full IMU and you'd like to
-feed a vision coprocessor real roll and pitch too, you need the raw device, not the wrapped one:
+## 3. Example: gyro angular rates for vision
+
+`SwerveDrive.getGyroRotation3d()` already gives you the robot's full attitude (roll, pitch and
+yaw, with `gyroAxis` and `gyroInvert` applied), so you don't need the raw device for orientation.
+What YAMS doesn't expose is the gyro's angular *rates*. If you'd like to feed a vision coprocessor
+real roll, pitch and yaw rates (for example for MegaTag2), you need the raw device:
 
 ```java title="SwerveDriveSubsystem.java"
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.hardware.Pigeon2;
-import edu.wpi.first.units.measure.AngularVelocity;
+import org.wpilib.math.geometry.Rotation3d;
+import org.wpilib.units.measure.AngularVelocity;
 
 private Pigeon2 gyro;
 private StatusSignal<AngularVelocity> gyroX;
@@ -97,7 +137,7 @@ private StatusSignal<AngularVelocity> gyroZ;
 
 public SwerveDriveSubsystem() {
   // ... parse and build cfg as usual ...
-  SwerveDriveDevices devices = SwerveParser.createSwerveDriveDevices(cfg);
+  SwerveDriveDevices<SwerveDrive> devices = SwerveParser.createSwerveDriveDevices(cfg);
   drive = devices.swerveDrive();
 
   gyro = (Pigeon2) devices.gyro();
@@ -107,20 +147,26 @@ public SwerveDriveSubsystem() {
 }
 
 public Rotation3d getGyroRotation3d() {
-  return gyro.getRotation3d(); // full roll/pitch/yaw, not just the yaw SwerveDrive tracks
+  return drive.getGyroRotation3d(); // robot attitude, already corrected for axis and inversion
 }
 ```
 
-Then hand that to your vision coprocessor's orientation input the same way you would the
-yaw-only version, for example YALL's `LimelightSettings.withRobotOrientation(...)`. Whether the
-extra roll/pitch actually improves your pose estimate depends on your camera mount and how noisy
+Then hand the attitude and rates to your vision coprocessor's orientation input. Whether the extra
+roll/pitch data actually improves your pose estimate depends on your camera mount and how noisy
 that IMU data is; it isn't automatically better than yaw-only, just more complete.
 
 {% hint style="info" %}
-This pattern is vendor-specific: `getRotation3d()` and per-axis `StatusSignal`s are CTRE Pigeon2
-methods. A different gyro's raw device exposes full orientation and angular velocity differently,
-or not at all, in which case yaw-only (from `SwerveDrive.getGyroAngle()`) is what you have, and
-that's fine, it's all MegaTag2 needs anyway.
+This pattern is vendor-specific: per-axis `StatusSignal`s are CTRE Pigeon2 methods. A different
+gyro's raw device exposes angular velocity differently, or not at all, in which case the attitude
+from `SwerveDrive.getGyroRotation3d()` is what you have, and that's fine: yaw is all MegaTag2
+actually requires.
+{% endhint %}
+
+{% hint style="warning" %}
+The raw device's own readings (`gyro.getRotation3d()`, `gyro.getYaw()`, ...) are **not** corrected
+for `gyroAxis`, `gyroInvert` or a zeroed heading, and they don't follow the simulated robot in
+simulation. Prefer `drive.getGyroRotation3d()` for orientation and keep the raw device for what
+only it can give you.
 {% endhint %}
 
 ## 4. Handle a `custom` gyro
@@ -134,5 +180,6 @@ scope wherever you built it; there's nothing to retrieve here.
 
 `SwerveModuleDevices`/`SwerveDriveDevices` are deliberately vendor-agnostic. YAGSL supports
 mixing CTRE, REV, ThriftyBot, AndyMark, and Redux hardware across modules (see
-[Supported Hardware](../reference/hardware/README.md)), so there's no single common supertype to
-return instead of `Object`. The cast is the price of that flexibility.
+[Supported Hardware](../reference/hardware/README.md)), and loads each vendor's library by
+reflection only when your JSON uses it, so there's no single common supertype to return instead of
+`Object`. The cast is the price of that flexibility.

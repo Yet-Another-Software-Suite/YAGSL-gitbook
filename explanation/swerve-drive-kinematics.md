@@ -42,18 +42,24 @@ This is not a complete list and will grow over time.
 
 ## How does a Swerve Drive work in code?
 
-Swerve Drives move each module to a specific angle determined by the direction you want to go and heading you want to face. For FRC we can get these values by hand by calculating the kinematics of the robot, or use [`SwerveDriveKinematics`](https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/kinematics/SwerveDriveKinematics.html), which uses the module locations to determine what the rotation and speed of each wheel should be given a [`ChassisSpeeds`](https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/kinematics/ChassisSpeeds.html) object, and returns a [`SwerveModuleState`](https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/kinematics/SwerveModuleState.html) array. The `SwerveModuleState` can then be used to set the angle/azimuth and speed corresponding to each Swerve Module to go in the desired direction while facing the desired heading.
+Swerve Drives move each module to a specific angle determined by the direction you want to go and heading you want to face. For FRC we can get these values by hand by calculating the kinematics of the robot, or use WPILib's `SwerveDriveKinematics` (`org.wpilib.math.kinematics`), which uses the module locations to determine what the rotation and speed of each wheel should be given a `ChassisVelocities` object, and returns a `SwerveModuleVelocity` array. The `SwerveModuleVelocity` can then be used to set the angle/azimuth and speed corresponding to each Swerve Module to go in the desired direction while facing the desired heading.
 
 {% hint style="info" %}
-YAMS's `SwerveDrive` builds and manages `SwerveDriveKinematics`, `SwerveModuleState`, and odometry for you internally based on the module locations in your JSON config. The illustration below shows what it's doing under the hood — useful for debugging, not something you need to write yourself.
+WPILib 2027 renamed these classes and moved them from `edu.wpi.first.*` to `org.wpilib.*`. `ChassisSpeeds` is now `ChassisVelocities`, and `SwerveModuleState` is now `SwerveModuleVelocity`. If you are reading older swerve code or tutorials, they are the same concepts under the old names.
+{% endhint %}
+
+{% hint style="info" %}
+YAMS's `SwerveDrive` builds and manages `SwerveDriveKinematics`, `SwerveModuleVelocity`, and odometry for you internally based on the module locations in your JSON config. The illustration below shows what it's doing under the hood. It is useful for debugging, not something you need to write yourself.
 {% endhint %}
 
 ### `SwerveDriveKinematics`
 
 <pre class="language-java" data-title="SwerveDrive.java" data-line-numbers data-full-width="false"><code class="lang-java">// Import relevant classes.
-import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.util.Units;
+import static org.wpilib.units.Units.Inches;
+import static org.wpilib.units.Units.Meters;
+
+import org.wpilib.math.geometry.Translation2d;
+import org.wpilib.math.kinematics.SwerveDriveKinematics;
 
 // Illustrative example of what YAMS builds internally from your module locations.
 public class SwerveDrive {
@@ -67,11 +73,12 @@ public class SwerveDrive {
         // 12.5in from center of robot to center of wheel.
         // 12.5in is converted to meters to work with object.
         // Translation2d(x,y) == Translation2d(front, left)
-<strong>        kinematics = new SwerveDriveKinematics(
-</strong><strong>            new Translation2d(Units.inchesToMeters(12.5), Units.inchesToMeters(12.5)), // Front Left
-</strong><strong>            new Translation2d(Units.inchesToMeters(12.5), Units.inchesToMeters(-12.5)), // Front Right
-</strong><strong>            new Translation2d(Units.inchesToMeters(-12.5), Units.inchesToMeters(12.5)), // Back Left
-</strong><strong>            new Translation2d(Units.inchesToMeters(-12.5), Units.inchesToMeters(-12.5))  // Back Right
+<strong>        double offset = Inches.of(12.5).in(Meters);
+</strong><strong>        kinematics = new SwerveDriveKinematics(
+</strong><strong>            new Translation2d(offset, offset),   // Front Left
+</strong><strong>            new Translation2d(offset, -offset),  // Front Right
+</strong><strong>            new Translation2d(-offset, offset),  // Back Left
+</strong><strong>            new Translation2d(-offset, -offset)  // Back Right
 </strong><strong>        );
 </strong>    }
 }
@@ -81,20 +88,21 @@ public class SwerveDrive {
 The order defines what the output order of module angle/azimuth's and speeds will be! This is exactly why each module JSON file has a `location` field — see the [JSON Schema reference](../reference/json-schema/module-json.md).
 {% endhint %}
 
-### `SwerveModuleState`
+### `SwerveModuleVelocity`
 
-`SwerveDriveKinematics` is used to generate the `SwerveModuleState` of each module in the given order — the example below shows how you can do this in a `drive()` function given a `ChassisSpeeds` object.
+`SwerveDriveKinematics` is used to generate the `SwerveModuleVelocity` of each module in the given order. The example below shows how you can do this in a `drive()` function given a `ChassisVelocities` object.
 
-`SwerveModuleState` has 2 properties reflecting the properties of a Swerve Module: `angle` and `speedMetersPerSecond`. The goal is to set the correct swerve module (based on the order given at construction of the `SwerveDriveKinematics` object) to the angle and speed given in the `SwerveModuleState`.
+`SwerveModuleVelocity` has 2 properties reflecting the properties of a Swerve Module: `angle` and `velocity` (in meters per second). The goal is to set the correct swerve module (based on the order given at construction of the `SwerveDriveKinematics` object) to the angle and velocity given in the `SwerveModuleVelocity`.
 
 <pre class="language-java" data-title="SwerveDrive.java" data-line-numbers data-full-width="false"><code class="lang-java">// Simple drive function
 public void drive()
 {
-    // Create test ChassisSpeeds going X = 14in, Y=4in, and spins at 30deg per second.
-<strong>    ChassisSpeeds testSpeeds = new ChassisSpeeds(Units.inchesToMeters(14), Units.inchesToMeters(4), Units.degreesToRadians(30));
+    // Create test ChassisVelocities going X = 14in per second, Y = 4in per second, and spinning at 30deg per second.
+    // ChassisVelocities takes meters per second and radians per second.
+<strong>    ChassisVelocities testVelocities = new ChassisVelocities(Inches.of(14).in(Meters), Inches.of(4).in(Meters), Math.toRadians(30));
 </strong>
-    // Get the SwerveModuleStates for each module given the desired speeds.
-<strong>    SwerveModuleState[] swerveModuleStates = kinematics.toSwerveModuleStates(testSpeeds);
+    // Get the SwerveModuleVelocity for each module given the desired velocities.
+<strong>    SwerveModuleVelocity[] moduleVelocities = kinematics.toSwerveModuleVelocities(testVelocities);
 </strong><strong>    // Output order is Front-Left, Front-Right, Back-Left, Back-Right
 </strong>}
 </code></pre>
@@ -105,9 +113,9 @@ Swerve Drive code does not work without [`SwerveDriveOdometry`](https://github.w
 
 ### `SwerveDriveOdometry`
 
-Life isn't that easy — you have to keep continuous track of the robot's current positioning, specifically the **heading**, **speed**, and **module positions**, collectively known as **odometry**. This is the only way to correctly generate usable `SwerveModuleState`s.
+Life isn't that easy. You have to keep continuous track of the robot's current positioning, specifically the **heading**, **speed**, and **module positions**, collectively known as **odometry**. This is the only way to correctly generate usable `SwerveModuleVelocity`s.
 
-Odometry must be updated every single loop, just like a subsystem's `periodic()`. YAMS's `SwerveDrive` does this for you as part of its own periodic update — you don't need to call an odometry update method yourself, but understanding *why* it must happen every loop is essential for debugging drift and lag.
+Odometry must be updated every single loop, just like a subsystem's `periodic()`. YAMS's `SwerveDrive` does this for you inside `drive.updateTelemetry()`, which is why your subsystem (Commands v2) or robot class (Commands v3) must call it every loop. You don't need to call a separate odometry update method yourself, but understanding *why* it must happen every loop is essential for debugging drift and lag.
 
 {% hint style="info" %}
 `SwerveDriveOdometry` can be replaced by `SwerveDrivePoseEstimator`, which additionally fuses vision measurements — this is what YAMS uses. See [Telemetry, Simulation & Vision](telemetry-and-vision.md).

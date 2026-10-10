@@ -12,26 +12,34 @@ To run these tests quickly and effectively, use the following (or a variation of
 
 {% code title="RobotContainer.java" %}
 ```java
-SwerveDriveSubsystem drivebase;
+SwerveDriveSubsystem swerve;
 CommandXboxController driverXbox;
 
-// Applies deadbands and inverts controls because joysticks
-// are back-right positive while robot controls are front-left positive.
-// Left stick controls translation, right stick controls the desired
-// heading directly (NOT angular rotation).
+// Xbox sticks read negative when pushed forward/left, while robot controls are
+// front-left positive, so every axis is negated.
+// Left stick controls translation, right stick points the desired
+// heading directly (NOT angular velocity).
 SwerveInputStream driveDirectAngle =
-    new SwerveInputStream(drivebase.getSwerveDrive(),
-                          () -> -driverXbox.getLeftY(),
-                          () -> -driverXbox.getLeftX(),
-                          () -> -driverXbox.getRightX(),
-                          () -> -driverXbox.getRightY())
-        .withAllianceRelativeControl();
+    swerve.getAngularVelocityStream(() -> -driverXbox.getLeftY(),
+                                    () -> -driverXbox.getLeftX(),
+                                    () -> -driverXbox.getRightX())
+          .withControllerHeadingAxis(() -> -driverXbox.getRightX(),
+                                     () -> -driverXbox.getRightY())
+          .withHeadingControl(() -> true)
+          .withDeadband(0.05)
+          .withAllianceRelativeControl();
 
-drivebase.setDefaultCommand(drivebase.drive(driveDirectAngle));
+swerve.setDefaultCommand(swerve.driveFieldRelative(driveDirectAngle));
 ```
 {% endcode %}
 
-This uses the four-argument `SwerveInputStream(drive, x, y, headingX, headingY)` constructor, which drives directly to a heading computed from the right stick instead of an angular velocity — the same "point the stick where you want the robot to face" behavior the old `SwerveController.getTargetSpeeds()` heading-hold path provided. If you're using the two-argument angular-velocity constructor instead, the steps below are identical; only the exact symptom description changes slightly.
+`getAngularVelocityStream(x, y, rot)` and `driveFieldRelative(stream)` are the two small helpers from the YAGSL `commands2` example's `SwerveDriveSubsystem`: the first returns `SwerveInputStream.of(drive, x, y, rot)` and the second runs `drive.setFieldRelativeChassisSpeeds(stream.get())` every loop. On Commands v3, use the `commands3` example's `HeadingTeleop` opmode, which builds the same stream and drives it from a `while (true)` coroutine.
+
+`withControllerHeadingAxis(headingX, headingY)` plus `withHeadingControl(() -> true)` makes the robot turn to face wherever the right stick points instead of spinning at an angular velocity, the same "point the stick where you want the robot to face" behavior the old `SwerveController.getTargetSpeeds()` heading-hold path provided. Heading control needs a rotation controller on the drive (`SwerveDriveConfig.withRotationController(...)`). If you leave `withHeadingControl` off and drive with the angular-velocity stream instead, the steps below are identical; only the exact symptom description changes slightly.
+
+{% hint style="info" %}
+A stick heading is field relative, not alliance relative. If you're testing from the red alliance wall, flip both heading axes (multiply them by `-1`), as the `commands2` example's `RobotContainer` does.
+{% endhint %}
 
 ## The eight steps
 
@@ -46,10 +54,10 @@ This uses the four-argument `SwerveInputStream(drive, x, y, headingX, headingY)`
 {% endhint %}
 
 {% hint style="warning" %}
-You are not expected to complete all of these steps to get a functioning swerve drive — somewhere along the way your issue should disappear.
+You are not expected to complete all of these steps to get a functioning swerve drive. Somewhere along the way your issue should disappear.
 {% endhint %}
 
-1. Start by setting `gyroInvert` in `swervedrive.json` to `false` **AND** `drive.inverted` to `false` in every module JSON.
+1. Start by setting `gyroInvert` in `swervedrive.json` to `false` **AND** `inverted.drive` to `false` in every module JSON.
 2. THEN set `gyroInvert` to `true`.
 3. THEN invert all of the drive motors in the module JSONs by setting `inverted.drive` to `true`.
 4. THEN set `gyroInvert` back to `false`.

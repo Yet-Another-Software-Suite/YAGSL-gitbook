@@ -13,12 +13,16 @@ etc.). Don't assume your numbers match another team's example.
 
 | Feature | Notes |
 |---|---|
-| Gyroscope model and connection | e.g. Pigeon 2.0 on CAN, NavX over USB/SPI/I2C, CANandGyro on CAN. The connection method matters — a NavX over USB is a different config than one on the MXP (SPI). |
-| Drive motor + controller for each module | e.g. Kraken X60 on TalonFX, NEO on SparkMAX, etc. |
+| Gyroscope model and connection | e.g. Pigeon 2.0 on CAN, Canandgyro on CAN, NavX3 on CAN (not usable with YAGSL 2027 yet, because StudicaLib has no `2027_alpha7` build), or the IMU built into the SystemCore (no wiring or CAN ID needed). |
+| Drive motor + controller for each module | e.g. Kraken X60 on TalonFX, NEO on SparkMAX, NEO on a Thrifty Nova, etc. |
 | Angle/steering motor + controller for each module | Same as above, per module. |
-| Absolute encoder model and connection for each module | e.g. CANcoder on CAN, REV Through Bore on a data port, attached to a SparkMAX analog/duty-cycle port. |
-| CAN bus name | `rio` on a roboRIO, unless you're running CTRE devices on a [CANivore](https://store.ctr-electronics.com/canivore/) (use the CANivore's configured name). Starting with the 2027 SystemCore, name whichever of its several native CAN buses each device is actually on. |
+| Absolute encoder model and connection for each module | e.g. CANcoder on CAN, a REV Through Bore attached to the angle motor controller's data port, or an encoder wired to a SystemCore DIO or analog port (record the channel). |
+| CAN bus of every CAN device | The SystemCore has several CAN buses, so record which one each device is wired to: `can_s0` (bus `0`, the default) through `can_s4` (bus `4`). CTRE devices on a [CANivore](https://store.ctr-electronics.com/canivore/) use the CANivore's configured name instead. See the note below. |
 | CAN ID / channel of every motor controller, encoder, and gyro | Get this wrong and you'll be controlling the wrong device without realizing it. |
+
+{% hint style="info" %}
+Every device's `canbus` value is read the same way, whichever vendor made it: leave it empty for `can_s0`, or enter the bus number, `0` to `4` for `can_s0` to `can_s4` (so `1` is `can_s1`), and `5` to `24` for the Motioncore buses `can_d0` to `can_d19`. Only CTRE devices also accept a CANivore name. REV and Thrifty devices only accept a bus number.
+{% endhint %}
 
 ## Physical characteristics
 

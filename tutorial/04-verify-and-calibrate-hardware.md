@@ -3,7 +3,7 @@
 Before your first drive, confirm every sensor and motor reports direction consistently, and capture each module's absolute encoder offset. Skipping this step is the single most common cause of a swerve drive that "spins out" or drives in the wrong direction.
 
 {% hint style="danger" %}
-Make sure every CAN ID is unique across your entire robot. A known failure mode: if a SparkMAX shares a CAN ID with your REV Power Distribution Hub, the SparkMAX simply won't move — with no obvious error.
+Make sure every CAN ID is unique across your entire robot, and that each device's CAN bus in your config matches the SystemCore bus it is actually wired to (an empty `canbus` means `can_s0`). A known failure mode: if a SparkMAX shares a CAN ID with your REV Power Distribution Hub, the SparkMAX simply won't move, with no obvious error.
 {% endhint %}
 
 ## Physically label everything
@@ -18,18 +18,18 @@ Label each motor controller, encoder, and gyroscope with its CAN ID/channel and 
 
 ## Check your motors
 
-Deploy your code with the config from step 3, then — **with the robot disabled** — spin each motor by hand and watch AdvantageScope's `Mechanisms/swerve` NetworkTables tree.
+Deploy your code with the config from step 3, then, **with the robot disabled**, spin each motor by hand and watch AdvantageScope's `Mechanisms/swerve` NetworkTables tree. These values are published by the swerve subsystem from [step 5](05-deploy-and-drive.md), so if your project doesn't have one yet, add it first and come back. The `swerve` in the path is the name that code passes to `SwerveDriveConfig.withTelemetry("swerve", ...)`.
 
 <figure><img src="../.gitbook/assets/yagsl-telemetry.png" alt=""><figcaption><p>The Mechanisms/swerve tree in AdvantageScope — each module's drive/azimuth telemetry and raw absolute encoder are visible per-module.</p></figcaption></figure>
 
-* Rotate the **drive** wheel forward (CCW as viewed from above). That module's `modules/<name>/drive/mechanism/position` should **increase**. If it doesn't, invert the drive motor.
-* Rotate the **angle** mechanism CCW (viewed from above). Both `modules/<name>/azimuth/mechanism/position` (relative) and `modules/<name>/encoder` (absolute) should **increase**. If either doesn't, invert that motor or encoder respectively.
+* Rotate the **drive** wheel forward (CCW as viewed from above). That module's `modules/<name>/drive/measurement/position` (the distance the wheel has rolled, in meters) should **increase**. If it doesn't, invert the drive motor.
+* Rotate the **angle** mechanism CCW (viewed from above). Both `modules/<name>/azimuth/mechanism/position` (relative, in rotations) and `modules/<name>/encoder` (absolute, in degrees) should **increase**. If either doesn't, invert that motor or encoder respectively.
 * Rotate the entire **robot** CCW. `Mechanisms/swerve/gyro` should **increase**. If not, invert the gyroscope.
 
 See [Determine Inversion](../how-to/determine-inversion.md) for the full decision procedure if any of these don't behave as expected — or work through [config.yagsl.com/guide](https://config.yagsl.com/guide), which walks through this same alignment process interactively.
 
 {% hint style="warning" %}
-If you're using a hardware vendor client to poke at motors/encoders directly, the roboRIO must not be active on the CAN bus at the same time. The most reliable way to do this without disturbing CAN bus termination is to briefly pull the roboRIO's breaker/fuse on the PDP, then power-cycle the robot.
+If you're using a hardware vendor client to poke at motors/encoders directly, your robot program must not be commanding those devices at the same time. Keep the robot disabled while you use the client, and power-cycle the robot when you're done so the SystemCore and your robot program start from a clean state.
 {% endhint %}
 
 ## Capture absolute encoder offsets
