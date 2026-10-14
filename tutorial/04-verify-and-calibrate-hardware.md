@@ -127,7 +127,7 @@ With the robot lifted, command pure counterclockwise rotation and watch the modu
 
 You can also run it from the dashboard: with drive tuning on, set `Tuning/swerve/modules/drive/inplace` to `true` and give `modules/drive/velocity` a small positive speed. Every module turns tangent to the robot and it should spin counterclockwise.
 
-<figure><img src="../.gitbook/assets/yagsl-ascope-spin-swerve.png" alt="The AdvantageScope Swerve tab during drive tuning with modules/drive/inplace on: every module points tangent to the robot at plus or minus 45 degrees and drives at 1 meter per second, desired in red and current in blue, so the robot spins counterclockwise in place."><figcaption><p>The spin test from the dashboard: modules/drive/inplace on, every module tangent to the robot.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/yagsl-ascope-spin-swerve.png" alt="The AdvantageScope Swerve tab during drive tuning with modules/drive/inplace on: every module points tangent to the robot at plus or minus 45 degrees with its arrow pointing counterclockwise around the center, desired in red and current in blue, so the robot spins counterclockwise in place."><figcaption><p>The spin test from the dashboard: modules/drive/inplace on, every module tangent to the robot.</p></figcaption></figure>
 
 [Determine Inversion](../how-to/determine-inversion.md) lists every symptom and its cause.
 {% endstep %}
