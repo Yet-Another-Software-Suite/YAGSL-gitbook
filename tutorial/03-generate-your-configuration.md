@@ -5,6 +5,12 @@ web app that builds your configuration files from a guided form instead of you h
 It runs entirely in your browser, and it produces the same files for Commands v2 and Commands v3
 projects.
 
+<figure><img src="../.gitbook/assets/yagsl-config-generator.png" alt="The YAGSL config generator three ways. On a desktop: the Gyro tab of the form, with Need Help, Quick Start Guide, Upload Config, Print and Download Config buttons. On a phone: the same form in one column with every button stacked. Printed: every tab on paper, with the dropdown options listed and blank lines to write each value on."><figcaption><p>The config generator on a desktop, on a phone, and printed.</p></figcaption></figure>
+
+* **On a phone:** the whole generator works on a phone, so you can fill it in at the robot.
+* **On paper:** **Print** prints every tab, with the dropdown options listed and a blank line for each value. Fill it in by hand, then type it in later.
+* **Quick Start Guide:** **Download Config** opens the generator's Quick Start Guide, a printable checklist that takes you from the YAGSL example project, through tuning in simulation, to calibrating and tuning the real robot. It is the quickest way to spin up YAGSL; the rest of this tutorial explains the same steps in more depth.
+
 {% hint style="info" %}
 Hand-editing the JSON files is still possible and fully supported. See the
 [JSON Schema Reference](../reference/json-schema/) if you need to script config generation or tweak

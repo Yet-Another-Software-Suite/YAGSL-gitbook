@@ -18,6 +18,8 @@ If you are using a magnetic encoder ensure that the magnet is glued correctly so
 * [ ] Angle/Azimuth/Steering Motor (+ controller)
 * [ ] Absolute Encoder
 
+<figure><img src="../.gitbook/assets/yagsl-module-anatomy.png" alt="A swerve module from the side. The drive motor turns the wheel through the drive gears. The steering, or angle, motor turns the whole module through the steering gears around the steering axis. The absolute encoder sits on the steering axis and reads the module's angle, zeroed by absoluteEncoderOffset. The wheel's diameter turns rotations into meters."><figcaption><p>The parts of a swerve module and what YAGSL needs to know about each.</p></figcaption></figure>
+
 ## Review
 
 This may seem out of place, but when debugging swerve drives this comes in handy very quickly!

@@ -92,6 +92,8 @@ too. Both controllers can be tuned live from a dashboard, see
 `driveToPose(Pose2d)` never finishes on its own. It keeps correcting toward the target pose until
 something cancels it, the same way your teleop default command never finishes.
 
+<figure><img src="../.gitbook/assets/yagsl-drive-to-pose.gif" alt="An animation of a robot driving across the field to a target pose while turning to face it. The distance from the pose, from getDistanceFromPose, and the angle difference, from getAngleDifferenceFromPose, count down. When the distance is under 2 inches and the angle under 5 degrees, the until condition becomes true and the command ends."><figcaption><p>The command ends once the robot is within both tolerances.</p></figcaption></figure>
+
 {% tabs %}
 {% tab title="Commands v2" %}
 Race it against a tolerance check (or a timeout) so it actually ends:

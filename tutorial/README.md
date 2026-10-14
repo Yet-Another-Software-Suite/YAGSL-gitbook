@@ -4,6 +4,10 @@ This tutorial takes a team from a bare WPILib project to a driving swerve robot 
 the five steps in order. Each one builds on the last, and by the end your robot will be driving
 under field-relative control with a tuned configuration.
 
+{% hint style="success" %}
+**The quickest path is the config generator's Quick Start Guide.** Fill in the form at [config.yagsl.com](https://config.yagsl.com) and press **Download Config**: the Quick Start Guide opens with checklists that take you from the YAGSL example project to a tuned robot. This tutorial explains the same steps in more depth, and how to add YAGSL to a project you already have.
+{% endhint %}
+
 {% hint style="warning" %}
 Swerve drives are complicated and will not "just work" on the first try. If you've never brought up
 a swerve drive before, budget more than one sitting for this because gathering accurate information about

@@ -17,6 +17,8 @@ they now need `"canbus": "2"`.
 
 ## 1. Find the bus each device is wired to
 
+<figure><img src="../.gitbook/assets/yagsl-can-buses.png" alt="Three groups of buses. SystemCore: can_s0 is an empty canbus or 0, then can_s1 to can_s4 are 1 to 4. Motioncore: can_d0 is 5, can_d1 is 6, up to can_d19 which is 24. CANivore: its name, for example canivore. An empty canbus is can_s0 for every vendor, a number outside 0 to 24 stops the program at startup, and any other text goes to the vendor as is."><figcaption><p>Which canbus value means which bus.</p></figcaption></figure>
+
 | `canbus` value        | Bus                                                                 |
 | --------------------- | ------------------------------------------------------------------- |
 | `""` (or left out)    | SystemCore `can_s0`                                                 |

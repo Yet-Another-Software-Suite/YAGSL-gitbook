@@ -10,6 +10,8 @@ YAMS's `SwerveModule`/`SwerveModuleConfig` provide a handful of behaviors beyond
 
 Cosine compensation scales the speed of your wheel by the cosine of the angle delta between the module's current angle and its commanded angle. While a module is still rotating to its target angle, driving it at full commanded speed wastes power and skids the wheel. Scaling speed down by how far off-angle the module still is keeps the wheel's actual velocity vector closer to what was commanded.
 
+<figure><img src="../.gitbook/assets/yagsl-cosine-compensation.gif" alt="An animation of a module turning from 0 to 100 degrees. Without cosine compensation the wheel drives at full speed while it is still turning, so much of its velocity is sideways skid. With cosine compensation its speed is scaled by the cosine of how far off it is, slow while far off and full speed once it points the right way."><figcaption><p>Cosine compensation slows a module that is still turning.</p></figcaption></figure>
+
 {% hint style="warning" %}
 Cosine compensation is tuned for real hardware and can behave oddly in simulation, where the physics model doesn't reproduce the same wheel-slip behavior.
 {% endhint %}

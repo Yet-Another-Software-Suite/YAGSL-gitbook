@@ -95,6 +95,8 @@ Several runtime tuning knobs from older YAGSL versions (`setCosineCompensator`, 
 
 Once hardware and configuration issues are ruled out, tune in this order. Each step builds on the last, so redoing an earlier one (or replacing hardware like your gyro) means redoing everything after it:
 
+<figure><img src="../.gitbook/assets/yagsl-drift-tuning-order.png" alt="Four steps as a staircase: 1, drive and angle PID, until the modules track their setpoints. 2, vision standard deviations, only if vision corrects odometry. 3, discretization with withDiscretizationTime, for loop delay. 4, gyro angular velocity scale, for gyro delay. A dashed arrow says that changing an earlier step, or replacing a part such as the gyro, means redoing every step after it."><figcaption><p>The order to tune drift in.</p></figcaption></figure>
+
 1. **Drive and angle PID**: see [how to tune PIDF gains](../how-to/tune-pidf-gains.md). Do this first; nothing else is worth tuning until the modules track their setpoints well.
 2. **Vision standard deviation**, if you're using vision to help odometry: tune `SwerveDrive.setVisionMeasurementStdDevs()` mostly by guess-and-check, scaling with distance. Some teams get better stability by filtering out vision poses beyond a certain distance.
 3. **Discretization**, to compensate for system delay: `SwerveDriveConfig.withDiscretizationTime()`. See [chassis control](../explanation/chassis-control.md) for what this does and why it matters.

@@ -44,6 +44,14 @@ schema. See [Schema Changes](reference/schema-changes.md) before you do anything
 
 ## Get started
 
+The quickest way to spin up YAGSL is the [config generator](https://config.yagsl.com) and its **Quick Start Guide**. Fill in the generator's form, press **Download Config**, and the Quick Start Guide walks you through the rest, one checklist at a time: copy the YAGSL example project, drop your config into it, tune it in simulation, then calibrate and tune the real robot.
+
+The generator works on a phone too, and its **Print** button prints the whole form, so you can fill it in on paper at the robot and type it in later.
+
+<figure><img src=".gitbook/assets/yagsl-config-generator.png" alt="The YAGSL config generator three ways. On a desktop: the Gyro tab of the form, with Need Help, Quick Start Guide, Upload Config, Print and Download Config buttons. On a phone: the same form in one column with every button stacked. Printed: every tab on paper, with the dropdown options listed and blank lines to write each value on."><figcaption><p>The config generator on a desktop, on a phone, and printed.</p></figcaption></figure>
+
+The [tutorial](tutorial/README.md) covers the same ground in more detail, including adding YAGSL to a project you already have.
+
 {% embed url="https://www.youtube.com/watch?v=4Tcyn_oj_G0&list=PLdhNPDifsCMLLe5pZoyHGXrMMVxNpJOxP" %}
 
 {% content-ref url="tutorial/README.md" %}

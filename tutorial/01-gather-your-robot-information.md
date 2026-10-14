@@ -1,5 +1,9 @@
 # 1. Gather your robot information
 
+{% hint style="info" %}
+Print the [config generator](https://config.yagsl.com) with its **Print** button and take it to the robot. Every tab prints on paper with the options listed and a blank line for each value, so you can fill it in as you gather this information and type it into the website later.
+{% endhint %}
+
 YAGSL is configured entirely from information about *your* robot. There is no universal constants
 file that works for everyone. Before opening [config.yagsl.com](https://config.yagsl.com), collect
 everything in this step. Having it all on hand up front saves you from re-measuring later.
@@ -34,6 +38,8 @@ Every device's `canbus` value is read the same way, whichever vendor made it: le
 | Module locations | Distance in inches from the robot's center to each module's center, split into "front" (X) and "left" (Y) components. See below for how to measure this. |
 
 ### Measuring module locations
+
+<figure><img src="../.gitbook/assets/yagsl-module-locations.png" alt="A robot seen from above with the front up. From the center, X points to the front and Y points to the left. The front left module is at plus 12, plus 12 inches, front right at plus 12, minus 12, back left at minus 12, plus 12 and back right at minus 12, minus 12. Dimension lines show x equals 12 inches and y equals minus 12 inches to the front right module."><figcaption><p>Module locations are from the robot's center to each module's center.</p></figcaption></figure>
 
 Measure in CAD if you can, for precision; otherwise, use this technique from Team 5010:
 

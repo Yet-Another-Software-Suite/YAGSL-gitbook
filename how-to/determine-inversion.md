@@ -57,6 +57,8 @@ record the `modules/<name>/encoder` value held in that position. That's the modu
 With the robot lifted off the ground, rotate the **entire robot** counterclockwise (viewed from
 above) and watch `Mechanisms/swerve/gyro`.
 
+<figure><img src="../.gitbook/assets/yagsl-gyro-ccw.gif" alt="An animation of a robot seen from above turning 90 degrees counterclockwise, twice. On the left the gyro reading goes up to 90 degrees, which is correct, so gyroInvert stays false. On the right it goes down to minus 90 degrees, so gyroInvert must be set to true."><figcaption><p>Turn the robot counterclockwise: the gyro should go up.</p></figcaption></figure>
+
 * If it **increases**, leave `gyroInvert` alone; there's nothing to change.
 * If it **decreases**, set `gyroInvert` to `true` in `swervedrive.json`:
 
@@ -85,6 +87,8 @@ Still with the robot lifted off the ground, deploy code and drive with a joystic
 commands pure rotation (e.g. hold the rotation stick fully to one side). Watch the robot against
 AdvantageScope's Swerve widget (top-down view; see
 [Set up AdvantageScope](set-up-advantagescope.md)) and compare:
+
+<figure><img src="../.gitbook/assets/yagsl-spin-test.gif" alt="An animation of three robots seen from above, commanded to spin counterclockwise. The first spins cleanly counterclockwise with every wheel pushing the same way around: correct. The second has one wheel pushing against the others, so it spins slowly and wobbles: invert that module's drive motor. The third spins clockwise: check for a diagonal module swap first."><figcaption><p>What the spin test can look like.</p></figcaption></figure>
 
 | Symptom                                                              | Likely cause                                                                                                    |
 | ----------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |

@@ -94,6 +94,8 @@ The order defines what the output order of module angle/azimuth's and speeds wil
 
 `SwerveModuleVelocity` has 2 properties reflecting the properties of a Swerve Module: `angle` and `velocity` (in meters per second). The goal is to set the correct swerve module (based on the order given at construction of the `SwerveDriveKinematics` object) to the angle and velocity given in the `SwerveModuleVelocity`.
 
+<figure><img src="../.gitbook/assets/yagsl-kinematics.gif" alt="An animation of a robot seen from above with four modules. For each ChassisVelocities, each module's velocity is drawn as the robot's velocity plus the spin at that module, and the sum is its SwerveModuleVelocity. Driving forward, every module points forward. Driving left, every module points left. Spinning counterclockwise, every module is tangent to a circle around the center. Driving forward while spinning, each module's angle and speed differ. A table lists each module's angle and velocity."><figcaption><p>Each module's velocity is the robot's velocity plus the spin at that module.</p></figcaption></figure>
+
 <pre class="language-java" data-title="SwerveDrive.java" data-line-numbers data-full-width="false"><code class="lang-java">// Simple drive function
 public void drive()
 {
