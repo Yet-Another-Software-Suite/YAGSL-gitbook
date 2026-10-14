@@ -34,9 +34,15 @@ Run the robot program in simulation and go through live tuning once before you t
 
 <figure><img src="../.gitbook/assets/yagsl-tune-azimuth.gif" alt="An animation of every module turning from 0 to 90 degrees beside a graph of the desired and current angle. With p at 0.002 the modules turn slowly and are still short of 90 degrees. With p at 0.05 they overshoot and ring. With p at 0.03 and d at 0.0005 they turn quickly and settle. The values are only an example."><figcaption><p>Too slow, ringing, then quick and settled. The values are only an example.</p></figcaption></figure>
 
+<figure><img src="../.gitbook/assets/yagsl-ascope-azimuth-swerve.png" alt="AdvantageScope connected to the YAGSL example in simulation. The sidebar shows Mechanisms/swerve/tuning with running on, and Tuning/swerve/modules/azimuth with angle 90, enabled on and the feedback gains. The Swerve tab shows every module turned to 90 degrees, desired in red and current in blue."><figcaption><p>The real thing: azimuth tuning in AdvantageScope, every module at 90°.</p></figcaption></figure>
+
+<figure><img src="../.gitbook/assets/yagsl-ascope-azimuth-graph.png" alt="An AdvantageScope line graph of Tuning/swerve/modules/azimuth/angle stepping between 0 and 90 degrees and Mechanisms/swerve/modules/frontleft/encoder following it, settling a little short of each step."><figcaption><p>Graph Tuning/swerve/modules/azimuth/angle against a module's encoder to judge the gains.</p></figcaption></figure>
+
 **Then tune the drive.** Turn azimuth tuning off and set `modules/drive/enabled` to `true` with `modules/drive/velocity` at `2`. Zero `feedback/p`, raise `feedforward/v` until the velocity settles on 2 m/s, then add `feedback/p` until it gets there quickly and holds.
 
 <figure><img src="../.gitbook/assets/yagsl-tune-drive.gif" alt="An animation of the drive velocity against a 2 meters per second setpoint. With feedforward v at 2 and p at 0 it settles at 1.6 meters per second, below the setpoint. With v at 2.5 and p at 0 it settles on 2 meters per second. With p at 4 added it reaches 2 meters per second quickly and holds. The values are only an example."><figcaption><p>Feedforward first, then feedback. The values are only an example.</p></figcaption></figure>
+
+<figure><img src="../.gitbook/assets/yagsl-ascope-drive-graph.png" alt="An AdvantageScope line graph of Tuning/swerve/modules/drive/velocity stepping between 0 and 1.5 meters per second and Mechanisms/swerve/modules/frontleft/drive/measurement/velocity following it, overshooting to about 1.58 meters per second."><figcaption><p>Graph Tuning/swerve/modules/drive/velocity against a module's drive/measurement/velocity.</p></figcaption></figure>
 
 **Save what you find.** Values typed on the dashboard are gone the next time the robot program starts. In simulation, copy them into `pidfproperties_sim.json`, which YAGSL reads only in simulation.
 
@@ -118,6 +124,10 @@ The absolute encoder offset is what lets your swerve module remember wheel orien
 With the robot lifted, command pure counterclockwise rotation and watch the modules in AdvantageScope's Swerve view. It should spin cleanly counterclockwise.
 
 <figure><img src="../.gitbook/assets/yagsl-spin-test.gif" alt="An animation of three robots seen from above, commanded to spin counterclockwise. The first spins cleanly counterclockwise: correct. The second has one wheel pushing against the others: invert that module's drive motor. The third spins clockwise: check for a diagonal module swap first."><figcaption><p>What the spin test can look like.</p></figcaption></figure>
+
+You can also run it from the dashboard: with drive tuning on, set `Tuning/swerve/modules/drive/inplace` to `true` and give `modules/drive/velocity` a small positive speed. Every module turns tangent to the robot and it should spin counterclockwise.
+
+<figure><img src="../.gitbook/assets/yagsl-ascope-spin-swerve.png" alt="The AdvantageScope Swerve tab during drive tuning with modules/drive/inplace on: every module points tangent to the robot at plus or minus 45 degrees and drives at 1 meter per second, desired in red and current in blue, so the robot spins counterclockwise in place."><figcaption><p>The spin test from the dashboard: modules/drive/inplace on, every module tangent to the robot.</p></figcaption></figure>
 
 [Determine Inversion](../how-to/determine-inversion.md) lists every symptom and its cause.
 {% endstep %}

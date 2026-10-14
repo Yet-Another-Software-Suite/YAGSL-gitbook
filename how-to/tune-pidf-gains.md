@@ -166,7 +166,11 @@ var cfg = new SwerveDriveConfig()
 
 <figure><img src="../.gitbook/assets/yagsl-tune-azimuth.gif" alt="An animation of every module turning from 0 to 90 degrees beside a graph of the desired and current angle: too slow with a low p, overshooting and ringing with a high p, and quick and settled with a little less p plus some d. The values are only an example."><figcaption><p>Azimuth: raise p until it rings, then back off and add d. The values are only an example.</p></figcaption></figure>
 
+<figure><img src="../.gitbook/assets/yagsl-ascope-azimuth-graph.png" alt="An AdvantageScope line graph of Tuning/swerve/modules/azimuth/angle stepping between 0 and 90 degrees and Mechanisms/swerve/modules/frontleft/encoder following it, settling a little short of each step."><figcaption><p>Graph Tuning/swerve/modules/azimuth/angle against a module's encoder to judge the gains.</p></figcaption></figure>
+
 <figure><img src="../.gitbook/assets/yagsl-tune-drive.gif" alt="An animation of the drive velocity against a 2 meters per second setpoint: with feedforward v too low it settles below, with v right it settles on 2 meters per second, and adding p makes it get there quickly and hold. The values are only an example."><figcaption><p>Drive: zero the feedback, find feedforward v, then add p. The values are only an example.</p></figcaption></figure>
+
+<figure><img src="../.gitbook/assets/yagsl-ascope-drive-graph.png" alt="An AdvantageScope line graph of Tuning/swerve/modules/drive/velocity stepping between 0 and 1.5 meters per second and Mechanisms/swerve/modules/frontleft/drive/measurement/velocity following it, overshooting to about 1.58 meters per second."><figcaption><p>Graph Tuning/swerve/modules/drive/velocity against a module's drive/measurement/velocity.</p></figcaption></figure>
 
 <figure><img src="../.gitbook/assets/yagsl-live-tuning-save.png" alt="The tuning values map to the JSON: azimuth/feedback/p to angle.p, azimuth/feedback/d to angle.d, drive/feedforward/v to drive.v and drive/feedback/p to drive.p. In simulation they go into pidfproperties_sim.json, on the real robot into pidfproperties.json."><figcaption><p>Where the live values belong.</p></figcaption></figure>
 
