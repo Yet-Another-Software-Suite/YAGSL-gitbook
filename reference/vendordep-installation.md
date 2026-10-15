@@ -4,39 +4,138 @@ description: Vendor dependencies YAGSL requires and how to install them
 
 # Vendordep Installation
 
+YAGSL 2027 targets WPILib `2027_alpha7` (Java 25) on the SystemCore. It is published as **two**
+vendordeps, one per WPILib command framework. Install exactly one of them: each one declares a
+conflict with the other.
+
+| Command framework | Vendordep name        | Vendordep URL                                       |
+| ----------------- | --------------------- | --------------------------------------------------- |
+| Commands v2       | `YAGSL (Commands v2)` | `https://cdn.yassrobotics.com/yagsl_commands2.json` |
+| Commands v3       | `YAGSL (Commands v3)` | `https://cdn.yassrobotics.com/yagsl_commands3.json` |
+
+{% hint style="warning" %}
+The old `https://yet-another-software-suite.github.io/YAGSL/yagsl.json` URL (and the
+`.../YAGSL/yagsl/yagsl.json` one before it) is the 2026 vendordep. Do not use it for a 2027
+project; remove `vendordeps/yagsl.json` if you are upgrading.
+{% endhint %}
+
 ## Install YAGSL
 
-YAGSL is listed directly in the **WPILib Vendor Dependencies** panel's catalog (VS Code sidebar) — open it and click **Install** next to YAGSL, no URL required.
+### Online
 
-<figure><img src="../.gitbook/assets/modern-yagsl.png" alt=""><figcaption><p>YAGSL listed directly in the WPILib Vendor Dependencies panel.</p></figcaption></figure>
+In VS Code, run **WPILib: Manage Vendor Libraries → Install new libraries (online)** and paste the
+URL for your command framework:
 
-If your WPILib version predates YAGSL being in that catalog, install manually instead: use **Manage Vendor Libraries → Install new library (online)** and paste:
-
+{% tabs %}
+{% tab title="Commands v2" %}
 ```
-https://yet-another-software-suite.github.io/YAGSL/yagsl/yagsl.json
+https://cdn.yassrobotics.com/yagsl_commands2.json
 ```
+{% endtab %}
+
+{% tab title="Commands v3" %}
+```
+https://cdn.yassrobotics.com/yagsl_commands3.json
+```
+{% endtab %}
+{% endtabs %}
+
+To pin a project to one release, use the versioned URL instead, for example
+`https://cdn.yassrobotics.com/yagsl_commands2-2026.10.09.json`.
 
 See the [WPILib guide to installing 3rd-party libraries](https://docs.wpilib.org/en/stable/docs/software/vscode-overview/3rd-party-libraries.html#installing-libraries) for the general workflow.
 
-## Required vendor libraries
+### Offline
 
-YAGSL's own vendordep manifest currently declares these as hard requirements — Gradle will fail to build without them, even if your robot doesn't use every one of them, because YAGSL is generic across all supported hardware. Install each one from the same WPILib Vendor Dependencies panel as YAGSL:
+Every [GitHub release](https://github.com/Yet-Another-Software-Suite/YAGSL/releases) has a
+`<version>-YAGSL-Offline.zip` asset (for example `2026.10.09-YAGSL-Offline.zip`). It contains a
+`maven` folder and a `vendordeps` folder that merge into your WPILib `2027_alpha7` home folder,
+which the WPILib installer creates:
 
-| Vendor         | Required by YAGSL's manifest | Needed for                                                 |
-| -------------- | ---------------------------- | ---------------------------------------------------------- |
-| REVLib         | Yes                          | SparkMAX / SparkFlex                                       |
-| CTRE Phoenix 6 | Yes                          | TalonFX / TalonFXS / Pigeon 2 / CANcoder                   |
-| CTRE Phoenix 5 | Yes                          | (legacy CTRE device support in the wider WPILib ecosystem) |
-| StudicaLib     | Yes                          | NavX3-CAN                                                  |
-| ThriftyLib     | Yes                          | Nova motor controllers, Thrifty absolute encoders          |
+| OS            | Extract into                          |
+| ------------- | ------------------------------------- |
+| Windows       | `C:\Users\Public\wpilib\2027_alpha7`  |
+| macOS / Linux | `~/wpilib/2027_alpha7`                |
 
-{% hint style="warning" %}
-If your robot uses a **Canandgyro**, **Canandmag**, or other Redux Robotics device, add **ReduxLib** yourself from the same panel — it is not currently in YAGSL's auto-required list, even though the parser supports Redux devices.
-{% endhint %}
+{% tabs %}
+{% tab title="Windows (PowerShell)" %}
+```powershell
+Expand-Archive -Path "$HOME\Downloads\2026.10.09-YAGSL-Offline.zip" -DestinationPath "C:\Users\Public\wpilib\2027_alpha7" -Force
+```
+{% endtab %}
+
+{% tab title="macOS / Linux" %}
+```bash
+unzip -o ~/Downloads/2026.10.09-YAGSL-Offline.zip -d ~/wpilib/2027_alpha7
+```
+{% endtab %}
+{% endtabs %}
+
+Afterwards you should have `wpilib/2027_alpha7/maven/swervelib/...` and
+`wpilib/2027_alpha7/vendordeps/yagsl_commands2.json` / `yagsl_commands3.json`. Then run
+**WPILib: Manage Vendor Libraries → Install new libraries (offline)** and pick
+**YAGSL (Commands v2)** or **YAGSL (Commands v3)**.
 
 {% hint style="info" %}
-If a vendor isn't in the panel's catalog on your WPILib version, fall back to **Manage Vendor Libraries → Install new library (online)** with a URL from the vendor's own install page — see the [WPILib guide to installing 3rd-party libraries](https://docs.wpilib.org/en/stable/docs/software/vscode-overview/3rd-party-libraries.html#installing-libraries).
+The offline zip only contains YAGSL. YAMS and any vendor libraries you need have to be installed
+offline separately.
 {% endhint %}
+
+## What gets installed
+
+Both vendordeps resolve from the Maven repository at `https://cdn.yassrobotics.com/`, group
+`swervelib`:
+
+| Vendordep             | Java artifacts                    | Packages                                  |
+| --------------------- | --------------------------------- | ----------------------------------------- |
+| `yagsl_commands2.json` | `YAGSL-core` + `YAGSL-commands2` | `swervelib.core.*` + `swervelib.commands2` |
+| `yagsl_commands3.json` | `YAGSL-core` + `YAGSL-commands3` | `swervelib.core.*` + `swervelib.commands3` |
+
+These replace the single `YAGSL-java` artifact of the 2026 releases.
+
+## Required vendor libraries
+
+The only library YAGSL's vendordep requires is the matching **YAMS** vendordep. WPILib offers to
+install it when it's missing.
+
+| YAGSL vendordep        | Requires                                              | YAMS in turn requires |
+| ---------------------- | ----------------------------------------------------- | --------------------- |
+| `yagsl_commands2.json` | `https://cdn.yassrobotics.com/yams_commands2.json`    | WPILib Commands v2 (`CommandsV2.json`, from the WPILib vendor libraries) |
+| `yagsl_commands3.json` | `https://cdn.yassrobotics.com/yams_commands3.json`    | WPILib Commands v3 (`CommandsV3.json`, from the WPILib vendor libraries) |
+
+## Optional vendor libraries
+
+Hardware vendor libraries are **not** required by the vendordep anymore. YAGSL loads a vendor's
+device classes by reflection only when your JSON config uses one of that vendor's devices, so you
+install the libraries for the hardware you actually have:
+
+| Vendor library   | Install it if your config uses                                                        |
+| ---------------- | ------------------------------------------------------------------------------------- |
+| REVLib           | `sparkmax_*`, `sparkflex_*`, `splineencoder_can`, or an `_attached` encoder on a Spark |
+| CTRE Phoenix 6   | `talonfx_*`, `talonfxs_*`, `pigeon2_can`, `cancoder_can`                              |
+| ReduxLib         | `canandgyro_can`, `canandmag_can`                                                     |
+| ThriftyLib       | `nova_*`, or an `_attached` encoder on a Nova                                          |
+| *(none)*         | `systemcore_internal` (WPILib's built in `OnboardIMU`), and `_dio` / `_analog` encoders on SmartIO ports |
+
+Phoenix 5 is no longer needed for anything.
+
+{% hint style="danger" %}
+If a config uses a device whose vendor library is missing, the project still builds, but robot
+code crashes with a missing class error when `SwerveParser.createSwerveDrive(...)` creates that
+device. Install the vendor library and redeploy.
+{% endhint %}
+
+{% hint style="warning" %}
+**NavX3-CAN (`navx3_can`) and the AndyMark CAN Hex Bore encoder (`andymarkhexbore_can`) are not
+available in the 2027 builds yet.** StudicaLib and AndyMark's library have no `2027_alpha7` release,
+so YAGSL 2027 is built without their device classes. See
+[Gyroscopes](hardware/gyroscopes.md#navx3-can) and
+[Absolute Encoders](hardware/absolute-encoders.md) for what to use instead.
+{% endhint %}
+
+Use the 2027 (`2027_alpha7`) release of each vendor library, installed from the vendor's own
+vendordep URL or the WPILib Vendor Dependencies panel. See the
+[WPILib guide to installing 3rd-party libraries](https://docs.wpilib.org/en/stable/docs/software/vscode-overview/3rd-party-libraries.html#installing-libraries).
 
 You'll also want the vendor's own tuning/firmware tools installed on your development machine (not a robot-code dependency, but needed to configure/calibrate hardware):
 

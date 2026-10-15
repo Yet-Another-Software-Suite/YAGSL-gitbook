@@ -19,9 +19,9 @@ Since the 2024 season, [AdvantageScope](https://github.com/Mechanical-Advantage/
 
 <figure><img src="../.gitbook/assets/AdvantageScope-Preferences.png" alt=""><figcaption><p>AdvantageScope's help menu</p></figcaption></figure>
 
-4. Input the roboRIO IP address based on your team number: `10.TE.AM.2`.
+4. Input the SystemCore's IP address based on your team number in the **Robot Address** field: `10.TE.AM.2`.
 
-<figure><img src="../.gitbook/assets/AdvantageScope-Preferences-IP.png" alt=""><figcaption><p>roboRIO Address field highlighted</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/AdvantageScope-Preferences-IP.png" alt=""><figcaption><p>Robot Address field highlighted</p></figcaption></figure>
 
 5. Connect to the robot (or the simulator).
 
@@ -47,6 +47,10 @@ Since the 2024 season, [AdvantageScope](https://github.com/Mechanical-Advantage/
 You may need to enable your robot before AdvantageScope shows values for these fields.
 {% endhint %}
 
+{% hint style="info" %}
+`swerve` is the telemetry name you gave the drive with `SwerveDriveConfig.withTelemetry("swerve", ...)`; if you named it something else, look under `Mechanisms/<that name>`. The `current` fields need `TelemetryVerbosity.MID` or higher and the `desired` fields need `TelemetryVerbosity.HIGH`.
+{% endhint %}
+
 To see the robot's pose on a 2D/3D field, add a **2D Field** or **3D Field** tab instead and drag in
 `Mechanisms/swerve/pose`.
 
@@ -58,4 +62,4 @@ The **RED** lines are the measured velocity and position of each swerve module.
 The **BLUE** lines are the velocity and position each module was commanded to.
 {% endhint %}
 
-Large, persistent gaps between the red and blue lines usually point to a tuning issue — see [how to tune PIDF gains](tune-pidf-gains.md) and [swerve drive drift causes](../reference/swerve-drift-causes.md).
+Large, persistent gaps between the red and blue lines usually point to a tuning issue. See [how to tune PIDF gains](tune-pidf-gains.md) and [swerve drive drift causes](../reference/swerve-drift-causes.md).
