@@ -6,11 +6,11 @@ description: We make your swerve drive run!
 
 ## Where does YAGSL fit into my program?
 
-YAGSL used to be a full swerve drive implementation of its own. It no longer is. **YAGSL is now a thin JSON configuration parser that builds a [YAMS](https://yams.yamgen.com/) `SwerveDrive`.**
+YAGSL used to be a full swerve drive implementation of its own. It no longer is. **YAGSL is a thin JSON configuration parser that builds a** [**YAMS**](https://yams.yamgen.com/) **`SwerveDrive`.**
 
 YAMS ([Yet Another Mechanism Suite](https://yams.yamgen.com/)) is a general-purpose FRC mechanism library: arms, elevators, flywheels, and swerve drives all share the same underlying `SmartMotorController` abstraction, feedforward/feedback plumbing, simulation support, and telemetry. YAMS's `SwerveDrive` (`yams.commands2.swerve.SwerveDrive` for Commands v2, `yams.commands3.swerve.SwerveDrive` for Commands v3) is a complete, hardware-agnostic swerve implementation in its own right; it does not need YAGSL to function.
 
-What YAGSL adds on top is the part FRC teams actually re-do every season: turning a description of *your* robot's hardware (which motor controllers, which absolute encoders, which gyro, what gear ratios, where each module sits) into the Java objects YAMS needs (`SwerveDriveConfig`, `SwerveModuleConfig`, and `SmartMotorControllerConfig`) without you hand-writing that boilerplate for every robot.
+What YAGSL adds on top is the part FRC teams actually re-do every season: turning a description of _your_ robot's hardware (which motor controllers, which absolute encoders, which gyro, what gear ratios, where each module sits) into the Java objects YAMS needs (`SwerveDriveConfig`, `SwerveModuleConfig`, and `SmartMotorControllerConfig`) without you hand-writing that boilerplate for every robot.
 
 YAGSL 2027 is built on WPILib 2027 (`2027_alpha7`, Java 25) and runs on the SystemCore.
 
@@ -18,7 +18,7 @@ YAGSL 2027 is built on WPILib 2027 (`2027_alpha7`, Java 25) and runs on the Syst
 
 ## How the pieces fit together
 
-1. You describe your robot's hardware as JSON files (`swervedrive.json`, and per-module files under `modules/`), generated for you by **[config.yagsl.com](https://config.yagsl.com)**, or hand-written if you prefer.
+1. You describe your robot's hardware as JSON files (`swervedrive.json`, and per-module files under `modules/`), generated for you by [**config.yagsl.com**](https://config.yagsl.com), or hand-written if you prefer.
 2. `SwerveParser.parse(directory)` reads that JSON. `SwerveParser` is `swervelib.commands2.SwerveParser` or `swervelib.commands3.SwerveParser`, depending on your command framework. Both extend the framework agnostic `swervelib.core.parser.SwerveParser`, which resolves each device string (e.g. `sparkflex_neo`, `cancoder_can`) to the right vendor hardware wrapper and builds a YAMS `SwerveModuleConfig`/`SmartMotorControllerConfig` per module.
 3. `SwerveParser.createSwerveDrive(SwerveDriveConfig)` hands those configs to YAMS, which constructs and returns a ready-to-drive `SwerveDrive` for your command framework, bound to the `Subsystem` (Commands v2) or `Mechanism` (Commands v3) in your `SwerveDriveConfig`.
 4. From there, everything (kinematics, odometry, telemetry, simulation, vision fusion, driver-input shaping via `SwerveInputStream`) is YAMS's API, documented in the [YAMS API reference](../reference/api-reference.md). YAGSL only exists at the boundary between "JSON describing my robot" and "a working `SwerveDrive` object."
@@ -80,6 +80,6 @@ Do you have multiple robots and don't want to change any code to get them to wor
 ## Goals of this documentation
 
 * Teach the fundamentals of a `SwerveDrive` and `SwerveModule` so you can debug and reason about your robot, even though YAMS builds the actual objects for you. See [Swerve Drive Kinematics](swerve-drive-kinematics.md) and [Swerve Modules](swerve-modules.md).
-* Walk you through generating a configuration and bringing up your first YAGSL-driven robot. See the [Tutorial](../tutorial/README.md).
+* Walk you through generating a configuration and bringing up your first YAGSL-driven robot. See the [Tutorial](../tutorial/).
 * Give you task-focused recipes for the debugging work every swerve team eventually needs. See the [How-to Guides](../how-to/how-to.md).
 * Document the current JSON schema and hardware support precisely. See the [Reference](../reference/reference.md) section.

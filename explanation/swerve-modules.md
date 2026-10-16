@@ -4,13 +4,13 @@ description: What is a Swerve Module?
 
 # Swerve Modules
 
-You may see a bunch of different classes in other teams' code which represent a `SwerveModule` and wonder why there isn't a standard class. There is a very good reason for that: every motor, absolute encoder, gear ratio, and installation can be different! YAGSL's JSON configuration exists to describe those differences declaratively instead of in code, and YAMS's `SwerveModule` handles them uniformly underneath.
+You may see a bunch of different classes in other teams' code which represent a `SwerveModule` and wonder why there isn't a standard class. There is a very good reason for that: every motor, absolute encoder, gear ratio, and installation can be different. YAGSL's JSON configuration exists to describe those differences declaratively instead of in code, and YAMS's `SwerveModule` handles them uniformly underneath.
 
 {% hint style="warning" %}
 If you are using a magnetic encoder ensure that the magnet is glued correctly so it does not slip.
 {% endhint %}
 
-## What is in a Swerve Module?
+## What is in a swerve module?
 
 * [ ] Drive Gears (ratio must be known)
 * [ ] Steering Gears (ratio must be known)
@@ -18,11 +18,11 @@ If you are using a magnetic encoder ensure that the magnet is glued correctly so
 * [ ] Angle/Azimuth/Steering Motor (+ controller)
 * [ ] Absolute Encoder
 
-<figure><img src="../.gitbook/assets/yagsl-module-anatomy.png" alt="A swerve module from the side. The drive motor turns the wheel through the drive gears. The steering, or angle, motor turns the whole module through the steering gears around the steering axis. The absolute encoder sits on the steering axis and reads the module's angle, zeroed by absoluteEncoderOffset. The wheel's diameter turns rotations into meters."><figcaption><p>The parts of a swerve module and what YAGSL needs to know about each.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/yagsl-module-anatomy.png" alt="A swerve module from the side. The drive motor turns the wheel through the drive gears. The steering, or angle, motor turns the whole module through the steering gears around the steering axis. The absolute encoder sits on the steering axis and reads the module&#x27;s angle, zeroed by absoluteEncoderOffset. The wheel&#x27;s diameter turns rotations into meters."><figcaption><p>The parts of a swerve module and what YAGSL needs to know about each.</p></figcaption></figure>
 
 ## Review
 
-This may seem out of place, but when debugging swerve drives this comes in handy very quickly!
+This may seem out of place, but it helps during swerve-drive debugging.
 
 Smart Motor Controllers typically have the following features:
 
@@ -79,7 +79,7 @@ When the inversion state of your steering/angle/azimuth motor is incorrect, the 
 
 Inversion is configured per-module via the `inverted.drive` / `inverted.angle` and `absoluteEncoderInverted` fields. See [When to Invert?](../how-to/determine-inversion.md).
 
-## Conversion Factor / Gearing
+## Conversion factor and gearing
 
 Math time! Remember dimensional analysis?
 
@@ -121,9 +121,9 @@ WPILib has a great guide to learning PIDs. The turret position example is exactl
 
 {% embed url="https://docs.wpilib.org/en/stable/docs/software/advanced-controls/introduction/introduction-to-pid.html" %}
 
-There are 2 PID loops involved in a Swerve Module: one for the drive motor, the other for the steering motor.
+There are two PID loops involved in a Swerve Module: one for the drive motor, the other for the steering motor.
 
-#### Drive Motor PID
+#### Drive motor PID
 
 Tune it as if it were a flywheel. This is documented here:
 
@@ -131,12 +131,12 @@ Tune it as if it were a flywheel. This is documented here:
 
 The drive motor also benefits from a feedforward, so the PID doesn't have to work against the minimum voltage needed to overcome friction and the robot's weight. See `s`/`v`/`a` in [pidfproperties.json](../reference/json-schema/pidfproperties-json.md).
 
-#### Steering Motor PID
+#### Steering motor PID
 
 The Steering Motor PID controls the angle of the wheel in degrees. A few tricks are necessary to do this effectively:
 
 1. PID wrapping ensures the wheel always chooses the shortest path to the destination angle.
-2. Grease your gears often!
+2. Grease your gears often.
 3. Calculate the correct gear ratio / conversion.
 4. Tune quickly and accurately using a hardware client or Tuner X.
 

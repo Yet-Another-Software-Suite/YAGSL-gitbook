@@ -1,10 +1,10 @@
 # Changelog
 
 {% hint style="info" %}
-YAGSL was rewritten as a JSON-config parser around YAMS's `SwerveDrive` between versions `2026.4.1` and `2026.8.05`, and ported to WPILib 2027 and the SystemCore in `2026.10.08`. Entries from `2026.8.05` onward describe the current architecture. Everything from `2026.4.1` down is the old, pre-rewrite library, kept under [Pre-rewrite history](#pre-rewrite-history).
+YAGSL was rewritten as a JSON-config parser around YAMS's `SwerveDrive` between versions `2026.4.1` and `2026.8.05`, and ported to WPILib 2027 and the SystemCore in `2026.10.08`. Entries from `2026.8.05` onward describe the current architecture. Everything from `2026.4.1` down is the old, pre-rewrite library, kept under [Pre-rewrite history](changelog.md#pre-rewrite-history).
 {% endhint %}
 
-## Pull Requests are always reviewed!
+## Pull requests are reviewed
 
 I highly encourage anyone who wants to help make YAGSL better to create pull requests with any modifications you have made that increases your quality of life.
 
@@ -28,19 +28,19 @@ Install from `https://cdn.yassrobotics.com/yagsl_commands2.json` or `https://cdn
 
 * **Vendordeps and artifacts now come from `cdn.yassrobotics.com`**, so networks that block `github.io` can still install, update and download YAGSL. The vendordep JSON URLs are `https://cdn.yassrobotics.com/yagsl_commands2.json` and `https://cdn.yassrobotics.com/yagsl_commands3.json`, and `https://cdn.yassrobotics.com/` is the only maven URL. The old `yet-another-software-suite.github.io/YAGSL` vendordep and maven URLs are stale. ([#57](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/57))
 * **The YAGSL vendordeps require only YAMS.** `yagsl_commands2.json` requires YAMS (Commands v2) and `yagsl_commands3.json` requires YAMS (Commands v3). REVLib, Phoenix 6, ReduxLib and ThriftyLib are no longer required: YAGSL loads a vendor's device classes through reflection only when a JSON configuration uses that vendor's devices, so you install vendor libraries for the hardware you have.
-* **`canbus` is read the same way for every vendor** through the new `swervelib.core.parser.CANBuses`. ([#59](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/59))
+*   **`canbus` is read the same way for every vendor** through the new `swervelib.core.parser.CANBuses`. ([#59](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/59))
 
-  | `canbus`          | Bus                                                              |
-  | ----------------- | ---------------------------------------------------------------- |
-  | `""` (or missing) | `can_s0` (bus 0)                                                 |
-  | `"0"` to `"4"`    | `can_s0` to `can_s4`, so `"1"` is `can_s1`                       |
-  | `"5"` to `"24"`   | Motioncore `can_d0` to `can_d19`                                 |
-  | anything else     | passed to the vendor, such as a CANivore's name for CTRE devices |
+    | `canbus`          | Bus                                                              |
+    | ----------------- | ---------------------------------------------------------------- |
+    | `""` (or missing) | `can_s0` (bus 0)                                                 |
+    | `"0"` to `"4"`    | `can_s0` to `can_s4`, so `"1"` is `can_s1`                       |
+    | `"5"` to `"24"`   | Motioncore `can_d0` to `can_d19`                                 |
+    | anything else     | passed to the vendor, such as a CANivore's name for CTRE devices |
 
-  * **Behavior change:** CTRE devices with an empty `canbus` are now on `can_s0`, like every other vendor. Before, Phoenix 6 put them on its SystemCore default, `can_s2`. Configurations whose CTRE devices are on `can_s2` need `"canbus": "2"`.
-  * **Behavior change:** REV devices no longer take port names such as `"CAN_S1"`. Use `"1"`.
-  * REV and Thrifty devices reject anything other than a bus number, with an error that explains the bus numbers. A bus number that does not exist, such as `"25"`, also gives a clear error.
-  * Redux devices take bus numbers too. ReduxLib bus strings such as `"socketcan:can_s1"` still work, since they are passed through.
+    * **Behavior change:** CTRE devices with an empty `canbus` are now on `can_s0`, like every other vendor. Before, Phoenix 6 put them on its SystemCore default, `can_s2`. Configurations whose CTRE devices are on `can_s2` need `"canbus": "2"`.
+    * **Behavior change:** REV devices no longer take port names such as `"CAN_S1"`. Use `"1"`.
+    * REV and Thrifty devices reject anything other than a bus number, with an error that explains the bus numbers. A bus number that does not exist, such as `"25"`, also gives a clear error.
+    * Redux devices take bus numbers too. ReduxLib bus strings such as `"socketcan:can_s1"` still work, since they are passed through.
 * **Thrifty Nova is supported again**, through YAMS's `NovaWrapper` on ThriftyLib 2027. ([#58](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/58))
   * Motor types are `nova_<motor>`: `nova_minion` and `nova_pulsar` select those motors on the Nova, and anything else, such as `nova_neo`, is run as a NEO.
   * An absolute encoder attached to the Nova's data port (`revthroughbore_attached`, `canandmag_attached`, `srxmag_attached`, `thrifty_attached`, `andymarkhexbore_attached`, `dutycycle_attached`) sets the Nova's absolute encoder type and direction, and is used as the external feedback encoder.
@@ -57,14 +57,14 @@ Install from `https://cdn.yassrobotics.com/yagsl_commands2.json` or `https://cdn
 Breaking changes for robot code:
 
 * **WPILib 2027.** WPILib Java packages are `org.wpilib.*` (`edu.wpi.first.*` no longer exists), and several types were renamed. The ones you meet with YAGSL are `ChassisSpeeds`, now `ChassisVelocities`, and `SwerveModuleState`, now `SwerveModuleVelocity`.
-* **Two vendordeps, one per command framework.** Install exactly one, they conflict with each other.
+*   **Two vendordeps, one per command framework.** Install exactly one, they conflict with each other.
 
-  | Vendordep              | Artifacts                       | Command framework |
-  | ---------------------- | ------------------------------- | ----------------- |
-  | `yagsl_commands2.json` | `YAGSL-core`, `YAGSL-commands2` | Commands v2       |
-  | `yagsl_commands3.json` | `YAGSL-core`, `YAGSL-commands3` | Commands v3       |
+    | Vendordep              | Artifacts                       | Command framework |
+    | ---------------------- | ------------------------------- | ----------------- |
+    | `yagsl_commands2.json` | `YAGSL-core`, `YAGSL-commands2` | Commands v2       |
+    | `yagsl_commands3.json` | `YAGSL-core`, `YAGSL-commands3` | Commands v3       |
 
-  `YAGSL-java` is replaced by `YAGSL-core` plus `YAGSL-commands2` or `YAGSL-commands3`. Remove the old `yagsl.json` from your `vendordeps` folder.
+    `YAGSL-java` is replaced by `YAGSL-core` plus `YAGSL-commands2` or `YAGSL-commands3`. Remove the old `yagsl.json` from your `vendordeps` folder.
 * **Packages.** Command framework agnostic code moved to `swervelib.core`: `swervelib.parser` is now `swervelib.core.parser`, and `swervelib.telemetry` is now `swervelib.core.telemetry`.
 * **Entry point.** Create the drive with `swervelib.commands2.SwerveParser` or `swervelib.commands3.SwerveParser`. They return the matching YAMS `SwerveDrive` (`yams.commands2.swerve.SwerveDrive` or `yams.commands3.swerve.SwerveDrive`). `SwerveParser.parse(directory)` works as before.
 * **YAMS packages.** YAMS classes are now under `yams.core.*`, `yams.commands2.*` and `yams.commands3.*`. For example `yams.mechanisms.config.SwerveDriveConfig` is now `yams.commands2.config.SwerveDriveConfig`, `yams.mechanisms.swerve.utility.SwerveInputStream` is now `yams.commands2.swerve.SwerveInputStream`, and `SmartMotorControllerConfig.TelemetryVerbosity` is now `yams.core.telemetry.enums.TelemetryVerbosity`.
@@ -143,7 +143,7 @@ First release of the rewritten YAGSL: a JSON configuration parser that builds a 
 ## Pre-rewrite history
 
 {% hint style="warning" %}
-Every entry below this notice describes the **old**, pre-rewrite architecture (a self-contained `SwerveDrive`/`SwerveModule`/`SwerveController` implementation, `controllerproperties.json`, `imu`/`encoder`-named JSON fields, etc.). None of it reflects the current API. If you're trying to understand what changed in the rewrite itself, see [Schema Changes](../reference/schema-changes.md) instead. This history is kept for archaeology: understanding *why* a given behavior exists, and crediting the contributors who built it.
+Every entry below this notice describes the **old**, pre-rewrite architecture (a self-contained `SwerveDrive`/`SwerveModule`/`SwerveController` implementation, `controllerproperties.json`, `imu`/`encoder`-named JSON fields, etc.). None of it reflects the current API. If you're trying to understand what changed in the rewrite itself, see [Schema Changes](../reference/schema-changes.md) instead. This history is kept for archaeology: understanding _why_ a given behavior exists, and crediting the contributors who built it.
 {% endhint %}
 
 ## 2026.4.1

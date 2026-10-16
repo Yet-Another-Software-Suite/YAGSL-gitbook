@@ -5,7 +5,7 @@ description: >-
   debugging.
 ---
 
-# How to set up AdvantageScope
+# Set up AdvantageScope
 
 ## Opening
 
@@ -17,25 +17,25 @@ Since the 2024 season, [AdvantageScope](https://github.com/Mechanical-Advantage/
 2. Open `AdvantageScope (WPILib)`, or in VS Code open the command palette and type `WPILib: Start Tool`, then click `AdvantageScope`.
 3. Click `Help`, then `Show Preferences`.
 
-<figure><img src="../.gitbook/assets/AdvantageScope-Preferences.png" alt=""><figcaption><p>AdvantageScope's help menu</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/AdvantageScope-Preferences.png" alt="AdvantageScope Help menu."><figcaption><p>AdvantageScope's help menu</p></figcaption></figure>
 
-4. Input the SystemCore's IP address based on your team number in the **Robot Address** field: `10.TE.AM.2`.
+4. In the **Robot Address** field, enter the SystemCore's IP address based on your team number: `10.TE.AM.2`.
 
-<figure><img src="../.gitbook/assets/AdvantageScope-Preferences-IP.png" alt=""><figcaption><p>Robot Address field highlighted</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/AdvantageScope-Preferences-IP.png" alt="Robot Address field in AdvantageScope preferences."><figcaption><p>Robot Address field highlighted</p></figcaption></figure>
 
 5. Connect to the robot (or the simulator).
 
-<figure><img src="../.gitbook/assets/AdvantageScope-Connect.png" alt=""><figcaption><p>Connect to Robot menu</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/AdvantageScope-Connect.png" alt="Connect to Robot menu in AdvantageScope."><figcaption><p>Connect to Robot menu</p></figcaption></figure>
 
-6. Add a new tab by clicking the `+` on the right side of the window.
+6. On the right side of the window, click `+` to add a new tab.
 
-<figure><img src="../.gitbook/assets/AdvantageScope-Add.png" alt=""><figcaption><p>Add new tab</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/AdvantageScope-Add.png" alt="Add new tab button in AdvantageScope."><figcaption><p>Add new tab</p></figcaption></figure>
 
 7. Add a new 🦀 Swerve tab.
 
-<figure><img src="../.gitbook/assets/AdvantageScope-Swerve.png" alt=""><figcaption><p>Swerve tab</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/AdvantageScope-Swerve.png" alt="Swerve tab in AdvantageScope."><figcaption><p>Swerve tab</p></figcaption></figure>
 
-8. Drag in each of these `Mechanisms/swerve` fields under the Sources field:
+8. In the Sources field, drag in each `Mechanisms/swerve` field:
    * `Mechanisms/swerve/states/current`
    * `Mechanisms/swerve/states/desired`
    * `Mechanisms/swerve/chassis/current`
@@ -51,8 +51,7 @@ You may need to enable your robot before AdvantageScope shows values for these f
 `swerve` is the telemetry name you gave the drive with `SwerveDriveConfig.withTelemetry("swerve", ...)`; if you named it something else, look under `Mechanisms/<that name>`. The `current` fields need `TelemetryVerbosity.MID` or higher and the `desired` fields need `TelemetryVerbosity.HIGH`.
 {% endhint %}
 
-To see the robot's pose on a 2D/3D field, add a **2D Field** or **3D Field** tab instead and drag in
-`Mechanisms/swerve/pose`.
+To see the robot's pose on a 2D/3D field, add a **2D Field** or **3D Field** tab instead and drag in `Mechanisms/swerve/pose`.
 
 ## Reading the display
 

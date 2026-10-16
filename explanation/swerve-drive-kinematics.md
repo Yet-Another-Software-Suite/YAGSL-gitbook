@@ -6,21 +6,21 @@ description: How does Swerve Drive work?
 
 <figure><img src="../.gitbook/assets/sim_sample.png" alt=""><figcaption><p>Swerve Drive simulation</p></figcaption></figure>
 
-## Tips while building a Swerve Drive
+## Tips while building a swerve drive
 
 * Center the gyroscope in the robot, this will help prevent a small drift and ensure more accurate odometry.
-* Make sure the magnets (if you're using them) are glued in right!
-* Set aside time, assume you will mess up building 1 module or otherwise need a spare during competitions.
-* Programming a Swerve Drive is hard, and while YAGSL/YAMS try to make it easier there are many things you must know to fully understand what you are doing!
-* Use the right tools for the job! Debugging a Swerve Drive is difficult enough by text only, try out a dashboard like [AdvantageScope](https://github.com/Mechanical-Advantage/AdvantageScope/tree/main). It has excellent visualization tools that are sure to help you out! See [how to set up AdvantageScope](../how-to/set-up-advantagescope.md).
+* Make sure the magnets (if you're using them) are secured correctly.
+* Set aside time for rework, or keep a spare module during competitions.
+* Programming a Swerve Drive requires you to understand its behavior.
+* Use the right tools for the job. Try a dashboard like [AdvantageScope](https://github.com/Mechanical-Advantage/AdvantageScope/tree/main). See [how to set up AdvantageScope](../how-to/set-up-advantagescope.md).
 
-## The Basics
+## The basics
 
 Swerve Drives move around by moving each wheel to a specific angle/azimuth and rotating the wheel to go in that direction. Swerve Drives are unique because they can rotate independently of their translational movement, meaning you can move in any direction while facing any direction. As a result you can "turn in-place" and rotate while moving around an area. The rotation of your robot is referred to as the **heading.**
 
-## What is a Swerve Drive?
+## What is a swerve drive?
 
-A Swerve Drive typically consists of 4 Swerve Modules (which are in essence a drive motor, an angle/azimuth motor, and an absolute encoder), and a gyroscope (centered is best). The motors, absolute encoders, and gyroscope do not matter and can all work together with varying degrees of success. As a rule of thumb, if you can stick to one system do it (all REV, all CTRE). This will give you the best feature set, however they are not required to be the same! For all other use cases YAGSL is the best choice because it (and YAMS underneath it) was built with abstraction in mind, making all sensors and motor controllers functionally equivalent.
+A Swerve Drive typically consists of four Swerve Modules (which are in essence a drive motor, an angle/azimuth motor, and an absolute encoder), and a gyroscope (centered is best). The motors, absolute encoders, and gyroscope do not matter and can all work together with varying degrees of success. As a rule of thumb, if you can stick to one system do it (all REV, all CTRE). This will give you the best feature set, however they are not required to be the same. For all other use cases YAGSL is the best choice because it (and YAMS underneath it) was built with abstraction in mind, making all sensors and motor controllers functionally equivalent.
 
 #### TL;DR
 
@@ -92,9 +92,9 @@ The order defines what the output order of module angle/azimuth's and speeds wil
 
 `SwerveDriveKinematics` is used to generate the `SwerveModuleVelocity` of each module in the given order. The example below shows how you can do this in a `drive()` function given a `ChassisVelocities` object.
 
-`SwerveModuleVelocity` has 2 properties reflecting the properties of a Swerve Module: `angle` and `velocity` (in meters per second). The goal is to set the correct swerve module (based on the order given at construction of the `SwerveDriveKinematics` object) to the angle and velocity given in the `SwerveModuleVelocity`.
+`SwerveModuleVelocity` has two properties reflecting the properties of a Swerve Module: `angle` and `velocity` (in meters per second). The goal is to set the correct swerve module (based on the order given at construction of the `SwerveDriveKinematics` object) to the angle and velocity given in the `SwerveModuleVelocity`.
 
-<figure><img src="../.gitbook/assets/yagsl-kinematics.gif" alt="An animation of a robot seen from above with four modules. For each ChassisVelocities, each module's velocity is drawn as the robot's velocity plus the spin at that module, and the sum is its SwerveModuleVelocity. Driving forward, every module points forward. Driving left, every module points left. Spinning counterclockwise, every module is tangent to a circle around the center. Driving forward while spinning, each module's angle and speed differ. A table lists each module's angle and velocity."><figcaption><p>Each module's velocity is the robot's velocity plus the spin at that module.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/yagsl-kinematics.gif" alt="An animation of a robot seen from above with four modules. For each ChassisVelocities, each module&#x27;s velocity is drawn as the robot&#x27;s velocity plus the spin at that module, and the sum is its SwerveModuleVelocity. Driving forward, every module points forward. Driving left, every module points left. Spinning counterclockwise, every module is tangent to a circle around the center. Driving forward while spinning, each module&#x27;s angle and speed differ. A table lists each module&#x27;s angle and velocity."><figcaption><p>Each module's velocity is the robot's velocity plus the spin at that module.</p></figcaption></figure>
 
 <pre class="language-java" data-title="SwerveDrive.java" data-line-numbers data-full-width="false"><code class="lang-java">// Simple drive function
 public void drive()
@@ -110,14 +110,14 @@ public void drive()
 </code></pre>
 
 {% hint style="danger" %}
-Swerve Drive code does not work without [`SwerveDriveOdometry`](https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/kinematics/SwerveDriveOdometry.html) or [`SwerveDrivePoseEstimator`](https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/estimator/SwerveDrivePoseEstimator.html) to keep track of module positions and angles! YAMS's `SwerveDrive` maintains a `SwerveDrivePoseEstimator` for you. See [Telemetry, Simulation & Vision](telemetry-and-vision.md).
+Swerve Drive code does not work without [`SwerveDriveOdometry`](https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/kinematics/SwerveDriveOdometry.html) or [`SwerveDrivePoseEstimator`](https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/estimator/SwerveDrivePoseEstimator.html) to keep track of module positions and angles. YAMS's `SwerveDrive` maintains a `SwerveDrivePoseEstimator` for you. See [Telemetry, Simulation & Vision](telemetry-and-vision.md).
 {% endhint %}
 
 ### `SwerveDriveOdometry`
 
 Life isn't that easy. You have to keep continuous track of the robot's current positioning, specifically the **heading**, **speed**, and **module positions**, collectively known as **odometry**. This is the only way to correctly generate usable `SwerveModuleVelocity`s.
 
-Odometry must be updated every single loop, just like a subsystem's `periodic()`. YAMS's `SwerveDrive` does this for you inside `drive.updateTelemetry()`, which is why your subsystem (Commands v2) or robot class (Commands v3) must call it every loop. You don't need to call a separate odometry update method yourself, but understanding *why* it must happen every loop is essential for debugging drift and lag.
+Odometry must be updated every single loop, just like a subsystem's `periodic()`. YAMS's `SwerveDrive` does this for you inside `drive.updateTelemetry()`, which is why your subsystem (Commands v2) or robot class (Commands v3) must call it every loop. You don't need to call a separate odometry update method yourself, but understanding _why_ it must happen every loop is essential for debugging drift and lag.
 
 {% hint style="info" %}
 `SwerveDriveOdometry` can be replaced by `SwerveDrivePoseEstimator`, which additionally fuses vision measurements; this is what YAMS uses. See [Telemetry, Simulation & Vision](telemetry-and-vision.md).
@@ -125,4 +125,4 @@ Odometry must be updated every single loop, just like a subsystem's `periodic()`
 
 ## Conclusion
 
-There are many more intricacies to Swerve Drives than covered on this page, but this is sufficient for a basic understanding of how a Swerve Drive is programmed. We'd highly encourage the reader to look at as many examples as they can find to understand some of the gotchas further, or continue on to use YAGSL. Good luck!
+There are many more intricacies to Swerve Drives than covered on this page, but this is sufficient for a basic understanding of how a Swerve Drive is programmed. We'd highly encourage the reader to look at as many examples as they can find to understand some of the gotchas further, or continue on to use YAGSL.

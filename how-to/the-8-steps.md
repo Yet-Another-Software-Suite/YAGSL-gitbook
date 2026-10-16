@@ -8,7 +8,7 @@ Affectionately known as _"Translational Axis change based off of the robot headi
 
 ## Prepare your robot code
 
-To run these tests quickly and effectively, use the following (or a variation of it) as your drive code. You may need to port it to your joystick or negate axis data, but this will help you debug faster.
+To run these tests, use the following (or a variation of it) as your drive code. You may need to port it to your joystick or negate axis data.
 
 {% code title="RobotContainer.java" %}
 ```java
@@ -44,13 +44,13 @@ A stick heading is field relative, not alliance relative. If you're testing from
 ## The eight steps
 
 {% hint style="danger" %}
-**The steps are dangerous!**
+**The steps are dangerous.**
 
-6 of them will cause your robot to spin out of control.
+Six of them will cause your robot to spin out of control.
 
-1 of them will be correct.
+One of them will be correct.
 
-1 of them will appear to be correct but have the translational axis change based on the robot's heading.
+One of them will appear to be correct but have the translational axis change based on the robot's heading.
 {% endhint %}
 
 {% hint style="warning" %}
@@ -89,7 +89,7 @@ For the examples, we label modules with numbers to reduce confusion; when changi
 
 **Swapping `frontleft.json` with `backright.json`**
 
-```json title="frontleft.json"
+```json
 {
   "drive": { "type": "sparkmax_neo", "id": 4, "canbus": "" },
   "angle": { "type": "sparkmax_neo", "id": 3, "canbus": "" },
@@ -100,7 +100,7 @@ For the examples, we label modules with numbers to reduce confusion; when changi
 }
 ```
 
-```json title="backright.json"
+```json
 {
   "drive": { "type": "sparkmax_neo", "id": 5, "canbus": "" },
   "angle": { "type": "sparkmax_neo", "id": 6, "canbus": "" },
@@ -122,7 +122,4 @@ Swap the device IDs and offsets between the two files (keep each file's own `loc
 
 [^1]: Change the device configuration for the drive AND angle motor controllers AND the absolute encoders in the following way:
 
-    (Front Left -> Back Right)
-    (Front Right -> Back Left)
-    (Back Left -> Front Right)
-    (Back Right -> Front Left)
+    (Front Left -> Back Right) (Front Right -> Back Left) (Back Left -> Front Right) (Back Right -> Front Left)

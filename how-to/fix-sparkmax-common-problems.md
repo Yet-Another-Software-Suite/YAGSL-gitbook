@@ -2,9 +2,9 @@
 description: These usually show up on MAXSwerve robots.
 ---
 
-# How to fix common SparkMAX/SparkFlex problems
+# Fix common SparkMAX/SparkFlex problems
 
-## NEOs are SparkMAX killers!
+## NEOs can damage SparkMAX controllers
 
 When a NEO heats up enough from being stalled too long, it will short positive to the sensor cable, sending very high current through the low-current sensor channel and melting the SparkMax PCB. This WILL kill your SparkMAX, and every SparkMAX plugged into your killer NEO.
 
@@ -18,7 +18,7 @@ The [SparkMAX Absolute Encoder board](https://www.revrobotics.com/rev-11-3326/) 
 
 ### Throughbore connection to the absolute encoder board
 
-The connector between the [SparkMax Absolute Encoder board](https://www.revrobotics.com/rev-11-3326/) and the [REV Throughbore](https://www.revrobotics.com/rev-11-1271/) should be hot-glued down on **BOTH** connection points, because these can come loose easily.
+The connector between the [SparkMax Absolute Encoder board](https://www.revrobotics.com/rev-11-3326/) and the [REV Throughbore](https://www.revrobotics.com/rev-11-1271/) should be hot-glued down on **BOTH** connection points, because these can come loose.
 
 The wire should also be tensioned just right. If it's over-tensioned, the wire might not be fully seated in the connector, and the data could be incomplete, corrupted, or unavailable.
 
@@ -33,7 +33,7 @@ When you use an absolute encoder wired to the SparkMax through its Absolute Enco
 ```
 
 {% hint style="success" %}
-When the absolute encoder is attached to the azimuth motor controller (e.g. a REV Throughbore wired into a SparkMax), YAGSL automatically wires it up as the SparkMax's closed-loop feedback sensor and applies `absoluteEncoderOffset` as its zero offset for you. There is no manual "set the `factor` to `360`" workaround to remember, and no `useExternalFeedbackSensor()`/`useInternalFeedbackSensor()` calls to make in your own code. Just set `absoluteEncoderOffset` in the module JSON (or via **[config.yagsl.com](https://config.yagsl.com)**) and the parser handles the rest.
+When the absolute encoder is attached to the azimuth motor controller (e.g. a REV Throughbore wired into a SparkMax), YAGSL automatically wires it up as the SparkMax's closed-loop feedback sensor and applies `absoluteEncoderOffset` as its zero offset for you. There is no manual "set the `factor` to `360`" workaround to remember, and no `useExternalFeedbackSensor()`/`useInternalFeedbackSensor()` calls to make in your own code. Just set `absoluteEncoderOffset` in the module JSON (or via [**config.yagsl.com**](https://config.yagsl.com)) and the parser handles the rest.
 {% endhint %}
 
 {% hint style="info" %}
