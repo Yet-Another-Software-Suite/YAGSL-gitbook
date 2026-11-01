@@ -98,15 +98,15 @@ swerve) is at [yagsl.gitbook.io/yams](https://yagsl.gitbook.io/yams/api-referenc
 
 | Library | Javadoc |
 | ------- | ------- |
-| YAGSL | [yet-another-software-suite.github.io/YAGSL/javadocs](https://yet-another-software-suite.github.io/YAGSL/javadocs/) |
-| `swervelib.commands2.SwerveParser` | [SwerveParser (Commands v2)](https://yet-another-software-suite.github.io/YAGSL/javadocs/swervelib/commands2/SwerveParser.html) |
-| `swervelib.commands3.SwerveParser` | [SwerveParser (Commands v3)](https://yet-another-software-suite.github.io/YAGSL/javadocs/swervelib/commands3/SwerveParser.html) |
-| `swervelib.core.parser.SwerveParser` | [SwerveParser (core)](https://yet-another-software-suite.github.io/YAGSL/javadocs/swervelib/core/parser/SwerveParser.html) |
-| `swervelib.core.parser.CANBuses` | [CANBuses](https://yet-another-software-suite.github.io/YAGSL/javadocs/swervelib/core/parser/CANBuses.html) |
-| `swervelib.core.parser.json` | [JSON classes](https://yet-another-software-suite.github.io/YAGSL/javadocs/swervelib/core/parser/json/package-summary.html) |
-| YAMS | [yet-another-software-suite.github.io/YAMS/javadocs](https://yet-another-software-suite.github.io/YAMS/javadocs/) |
-| YAMS `SwerveDrive` | [Commands v2](https://yet-another-software-suite.github.io/YAMS/javadocs/yams/commands2/swerve/SwerveDrive.html), [Commands v3](https://yet-another-software-suite.github.io/YAMS/javadocs/yams/commands3/swerve/SwerveDrive.html), [core](https://yet-another-software-suite.github.io/YAMS/javadocs/yams/core/mechanisms/swerve/SwerveDrive.html) |
-| YAMS `SwerveDriveConfig` | [Commands v2](https://yet-another-software-suite.github.io/YAMS/javadocs/yams/commands2/config/SwerveDriveConfig.html), [Commands v3](https://yet-another-software-suite.github.io/YAMS/javadocs/yams/commands3/config/SwerveDriveConfig.html), [core](https://yet-another-software-suite.github.io/YAMS/javadocs/yams/core/mechanisms/config/SwerveDriveConfig.html) |
+| YAGSL | [javadocs.yassrobotics.com/yagsl](https://javadocs.yassrobotics.com/yagsl/) |
+| `swervelib.commands2.SwerveParser` | [SwerveParser (Commands v2)](https://javadocs.yassrobotics.com/yagsl/swervelib/commands2/SwerveParser.html) |
+| `swervelib.commands3.SwerveParser` | [SwerveParser (Commands v3)](https://javadocs.yassrobotics.com/yagsl/swervelib/commands3/SwerveParser.html) |
+| `swervelib.core.parser.SwerveParser` | [SwerveParser (core)](https://javadocs.yassrobotics.com/yagsl/swervelib/core/parser/SwerveParser.html) |
+| `swervelib.core.parser.CANBuses` | [CANBuses](https://javadocs.yassrobotics.com/yagsl/swervelib/core/parser/CANBuses.html) |
+| `swervelib.core.parser.json` | [JSON classes](https://javadocs.yassrobotics.com/yagsl/swervelib/core/parser/json/package-summary.html) |
+| YAMS | [javadocs.yassrobotics.com/yams](https://javadocs.yassrobotics.com/yams/) |
+| YAMS `SwerveDrive` | [Commands v2](https://javadocs.yassrobotics.com/yams/yams/commands2/swerve/SwerveDrive.html), [Commands v3](https://javadocs.yassrobotics.com/yams/yams/commands3/swerve/SwerveDrive.html), [core](https://javadocs.yassrobotics.com/yams/yams/core/mechanisms/swerve/SwerveDrive.html) |
+| YAMS `SwerveDriveConfig` | [Commands v2](https://javadocs.yassrobotics.com/yams/yams/commands2/config/SwerveDriveConfig.html), [Commands v3](https://javadocs.yassrobotics.com/yams/yams/commands3/config/SwerveDriveConfig.html), [core](https://javadocs.yassrobotics.com/yams/yams/core/mechanisms/config/SwerveDriveConfig.html) |
 
 {% hint style="info" %}
 Only `SwerveParser` and the JSON-file classes under `swervelib.core.parser.json` are
