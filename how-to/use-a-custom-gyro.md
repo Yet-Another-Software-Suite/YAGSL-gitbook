@@ -7,9 +7,7 @@ description: Configure a gyro YAGSL's parser doesn't build for you by handing YA
 {% hint style="info" %}
 If your gyro is one of the [supported types](../reference/hardware/gyroscopes.md#supported-gyroscope-types)
 (`pigeon2_can`, `canandgyro_can`, `navx3_can`, or the SystemCore's own IMU as `systemcore_internal`),
-you don't need this page. Set `gyro.type` normally in `swervedrive.json`. The exception is the
-NavX3: `navx3_can` does not work with YAGSL 2027 yet, because StudicaLib has no `2027_alpha7`
-build, so use this page to supply it yourself once you have a way to read it.
+you don't need this page. Set `gyro.type` normally in `swervedrive.json`.
 {% endhint %}
 
 Use a `custom` gyro when your heading source isn't one the parser builds for you: an IMU YAGSL has

@@ -65,10 +65,11 @@ Not every vendor can use a bus name:
 | CTRE (`talonfx_*`, `talonfxs_*`, `cancoder_can`, `pigeon2_can`) | Empty, a bus number, or a CANivore's name or serial number                                |
 | REV (`sparkmax_*`, `sparkflex_*`, `splineencoder_can`)        | Empty or a bus number only                                                                 |
 | Thrifty (`nova_*`)                                            | Empty or a bus number only                                                                 |
+| Studica (`navx3_can`)                                         | Empty or a bus number only                                                                 |
 | Redux (`canandgyro_can`, `canandmag_can`)                     | Empty, a bus number, or a ReduxLib bus string such as `socketcan:can_s1`                   |
-| Studica (`navx3_can`), AndyMark (`andymarkhexbore_can`)       | `canbus` is not used; the device is created from its CAN ID alone. Neither device works with YAGSL 2027 yet, because their vendor libraries have no `2027_alpha7` build                          |
+| AndyMark (`andymarkhexbore_can`)                              | `canbus` is not used; the device is created from its CAN ID alone. It doesn't work with YAGSL 2027 yet, because the AndyMark library has no `2027_alpha7` build |
 
-That includes port names: a SPARK on `can_s1` is `"1"`, not `"CAN_S1"`. Giving a REV or Thrifty
+That includes port names: a SPARK on `can_s1` is `"1"`, not `"CAN_S1"`. Giving a REV, Thrifty or Studica
 device anything other than a bus number stops the robot program at startup with an
 `IllegalArgumentException` like:
 

@@ -76,7 +76,7 @@ The gyro object depends on `gyro.type`:
 | --------------------- | ------------------------------------------------- |
 | `pigeon2_can`         | CTRE `com.ctre.phoenix6.hardware.Pigeon2`         |
 | `canandgyro_can`      | Redux `com.reduxrobotics.canandgyro.Canandgyro`   |
-| `navx3_can`           | Studica `com.studica.frc.Navx` (not usable yet: StudicaLib has no `2027_alpha7` build) |
+| `navx3_can`           | Studica `com.studica.frc.Navx`                    |
 | `systemcore_internal` | WPILib `org.wpilib.hardware.imu.OnboardIMU`       |
 | `custom`              | `null`                                            |
 

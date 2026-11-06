@@ -22,6 +22,16 @@ YAGSL repository
 
 All PR's should be based off of and merged into `main`.
 
+## 2026.11.06
+
+Uses YAMS `2026.11.06`. See [Install YAGSL](../tutorial/02-install-yagsl.md).
+
+* **The NavX3 works again.** `navx3_can` builds the gyro with StudicaLib `2027.0.0-alpha-1`, the first StudicaLib for `2027_alpha7`. Install the StudicaLib vendordep from `https://dev.studica.com/maven/release/2027/json/StudicaLib.json`. Its `canbus` is a SystemCore CAN bus number, like every other vendor's. See [NavX3-CAN](../reference/hardware/gyroscopes.md#navx3-can).
+* **A Thrifty Nova angle motor works with a CAN absolute encoder**, such as `cancoder_can`, like a SPARK MAX with one. The Nova runs the module's closed loop, wrapping and feedforward itself. ([#64](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/64), [#65](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/65))
+* **`canbus` means the same thing for every vendor:** empty for `can_s0`, or the bus number, such as `"1"` for `can_s1`. CTRE devices with an empty `canbus` are now on `can_s0`, not Phoenix 6's default `can_s2`. See [Put devices on a different CAN bus](../how-to/choose-a-can-bus.md). ([#59](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/59))
+* The module motors' closed loop period, velocity measurement delay and drive mechanism velocity are published to telemetry. ([#62](https://github.com/Yet-Another-Software-Suite/YAGSL/pull/62))
+* REVLib `2027.0.0-alpha-9` and ThriftyLib `2027.0.0-alpha-6`.
+
 ## 2026.10.09
 
 Install from `https://cdn.yassrobotics.com/yagsl_commands2.json` or `https://cdn.yassrobotics.com/yagsl_commands3.json`. See [Install YAGSL](../tutorial/02-install-yagsl.md).

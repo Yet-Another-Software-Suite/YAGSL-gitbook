@@ -66,7 +66,7 @@ other vendor's devices. It used to end up on `can_s2`; if yours is wired to `can
 | [Pigeon 2](#pigeon-2) | `pigeon2_can` | CAN; bus number or CANivore name | Phoenix 6 |
 | [Canandgyro](#canandgyro) | `canandgyro_can` | CAN; bus number or ReduxLib bus string | ReduxLib |
 | [SystemCore IMU](#systemcore-imu) | `systemcore_internal` | Built into the SystemCore; `id` and `canbus` are ignored | none (part of WPILib) |
-| [NavX3-CAN](#navx3-can) | `navx3_can` | CAN. *Not available in the 2027 builds yet, see [below](#navx3-can).* | StudicaLib |
+| [NavX3-CAN](#navx3-can) | `navx3_can` | CAN; bus number | StudicaLib |
 | [Custom](#custom-gyro) | `custom` | *any*: you construct and supply the gyro yourself | whatever your gyro needs |
 
 The vendor library is loaded by reflection only when your config uses that gyro, so install the one
@@ -186,13 +186,6 @@ If your SystemCore is mounted vertically (`MountOrientation.LANDSCAPE` or `PORTR
 
 ## NavX3-CAN
 
-{% hint style="danger" %}
-**Not available in the 2027 builds yet.** StudicaLib has no `2027_alpha7` release, so the YAGSL
-2027 artifacts are built without the NavX3 device class. `navx3_can` is still accepted by the
-schema, but creating the drive with it fails. Until StudicaLib is released for 2027, use another
-gyro or supply the NavX yourself through a [custom gyro](#custom-gyro).
-{% endhint %}
-
 {% hint style="info" %}
 NavX3-CAN supports CAN 2.0 and has CAN-FD capability. See Studica's notes for CAN-FD
 requirements.
@@ -203,12 +196,12 @@ requirements.
 
 **Checklist**
 
-* [ ] Install the **StudicaLib** vendordep (do not install both `Studica` and `StudicaLib`).
+* [ ] Install the **StudicaLib** vendordep from `https://dev.studica.com/maven/release/2027/json/StudicaLib.json` (do not install both `Studica` and `StudicaLib`). YAGSL 2026.11.06 and later work with StudicaLib 2027.0.0-alpha-1.
 * [ ] Update NavX3-CAN firmware to **5.0.4+** using Studica Hardware Manager.
 * [ ] Use Studica Hardware Manager to find the CAN ID (often ships as `0`) and enter it in your
   config.
 
-The parser creates the NavX3 from its CAN ID only; `canbus` is ignored for this device.
+Set `canbus` to the SystemCore CAN bus the NavX3 is on: empty for `can_s0`, or the bus number, such as `"1"` for `can_s1`. A CANivore name isn't accepted. Until its first reading arrives, or while it is disconnected, the NavX3 reports its last heading (zero at startup).
 
 NavX3-CAN ships factory-calibrated. For higher accuracy, re-calibrate with Studica Hardware
 Manager, which auto-detects sensor orientation during calibration. Connect CAN-H/CAN-L to the
