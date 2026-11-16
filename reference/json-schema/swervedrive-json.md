@@ -27,8 +27,9 @@ Top-level drive configuration. Parsed into `swervelib.core.parser.json.SwerveDri
 | Field     | Type   | Description                                                              |
 | --------- | ------ | ------------------------------------------------------------------------- |
 | `type`    | string | Gyro type string, see [Device type strings](device-types.md#gyro). Set to `custom` to skip YAGSL's gyro setup and configure the gyro yourself; see [Custom Gyro](../hardware/gyroscopes.md#custom-gyro). |
-| `id`      | number | CAN ID. Set to `0` if the gyro doesn't need one (`systemcore_internal`, `custom`). |
-| `canbus`  | string | CAN bus the gyro is on: `""` for the SystemCore bus `can_s0`, or the bus number, such as `"1"` for `can_s1`. A Pigeon 2 also takes a CANivore's name. See [CAN buses](README.md#control-system-and-can-buses). Ignored by `systemcore_internal` and `custom`. |
+| `id`      | number | CAN ID. Set to `0` if the gyro doesn't need one (`systemcore_internal`, `navx3_usb`, `custom`). |
+| `canbus`  | string | CAN bus the gyro is on: `""` for the SystemCore bus `can_s0`, or the bus number, such as `"1"` for `can_s1`. A Pigeon 2 also takes a CANivore's name. See [CAN buses](README.md#control-system-and-can-buses). Ignored by `systemcore_internal`, `navx3_usb` and `custom`. |
+| `channel` | number | Optional, `navx3_usb` only: the SystemCore USB port the NavX3 is plugged into, `0` for USB0 to `3` for USB3. Defaults to `0`. |
 
 {% hint style="info" %}
 When `gyro.type` is `custom`, `gyroAxis` and `gyroInvert` above are also ignored. The parser

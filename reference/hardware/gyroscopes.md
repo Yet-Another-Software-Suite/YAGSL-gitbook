@@ -67,6 +67,7 @@ other vendor's devices. It used to end up on `can_s2`; if yours is wired to `can
 | [Canandgyro](#canandgyro) | `canandgyro_can` | CAN; bus number or ReduxLib bus string | ReduxLib |
 | [SystemCore IMU](#systemcore-imu) | `systemcore_internal` | Built into the SystemCore; `id` and `canbus` are ignored | none (part of WPILib) |
 | [NavX3-CAN](#navx3-can) | `navx3_can` | CAN; bus number | StudicaLib |
+| [NavX3 over USB](#navx3-over-usb) | `navx3_usb` | A SystemCore USB port, given by `channel`; `id` and `canbus` are ignored | StudicaLib |
 | [Custom](#custom-gyro) | `custom` | *any*: you construct and supply the gyro yourself | whatever your gyro needs |
 
 The vendor library is loaded by reflection only when your config uses that gyro, so install the one
@@ -206,6 +207,27 @@ Set `canbus` to the SystemCore CAN bus the NavX3 is on: empty for `can_s0`, or t
 NavX3-CAN ships factory-calibrated. For higher accuracy, re-calibrate with Studica Hardware
 Manager, which auto-detects sensor orientation during calibration. Connect CAN-H/CAN-L to the
 robot bus and make sure the bus is properly terminated.
+
+## NavX3 over USB
+
+A NavX3 plugged into one of the SystemCore's USB ports instead of the CAN bus. YAGSL creates it with StudicaLib's
+`Navx.usb(UsbPort)`. Needs a YAGSL release newer than 2026.11.06.
+
+**Checklist**
+
+* [ ] Install the **StudicaLib** vendordep, as for [NavX3-CAN](#navx3-can).
+* [ ] Plug the NavX3 into a SystemCore USB port and note which one.
+
+Set `channel` to that port: `0` for USB0 to `3` for USB3. It defaults to `0`. A port that doesn't exist fails when
+the drive is created. `id` and `canbus` are ignored.
+
+```json
+"gyro": { "type": "navx3_usb", "id": 0, "canbus": "", "channel": 1 }
+```
+
+In the [config generator](https://config.yagsl.com), pick **USB** as the gyro's connection, then the USB port. Like
+the NavX3-CAN, it reports its last heading (zero at startup) until its first reading arrives or while it is
+disconnected.
 
 ## Pigeon 2
 

@@ -17,12 +17,10 @@ Used in [swervedrive.json](swervedrive-json.md)'s `gyro.type`.
 | `pigeon2_can`         | CTRE Pigeon 2.0, over CAN                                                                             | Phoenix 6                |
 | `canandgyro_can`      | Redux Canandgyro, over CAN                                                                            | ReduxLib                 |
 | `systemcore_internal` | The IMU built into the SystemCore (WPILib `OnboardIMU`), mounted flat. `id` and `canbus` are ignored. | none (part of WPILib)    |
-| `navx3_can`           | Studica NavX3, over CAN. **Not available in the 2027 builds yet**, see below.                         | StudicaLib               |
+| `navx3_can`           | Studica NavX3, over CAN                                                                               | StudicaLib               |
+| `navx3_usb`           | Studica NavX3, plugged into a SystemCore USB port given by `channel`: `0` for USB0 to `3` for USB3. `id` and `canbus` are ignored. Needs a YAGSL release newer than 2026.11.06. | StudicaLib |
 | `custom`              | Any gyro not built by the parser. You supply it yourself.                                             | whatever your gyro needs |
 
-{% hint style="warning" %}
-`navx3_can` is still a valid type string, but StudicaLib has no `2027_alpha7` release yet, so the YAGSL 2027 artifacts are built without the NavX3 device class and selecting it fails when the drive is created. Use a [`custom` gyro](../hardware/gyroscopes.md#custom-gyro) until StudicaLib is available.
-{% endhint %}
 
 See [Gyroscopes](../hardware/gyroscopes.md) for wiring/calibration notes per device.
 
