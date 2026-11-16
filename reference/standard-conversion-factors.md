@@ -19,50 +19,146 @@ a module's own `gearing` field (module-level `gearing` wins if both are present)
 - `drive.diameter`: wheel diameter in **inches**.
 - `angle.gearRatio`: motor revolutions per full azimuth revolution, as `X:1`.
 
-The config generator at [config.yagsl.com](https://config.yagsl.com) has these built in as presets.
-You generally won't need to type these by hand, but they're listed here for reference and for
-teams hand-editing JSON.
+The config generator at [config.yagsl.com](https://config.yagsl.com) has the SDS, REV, Thrifty Bot and WCP modules
+below as presets: pick your module under **Physical Properties → Swerve Module** and it fills in all three values.
+They're listed here for reference and for teams hand-editing JSON.
 
-## MAX Swerve
-
-| Pinion | `angle.gearRatio` | `drive.gearRatio` | `drive.diameter` |
-|---|---|---|---|
-| 12T | 46.42 | 5.50 | 3 |
-| 13T | 46.42 | 5.08 | 3 |
-| 14T | 46.42 | 4.71 | 3 |
+Ratios are given to four decimal places. Where a module's gear train is published, the ratio is worked out from its
+tooth counts, so it can differ from the vendor's rounded value in the last places (MK4 L2 is 6.746, sold as 6.75).
+Wheel diameters are nominal: measure your own (see [Deriving your own](#deriving-your-own)).
 
 ## Swerve Drive Specialties (SDS)
 
 | Module | `angle.gearRatio` | `drive.gearRatio` | `drive.diameter` |
 |---|---|---|---|
-| MK4 L1 | 12.8 | 8.14 | 4 |
-| MK4 L2 | 12.8 | 6.75 | 4 |
-| MK4 L3 | 12.8 | 6.12 | 4 |
-| MK4 L4 | 12.8 | 5.14 | 4 |
-| MK4i L1 | 21.4285714286 | 8.14 | 4 |
-| MK4i L2 | 21.4285714286 | 6.75 | 4 |
-| MK4i L3 | 21.4285714286 | 6.12 | 4 |
+| MK4 L1 | 12.8 | 8.1429 | 4 |
+| MK4 L2 | 12.8 | 6.746 | 4 |
+| MK4 L3 | 12.8 | 6.1224 | 4 |
+| MK4 L4 | 12.8 | 5.1429 | 4 |
+| MK4i L1 | 21.4286 (150/7) | 8.1429 | 4 |
+| MK4i L2 | 21.4286 (150/7) | 6.746 | 4 |
+| MK4i L3 | 21.4286 (150/7) | 6.1224 | 4 |
+| MK4n L1+ | 18.75 | 7.125 | 4 |
+| MK4n L2+ | 18.75 | 5.9028 | 4 |
+| MK4n L3+ | 18.75 | 5.3571 | 4 |
+| MK4c L1+ | 12.8 | 7.125 | 4 |
+| MK4c L2+ | 12.8 | 5.9028 | 4 |
+| MK4c L3+ | 12.8 | 5.3571 | 4 |
 | MK5i R1 | 26 | 7.03 | 4 |
 | MK5i R2 | 26 | 6.03 | 4 |
 | MK5i R3 | 26 | 5.27 | 4 |
-| MK4n L1 | 18.75 | 7.13 | 4 |
-| MK4n L2 | 18.75 | 5.9 | 4 |
-| MK4n L3 | 18.75 | 5.36 | 4 |
-| MK5n R1 | 26.09 | 7.03 | 4 |
-| MK5n R2 | 26.09 | 6.03 | 4 |
-| MK5n R3 | 26.09 | 5.27 | 4 |
+| MK5n R1 | 26.0909 (287/11) | 7.03 | 4 |
+| MK5n R2 | 26.0909 (287/11) | 6.03 | 4 |
+| MK5n R3 | 26.0909 (287/11) | 5.27 | 4 |
+
+## REV MAXSwerve
+
+From REV's speed ratio chart: the drive reduction is the spur gear over the pinion, times the 45:15 bevel.
+
+| Option | Pinion | Spur gear | `angle.gearRatio` | `drive.gearRatio` | `drive.diameter` |
+|---|---|---|---|---|---|
+| Low | 12T | 22T | 46.4236 (9424/203) | 5.5 | 3 |
+| Medium | 13T | 22T | 46.4236 (9424/203) | 5.0769 | 3 |
+| High | 14T | 22T | 46.4236 (9424/203) | 4.7143 | 3 |
+| Extra High 1 | 14T | 21T | 46.4236 (9424/203) | 4.5 | 3 |
+| Extra High 2 | 14T | 20T | 46.4236 (9424/203) | 4.2857 | 3 |
+| Extra High 3 | 15T | 20T | 46.4236 (9424/203) | 4 | 3 |
+| Extra High 4 | 16T | 20T | 46.4236 (9424/203) | 3.75 | 3 |
+| Extra High 5 | 16T | 19T | 46.4236 (9424/203) | 3.5625 | 3 |
 
 ## Thrifty Swerve
 
-Steering gear ratio is **25:1** for both configurations below (12T pinion, 3" wheel, NEO-driven).
-Check the gear-ratio chart on your Thrifty Swerve for other pinion/output combinations.
+Six ratios from three pinions and two bevel shaft gears, worked out from the gear train in Thrifty's bill of
+materials: 36 over the pinion, times the bevel shaft gear over 24, times the 45:15 bevel. Thrifty doesn't publish a
+ratio table, so check the gears on your module.
 
-| Output gear | `angle.gearRatio` | `drive.gearRatio` | `drive.diameter` |
+| Pinion | Bevel shaft gear | `angle.gearRatio` | `drive.gearRatio` | `drive.diameter` |
+|---|---|---|---|---|
+| 12T | 18T | 25 | 6.75 | 4 |
+| 12T | 16T | 25 | 6 | 4 |
+| 13T | 18T | 25 | 6.2308 | 4 |
+| 13T | 16T | 25 | 5.5385 | 4 |
+| 14T | 18T | 25 | 5.7857 | 4 |
+| 14T | 16T | 25 | 5.1429 | 4 |
+
+## West Coast Products (WCP)
+
+From WCP's ratio tables. Each ratio is named by its ratio set and pinion, so X2-11 is the X2 ratio set with the 11T
+pinion.
+
+### Swerve X2, X2i and X2t
+
+| Ratio | `angle.gearRatio` | `drive.gearRatio` | `drive.diameter` |
 |---|---|---|---|
-| 18T | 25 | 15 | 3 |
-| 16T | 25 | 16.9 | 3 |
+| X1-10 | 12.1 | 7.6737 | 4 |
+| X1-11 | 12.1 | 6.9761 | 4 |
+| X1-12 | 12.1 | 6.3947 | 4 |
+| X2-10 | 12.1 | 6.8211 | 4 |
+| X2-11 | 12.1 | 6.201 | 4 |
+| X2-12 | 12.1 | 5.6842 | 4 |
+| X3-10 | 12.1 | 6.48 | 4 |
+| X3-11 | 12.1 | 5.8909 | 4 |
+| X3-12 | 12.1 | 5.4 | 4 |
+| X4-10 | 12.1 | 5.67 | 4 |
+| X4-11 | 12.1 | 5.1545 | 4 |
+| X4-12 | 12.1 | 4.725 | 4 |
+
+### Swerve X2S and X2St
+
+| Ratio | `angle.gearRatio` | `drive.gearRatio` | `drive.diameter` |
+|---|---|---|---|
+| X1-15 | 25.9 | 6 | 3.5 |
+| X1-16 | 25.9 | 5.625 | 3.5 |
+| X1-17 | 25.9 | 5.2941 | 3.5 |
+| X2-17 | 25.9 | 4.9412 | 3.5 |
+| X2-18 | 25.9 | 4.6667 | 3.5 |
+| X2-19 | 25.9 | 4.4211 | 3.5 |
+| X3-19 | 25.9 | 4.1053 | 3.5 |
+| X3-20 | 25.9 | 3.9 | 3.5 |
+| X3-21 | 25.9 | 3.7143 | 3.5 |
+
+### Swerve X
+
+| Ratio | `angle.gearRatio` | `drive.gearRatio` | `drive.diameter` |
+|---|---|---|---|
+| X1-10 | 11.3143 (396/35) | 7.8462 | 4 |
+| X1-11 | 11.3143 (396/35) | 7.1329 | 4 |
+| X1-12 | 11.3143 (396/35) | 6.5385 | 4 |
+| X2-10 | 11.3143 (396/35) | 6.5571 | 4 |
+| X2-11 | 11.3143 (396/35) | 5.961 | 4 |
+| X2-12 | 11.3143 (396/35) | 5.4643 | 4 |
+| X3-12 | 11.3143 (396/35) | 5.1429 | 4 |
+| X3-13 | 11.3143 (396/35) | 4.7473 | 4 |
+| X3-14 | 11.3143 (396/35) | 4.4082 | 4 |
+
+### Swerve X Flipped
+
+| Ratio | `angle.gearRatio` | `drive.gearRatio` | `drive.diameter` |
+|---|---|---|---|
+| X1-10 | 13.3714 (468/35) | 8.1 | 4 |
+| X1-11 | 13.3714 (468/35) | 7.3636 | 4 |
+| X1-12 | 13.3714 (468/35) | 6.75 | 4 |
+| X2-10 | 13.3714 (468/35) | 6.72 | 4 |
+| X2-11 | 13.3714 (468/35) | 6.1091 | 4 |
+| X2-12 | 13.3714 (468/35) | 5.6 | 4 |
+| X3-10 | 13.3714 (468/35) | 5.5125 | 4 |
+| X3-11 | 13.3714 (468/35) | 5.0114 | 4 |
+| X3-12 | 13.3714 (468/35) | 4.5938 | 4 |
+
+### Swerve XS
+
+| Ratio | `angle.gearRatio` | `drive.gearRatio` | `drive.diameter` |
+|---|---|---|---|
+| X1-12 | 41.25 (165/4) | 6 | 3 |
+| X1-13 | 41.25 (165/4) | 5.5385 | 3 |
+| X1-14 | 41.25 (165/4) | 5.1429 | 3 |
+| X2-14 | 41.25 (165/4) | 4.7143 | 3 |
+| X2-15 | 41.25 (165/4) | 4.4 | 3 |
+| X2-16 | 41.25 (165/4) | 4.125 | 3 |
 
 ## Plummer Industries
+
+Not a preset in the config generator.
 
 | Configuration | `angle.gearRatio` | `drive.gearRatio` | `drive.diameter` |
 |---|---|---|---|
