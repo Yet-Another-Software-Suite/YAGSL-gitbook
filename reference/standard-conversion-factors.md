@@ -66,6 +66,16 @@ From REV's speed ratio chart: the drive reduction is the spur gear over the pini
 | Extra High 4 | 16T | 20T | 46.4236 (9424/203) | 3.75 | 3 |
 | Extra High 5 | 16T | 19T | 46.4236 (9424/203) | 3.5625 | 3 |
 
+## REV EasySwerve
+
+One drive gearing, from REV's EasySwerve docs. The wheel is the 4in Traction Wheel it ships with, or the optional
+4in Spiky Wheel, which measures 3.66in.
+
+| Wheel | `angle.gearRatio` | `drive.gearRatio` | `drive.diameter` |
+|---|---|---|---|
+| Traction Wheel | 20 | 6.3 | 4 |
+| Spiky Wheel | 20 | 6.3 | 3.66 |
+
 ## Thrifty Swerve
 
 Six ratios from three pinions and two bevel shaft gears, worked out from the gear train in Thrifty's bill of
