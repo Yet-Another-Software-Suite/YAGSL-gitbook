@@ -96,7 +96,7 @@ ratio table, so check the gears on your module.
 From WCP's ratio tables. Each ratio is named by its ratio set and pinion, so X2-11 is the X2 ratio set with the 11T
 pinion.
 
-### Swerve X2, X2i and X2t
+### Swerve X2, X2i, X2t and X2c
 
 | Ratio | `angle.gearRatio` | `drive.gearRatio` | `drive.diameter` |
 |---|---|---|---|
