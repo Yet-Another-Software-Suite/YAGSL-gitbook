@@ -107,10 +107,10 @@ empty `canbus` was on Phoenix 6's SystemCore default bus, `can_s2`. Since `2026.
 {% endhint %}
 
 {% hint style="warning" %}
-**REV and Thrifty devices only accept `""` or a bus number.** Port names such as `"can_s1"` or
-`"CAN_S1"` that REV devices used to take now throw
-`REV devices only use the Systemcore and Motioncore CAN buses`. A bus number that doesn't exist
-(such as `"25"`) throws for every vendor.
+**REV and Thrifty devices only accept `""`, a bus number or its `CANPort` name.** Port names such as
+`"can_s1"` that REV devices used to take now throw
+`REV devices only use the Systemcore and Motioncore CAN buses`; use `"1"` or `"CAN_S1"`. A bus number
+that doesn't exist (such as `"25"`) throws for every vendor.
 {% endhint %}
 
 See [Control system and CAN buses](json-schema/README.md#control-system-and-can-buses) for the full

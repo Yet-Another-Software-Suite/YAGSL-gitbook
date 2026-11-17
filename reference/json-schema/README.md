@@ -77,21 +77,24 @@ the same way for every vendor, by `swervelib.core.parser.CANBuses`:
 | `""` (empty or missing) | SystemCore `can_s0`                                                  |
 | `"0"` to `"4"`          | SystemCore `can_s0` to `can_s4`, so `"1"` is `can_s1`                |
 | `"5"` to `"24"`         | Motioncore `can_d0` to `can_d19`, so `"5"` is `can_d0`               |
+| `"CAN_S0"` to `"CAN_S4"`, `"CAN_D0"` to `"CAN_D19"` | The same buses by their `CANPort` name, so `"CAN_S1"` is `can_s1` |
 | any other number        | Rejected with `CAN bus <n> does not exist`                           |
 | anything else           | Passed to the vendor as is, such as a CANivore's name for CTRE devices |
 
-The bus numbers follow WPILib's `CANPort` enum. Whitespace around the value is trimmed, and
+The bus numbers and names follow WPILib's `CANPort` enum, and a name has to be spelled exactly as the
+enum names it: `"can_s1"` isn't a `CANPort` name, so it counts as anything else. Whitespace around the
+value is trimmed, and
 `canbus` is always a JSON **string** (`"1"`, not `1`). For a step by step guide, see
 [Put devices on a different CAN bus](../../how-to/choose-a-can-bus.md).
 
-What each vendor does with a value that is not a bus number:
+What each vendor does with a value that is not a bus number or `CANPort` name:
 
 | Vendor                                              | Non-numeric `canbus`                                                    |
 | --------------------------------------------------- | ----------------------------------------------------------------------- |
 | CTRE (`talonfx_*`, `talonfxs_*`, `pigeon2_can`, `cancoder_can`) | Used as the Phoenix 6 `CANBus` name, such as a CANivore's name or serial number. |
 | Redux (`canandgyro_can`, `canandmag_can`)           | Used as a ReduxLib bus string, such as `"socketcan:can_s1"`.            |
-| REV (`sparkmax_*`, `sparkflex_*`, `splineencoder_can`) | Rejected. REV devices only accept `""` or a bus number.               |
-| ThriftyBot (`nova_*`)                               | Rejected. Thrifty devices only accept `""` or a bus number.             |
+| REV (`sparkmax_*`, `sparkflex_*`, `splineencoder_can`) | Rejected. REV devices only accept `""`, a bus number or its `CANPort` name. |
+| ThriftyBot (`nova_*`)                               | Rejected. Thrifty devices only accept `""`, a bus number or its `CANPort` name. |
 
 `canbus` is ignored for devices that aren't on CAN (`systemcore_internal`, `custom`, and `_dio`,
 `_analog`, and `_attached` absolute encoders). It is currently also ignored by `navx3_can` and
@@ -101,5 +104,5 @@ What each vendor does with a value that is not a bus number:
 **Changed in 2027:** a CTRE device with an empty `canbus` is now on `can_s0`, like every other
 vendor. Before the `canbus` values were unified in `2026.10.09` it ended up on `can_s2`, so a CTRE
 device wired to `can_s2` now needs `"canbus": "2"`. REV devices no longer accept a port name such as
-`"can_s1"`; use the bus number `"1"`.
+`"can_s1"`; use the bus number `"1"` or the `CANPort` name `"CAN_S1"`.
 {% endhint %}

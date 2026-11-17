@@ -19,14 +19,18 @@ they now need `"canbus": "2"`.
 
 <figure><img src="../.gitbook/assets/yagsl-can-buses.png" alt="Three groups of buses. SystemCore: can_s0 is an empty canbus or 0, then can_s1 to can_s4 are 1 to 4. Motioncore: can_d0 is 5, can_d1 is 6, up to can_d19 which is 24. CANivore: its name, for example canivore. An empty canbus is can_s0 for every vendor, a number outside 0 to 24 stops the program at startup, and any other text goes to the vendor as is."><figcaption><p>Which canbus value means which bus.</p></figcaption></figure>
 
-| `canbus` value        | Bus                                                                 |
-| --------------------- | ------------------------------------------------------------------- |
-| `""` (or left out)    | SystemCore `can_s0`                                                 |
-| `"0"` to `"4"`        | SystemCore `can_s0` to `can_s4`                                     |
-| `"5"` to `"24"`       | Motioncore `can_d0` to `can_d19`                                    |
-| Any other text        | Passed to the vendor as is, for example a CANivore's name for CTRE  |
+| `canbus` value                     | Bus                                                                 |
+| ---------------------------------- | ------------------------------------------------------------------- |
+| `""` (or left out)                 | SystemCore `can_s0`                                                 |
+| `"0"` to `"4"`                     | SystemCore `can_s0` to `can_s4`                                     |
+| `"5"` to `"24"`                    | Motioncore `can_d0` to `can_d19`                                    |
+| `"CAN_S0"` to `"CAN_S4"`           | SystemCore `can_s0` to `can_s4`, by WPILib's `CANPort` name         |
+| `"CAN_D0"` to `"CAN_D19"`          | Motioncore `can_d0` to `can_d19`, by WPILib's `CANPort` name        |
+| Any other text                     | Passed to the vendor as is, for example a CANivore's name for CTRE  |
 
-So a device on `can_s1` gets `"canbus": "1"`, and the first Motioncore bus, `can_d0`, is `"5"`.
+So a device on `can_s1` gets `"canbus": "1"` or `"canbus": "CAN_S1"`, and the first Motioncore bus,
+`can_d0`, is `"5"` or `"CAN_D0"`. A name has to be spelled exactly as the `CANPort` enum names it, in
+capitals: `"can_s1"` isn't a `CANPort` name, so it goes to the vendor as is.
 A number outside 0 to 24 stops the robot program at startup with
 `CAN bus <n> does not exist`.
 
@@ -62,19 +66,19 @@ Not every vendor can use a bus name:
 
 | Vendor                                                        | Accepted `canbus` values                                                                   |
 | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| CTRE (`talonfx_*`, `talonfxs_*`, `cancoder_can`, `pigeon2_can`) | Empty, a bus number, or a CANivore's name or serial number                                |
-| REV (`sparkmax_*`, `sparkflex_*`, `splineencoder_can`)        | Empty or a bus number only                                                                 |
-| Thrifty (`nova_*`)                                            | Empty or a bus number only                                                                 |
-| Studica (`navx3_can`)                                         | Empty or a bus number only                                                                 |
-| Redux (`canandgyro_can`, `canandmag_can`)                     | Empty, a bus number, or a ReduxLib bus string such as `socketcan:can_s1`                   |
+| CTRE (`talonfx_*`, `talonfxs_*`, `cancoder_can`, `pigeon2_can`) | Empty, a bus number or its `CANPort` name, or a CANivore's name or serial number          |
+| REV (`sparkmax_*`, `sparkflex_*`, `splineencoder_can`)        | Empty, a bus number, or its `CANPort` name only                                            |
+| Thrifty (`nova_*`)                                            | Empty, a bus number, or its `CANPort` name only                                            |
+| Studica (`navx3_can`)                                         | Empty, a bus number, or its `CANPort` name only                                            |
+| Redux (`canandgyro_can`, `canandmag_can`)                     | Empty, a bus number or its `CANPort` name, or a ReduxLib bus string such as `socketcan:can_s1` |
 | AndyMark (`andymarkhexbore_can`)                              | `canbus` is not used; the device is created from its CAN ID alone. It doesn't work with YAGSL 2027 yet, because the AndyMark library has no `2027_alpha7` build |
 
-That includes port names: a SPARK on `can_s1` is `"1"`, not `"CAN_S1"`. Giving a REV, Thrifty or Studica
-device anything other than a bus number stops the robot program at startup with an
-`IllegalArgumentException` like:
+So a SPARK on `can_s1` is `"1"` or `"CAN_S1"`. Giving a REV, Thrifty or Studica device anything other
+than a bus number or `CANPort` name, such as `"can_s1"` or a CANivore's name, stops the robot program at
+startup with an `IllegalArgumentException` like:
 
 ```
-REV devices only use the Systemcore and Motioncore CAN buses, but canbus is "canivore". Use "" for can_s0, or the bus number, such as "1" for can_s1.
+REV devices only use the Systemcore and Motioncore CAN buses, but canbus is "canivore". Use "" for can_s0, or the bus number or CANPort name, such as "1" or "CAN_S1" for can_s1.
 ```
 
 Encoders with an `_attached`, `_dio` or `_analog` type are not on CAN at all, so their `canbus` is

@@ -66,7 +66,7 @@ other vendor's devices. It used to end up on `can_s2`; if yours is wired to `can
 | [Pigeon 2](#pigeon-2) | `pigeon2_can` | CAN; bus number or CANivore name | Phoenix 6 |
 | [Canandgyro](#canandgyro) | `canandgyro_can` | CAN; bus number or ReduxLib bus string | ReduxLib |
 | [SystemCore IMU](#systemcore-imu) | `systemcore_internal` | Built into the SystemCore; `id` and `canbus` are ignored | none (part of WPILib) |
-| [NavX3-CAN](#navx3-can) | `navx3_can` | CAN; bus number | StudicaLib |
+| [NavX3-CAN](#navx3-can) | `navx3_can` | CAN; bus number or `CANPort` name | StudicaLib |
 | [NavX3 over USB](#navx3-over-usb) | `navx3_usb` | A SystemCore USB port, given by `channel`; `id` and `canbus` are ignored | StudicaLib |
 | [Custom](#custom-gyro) | `custom` | *any*: you construct and supply the gyro yourself | whatever your gyro needs |
 

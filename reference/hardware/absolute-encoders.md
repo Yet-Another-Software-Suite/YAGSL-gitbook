@@ -66,7 +66,7 @@ the absolute encoder.
 | AndyMark Hex Bore | `andymarkhexbore_dio` | SystemCore SmartIO (duty cycle) |
 | AndyMark Hex Bore | `andymarkhexbore_analog` | SystemCore SmartIO (analog input) |
 | AndyMark Hex Bore | `andymarkhexbore_can` | CAN. *Not available in the 2027 builds yet, see below.* |
-| Spline Encoder | `splineencoder_can` | CAN (REV); bus number only. Requires REVLib. |
+| Spline Encoder | `splineencoder_can` | CAN (REV); bus number or `CANPort` name only. Requires REVLib. |
 | Thrifty absolute encoder | `thrifty_attached` | Plugged into a Thrifty Nova angle motor controller's data port (10 pin encoder) |
 | Thrifty absolute encoder | `thrifty_analog` | SystemCore SmartIO (analog input) |
 | Generic analog (5V) | `analog5v_attached` | Plugged into a SparkMAX/SparkFlex angle motor controller's analog port, 5 V range |
