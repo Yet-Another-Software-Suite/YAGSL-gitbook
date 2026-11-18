@@ -15,7 +15,7 @@ digraph G {
   s1q1 -> s1f1 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
   s1h2 [label="Check each absolute encoder's magnet,\nby gently trying to pull it out", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
   s1q2 [label="Does it stay put,\nglued or loctited in\nand centered?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  s1f2 [label="Glue or loctite it in.\nYou'll record the offset\nagain in stage 4", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  s1f2 [label="Glue or loctite it in.\nYou'll record the offset\nagain in stage 5", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; s1q2; s1f2;}
   s1q1 -> s1h2 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
   s1h2 -> s1q2 [color="#6c8ebf", weight=10];
@@ -157,112 +157,112 @@ digraph G {
   s3q4 -> s3h5 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
   s3h5 -> s3q5 [color="#6c8ebf", weight=10];
   s3q5 -> s3f5 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  b4 [label="Stage 4: Are the inversions and offsets right?", shape=box, style="rounded,filled,bold", fillcolor="#dae8fc", color="#6c8ebf", fontsize=16, penwidth=2.4];
+  b4 [label="Stage 4: Are the module locations right?", shape=box, style="rounded,filled,bold", fillcolor="#dae8fc", color="#6c8ebf", fontsize=16, penwidth=2.4];
   s3q5 -> b4 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
-  s4h1 [label="Turn each module counterclockwise, seen from\nabove, while you graph its azimuth motor position,\nMechanisms/swerve/modules/<name>/azimuth/mechanism/position,\nand its absolute encoder, .../<name>/encoder", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  s4q1 [label="Do both\nincrease?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  s4f1 [label="Invert the one that doesn't:\nabsoluteEncoderInverted or\ninverted.angle. See Determine\ninversion, step 1", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  s4h1 [label="Look at each module's location\nin its JSON file", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  s4q1 [label="Is it in inches,\nfrom the robot's\ncenter?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  s4f1 [label="Enter it in inches, from the\nrobot's center to the\nmodule's center", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; s4q1; s4f1;}
   b4 -> s4h1 [color="#6c8ebf", weight=10];
   s4h1 -> s4q1 [color="#6c8ebf", weight=10];
   s4q1 -> s4f1 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  s4h2 [label="Rotate the robot counterclockwise by\nhand while you graph the gyro", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  s4q2 [label="Does the heading\nincrease?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  s4f2 [label="Set gyroInvert.\nSee Determine\ninversion, step 2", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  s4h2 [label="Measure from the robot's center to each\nmodule's center in inches, and compare", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  s4q2 [label="Do the locations\nmatch?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  s4f2 [label="Fix the locations.\nSee Verify your\nmodule locations", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; s4q2; s4f2;}
   s4q1 -> s4h2 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
   s4h2 -> s4q2 [color="#6c8ebf", weight=10];
   s4q2 -> s4f2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  s4h3 [label="Point every wheel forward with its bevel gear\non the left, and graph each module's azimuth\nmotor position with its absolute encoder", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  s4q3 [label="Does every motor\nposition read 0, with\nits encoder on top?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  s4f3 [label="Set the offsets to 0, then\nrecord each one again with\nthe wheel forward and its\nbevel gear on the left", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  s4h3 [label="Zero the gyro with the robot's front\naway from you, and drive forward", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  s4q3 [label="Does it drive\ntoward its front?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  s4f3 [label="Front is whatever the gyro\nreports as 0. See Verify\nyour module locations", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; s4q3; s4f3;}
   s4q2 -> s4h3 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
   s4h3 -> s4q3 [color="#6c8ebf", weight=10];
   s4q3 -> s4f3 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  s4h4 [label="On blocks, run the spin test from\nDetermine inversion, step 3, and\nwatch which way each wheel drives", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  s4q4 [label="Does any module push\nagainst the others?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  s4f4 [label="That module runs backwards:\nflip its drive inversion, or\nrecord its offset again\nif it's 180° off", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
-  {rank=same; s4q4; s4f4;}
-  s4q3 -> s4h4 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
-  s4h4 -> s4q4 [color="#6c8ebf", weight=10];
-  s4q4 -> s4f4 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
-  s4h5 [label="In the spin test, hold the\nright stick left", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  s4q5 [label="Does the robot spin\ncounterclockwise?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  s4f5 [label="A diagonal module swap, inverted\ndrive motors, or offsets recorded\nwith the bevel gears facing right.\nSee Determine inversion, step 3", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
-  {rank=same; s4q5; s4f5;}
-  s4q4 -> s4h5 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b", weight=10];
-  s4h5 -> s4q5 [color="#6c8ebf", weight=10];
-  s4q5 -> s4f5 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  s4h6 [label="On the ground, drive forward and\nwatch odometry, Mechanisms/swerve/pose", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  s4q6 [label="Does odometry\nmove forward too?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  s4f6 [label="Add 180 to every\nabsoluteEncoderOffset", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
-  {rank=same; s4q6; s4f6;}
-  s4q5 -> s4h6 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
-  s4h6 -> s4q6 [color="#6c8ebf", weight=10];
-  s4q6 -> s4f6 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  b5 [label="Stage 5: Are the gear ratios and wheel size right?", shape=box, style="rounded,filled,bold", fillcolor="#dae8fc", color="#6c8ebf", fontsize=16, penwidth=2.4];
-  s4q6 -> b5 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
-  s5h1 [label="Look up your module's angle and drive gear\nratios for its configuration in Standard\nConversion Factors or the config generator", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  s5q1 [label="Does your\nconfig match?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  s5f1 [label="Fix them, such as with the\nconfig generator's Module Type\nand Module Configuration", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  b5 [label="Stage 5: Are the inversions and offsets right?", shape=box, style="rounded,filled,bold", fillcolor="#dae8fc", color="#6c8ebf", fontsize=16, penwidth=2.4];
+  s4q3 -> b5 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  s5h1 [label="Turn each module counterclockwise, seen from\nabove, while you graph its azimuth motor position,\nMechanisms/swerve/modules/<name>/azimuth/mechanism/position,\nand its absolute encoder, .../<name>/encoder", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  s5q1 [label="Do both\nincrease?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  s5f1 [label="Invert the one that doesn't:\nabsoluteEncoderInverted or\ninverted.angle. See Determine\ninversion, step 1", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; s5q1; s5f1;}
   b5 -> s5h1 [color="#6c8ebf", weight=10];
   s5h1 -> s5q1 [color="#6c8ebf", weight=10];
   s5q1 -> s5f1 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  s5h2 [label="Look for a gearing override\nin each module's JSON", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  s5q2 [label="Does any module\nhave its own\ngearing?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  s5f2 [label="Remove it, unless that\nmodule really is geared\ndifferently", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  s5h2 [label="Rotate the robot counterclockwise by\nhand while you graph the gyro", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  s5q2 [label="Does the heading\nincrease?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  s5f2 [label="Set gyroInvert.\nSee Determine\ninversion, step 2", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; s5q2; s5f2;}
   s5q1 -> s5h2 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
   s5h2 -> s5q2 [color="#6c8ebf", weight=10];
-  s5q2 -> s5f2 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
-  s5h3 [label="Spin each module five turns by hand while you\ngraph its azimuth motor position with its\nabsolute encoder, .../<name>/azimuth/mechanism/position and .../<name>/encoder", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  s5q3 [label="Do the lines stay\non top of each other?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  s5f3 [label="The angle gear ratio doesn't\nmatch the absolute encoder:\nfix it", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  s5q2 -> s5f2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  s5h3 [label="Point every wheel forward with its bevel gear\non the left, and graph each module's azimuth\nmotor position with its absolute encoder", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  s5q3 [label="Does every motor\nposition read 0, with\nits encoder on top?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  s5f3 [label="Set the offsets to 0, then\nrecord each one again with\nthe wheel forward and its\nbevel gear on the left", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; s5q3; s5f3;}
-  s5q2 -> s5h3 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b", weight=10];
+  s5q2 -> s5h3 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
   s5h3 -> s5q3 [color="#6c8ebf", weight=10];
   s5q3 -> s5f3 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  s5h4 [label="Measure a wheel's diameter with calipers,\nwith its tread on as it is now", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  s5q4 [label="Does the diameter\nmatch your config?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  s5f4 [label="Update the wheel diameter,\nor replace the tread", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  s5h4 [label="On blocks, run the spin test from\nDetermine inversion, step 3, and\nwatch which way each wheel drives", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  s5q4 [label="Does any module push\nagainst the others?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  s5f4 [label="That module runs backwards:\nflip its drive inversion, or\nrecord its offset again\nif it's 180° off", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; s5q4; s5f4;}
   s5q3 -> s5h4 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
   s5h4 -> s5q4 [color="#6c8ebf", weight=10];
-  s5q4 -> s5f4 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  s5h5 [label="Mark the floor, push the robot a measured\ndistance, such as 3 m, and compare\nodometry, Mechanisms/swerve/pose", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  s5q5 [label="Does odometry\nagree?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  s5f5 [label="Check the drive gear ratio\nand wheel diameter again", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  s5q4 -> s5f4 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  s5h5 [label="In the spin test, hold the\nright stick left", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  s5q5 [label="Does the robot spin\ncounterclockwise?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  s5f5 [label="A diagonal module swap, inverted\ndrive motors, or offsets recorded\nwith the bevel gears facing right.\nSee Determine inversion, step 3", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; s5q5; s5f5;}
-  s5q4 -> s5h5 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  s5q4 -> s5h5 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b", weight=10];
   s5h5 -> s5q5 [color="#6c8ebf", weight=10];
   s5q5 -> s5f5 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  b6 [label="Stage 6: Are the module locations right?", shape=box, style="rounded,filled,bold", fillcolor="#dae8fc", color="#6c8ebf", fontsize=16, penwidth=2.4];
-  s5q5 -> b6 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
-  s6h1 [label="Look at each module's location\nin its JSON file", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  s6q1 [label="Is it in inches,\nfrom the robot's\ncenter?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  s6f1 [label="Enter it in inches, from the\nrobot's center to the\nmodule's center", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  s5h6 [label="On the ground, drive forward and\nwatch odometry, Mechanisms/swerve/pose", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  s5q6 [label="Does odometry\nmove forward too?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  s5f6 [label="Add 180 to every\nabsoluteEncoderOffset", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; s5q6; s5f6;}
+  s5q5 -> s5h6 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  s5h6 -> s5q6 [color="#6c8ebf", weight=10];
+  s5q6 -> s5f6 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  b6 [label="Stage 6: Are the gear ratios and wheel size right?", shape=box, style="rounded,filled,bold", fillcolor="#dae8fc", color="#6c8ebf", fontsize=16, penwidth=2.4];
+  s5q6 -> b6 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  s6h1 [label="Look up your module's angle and drive gear\nratios for its configuration in Standard\nConversion Factors or the config generator", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  s6q1 [label="Does your\nconfig match?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  s6f1 [label="Fix them, such as with the\nconfig generator's Module Type\nand Module Configuration", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; s6q1; s6f1;}
   b6 -> s6h1 [color="#6c8ebf", weight=10];
   s6h1 -> s6q1 [color="#6c8ebf", weight=10];
   s6q1 -> s6f1 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  s6h2 [label="Measure from the robot's center to each\nmodule's center in inches, and compare", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  s6q2 [label="Do the locations\nmatch?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  s6f2 [label="Fix the locations.\nSee Verify your\nmodule locations", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  s6h2 [label="Look for a gearing override\nin each module's JSON", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  s6q2 [label="Does any module\nhave its own\ngearing?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  s6f2 [label="Remove it, unless that\nmodule really is geared\ndifferently", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; s6q2; s6f2;}
   s6q1 -> s6h2 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
   s6h2 -> s6q2 [color="#6c8ebf", weight=10];
-  s6q2 -> s6f2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  s6h3 [label="Zero the gyro with the robot's front\naway from you, and drive forward", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  s6q3 [label="Does it drive\ntoward its front?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  s6f3 [label="Front is whatever the gyro\nreports as 0. See Verify\nyour module locations", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  s6q2 -> s6f2 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  s6h3 [label="Spin each module five turns by hand while you\ngraph its azimuth motor position with its\nabsolute encoder, .../<name>/azimuth/mechanism/position and .../<name>/encoder", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  s6q3 [label="Do the lines stay\non top of each other?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  s6f3 [label="The angle gear ratio doesn't\nmatch the absolute encoder:\nfix it", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; s6q3; s6f3;}
-  s6q2 -> s6h3 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  s6q2 -> s6h3 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b", weight=10];
   s6h3 -> s6q3 [color="#6c8ebf", weight=10];
   s6q3 -> s6f3 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  s6h4 [label="Measure a wheel's diameter with calipers,\nwith its tread on as it is now", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  s6q4 [label="Does the diameter\nmatch your config?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  s6f4 [label="Update the wheel diameter,\nor replace the tread", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; s6q4; s6f4;}
+  s6q3 -> s6h4 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  s6h4 -> s6q4 [color="#6c8ebf", weight=10];
+  s6q4 -> s6f4 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  s6h5 [label="Mark the floor, push the robot a measured\ndistance, such as 3 m, and compare\nodometry, Mechanisms/swerve/pose", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  s6q5 [label="Does odometry\nagree?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  s6f5 [label="Check the drive gear ratio\nand wheel diameter again", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; s6q5; s6f5;}
+  s6q4 -> s6h5 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  s6h5 -> s6q5 [color="#6c8ebf", weight=10];
+  s6q5 -> s6f5 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
   b7 [label="Stage 7: Does the code drive it right?", shape=box, style="rounded,filled,bold", fillcolor="#dae8fc", color="#6c8ebf", fontsize=16, penwidth=2.4];
-  s6q3 -> b7 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  s6q5 -> b7 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
   s7h1 [label="Read your drive code for scaling, such as\nwithScaleTranslation or multiplying\nthe controller axis", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
   s7q1 [label="Is the input\nscaled down?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
   s7f1 [label="Remove the scaling, or\nmake it a slow mode\non purpose", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
