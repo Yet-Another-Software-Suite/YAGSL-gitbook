@@ -2,15 +2,29 @@ digraph G {
   graph [rankdir=TB, nodesep=0.5, ranksep=0.45, pad=0.3, bgcolor="white", dpi=150, splines=ortho];
   node  [fontname="DejaVu Sans", fontsize=13, margin="0.2,0.12", penwidth=1.6];
   edge  [fontname="DejaVu Sans", fontsize=12, penwidth=1.6, arrowhead=onormal, arrowsize=1.1];
+  graph [nodesep=1.1];
   s [label="Autonomous is consistently off:\nit ends short or long\nby about the same amount", shape=box, style="rounded,filled", fillcolor="#dae8fc", color="#6c8ebf"];
-  q1 [label="Push the robot a measured\ndistance, such as 3 m.\nDoes odometry agree?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  q2 [label="Is the drive gear ratio\nright for your module\nand its configuration?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  f2 [label="Fix the gear ratio, such as\nwith the config generator's\nmodule type and configuration", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
-  f3 [label="Measure the wheel diameter\nas the tread is now: worn tread\nis smaller than new. Update it,\nor replace the tread", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
-  d [label="Odometry is right, so the\npath following is off: see\nFix swerve drive drift", shape=box, style="rounded,filled", fillcolor="#d5e8d4", color="#82b366"];
-  s -> q1 [color="#6c8ebf"];
-  q1 -> q2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  q1 -> d [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  h1 [label="Mark the floor, push the robot a measured\ndistance, such as 3 m, and compare\nodometry, Mechanisms/swerve/pose", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q1 [label="Does odometry\nagree?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f1 [label="Odometry is right, so the path\nfollowing is off: see the Robot is\ndrifting flowchart and\nSet up PathPlanner", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; q1; f1;}
+  s -> h1 [color="#6c8ebf", weight=10];
+  h1 -> q1 [color="#6c8ebf", weight=10];
+  q1 -> f1 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q1 -> h2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b", weight=10];
+  h2 [label="Look up your module's drive gear ratio\nfor its configuration in Standard\nConversion Factors or the config generator", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q2 [label="Does your config\nmatch it?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f2 [label="Fix the drive gear ratio", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; q2; f2;}
+  h2 -> q2 [color="#6c8ebf", weight=10];
   q2 -> f2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  q2 -> f3 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q2 -> h3 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  h3 [label="Measure a wheel as it is now:\nuse calipers, or roll it one turn and\ndivide the distance by π", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q3 [label="Does the diameter\nmatch your config?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f3 [label="Worn tread is smaller than new:\nupdate the wheel diameter,\nor replace the tread", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; q3; f3;}
+  h3 -> q3 [color="#6c8ebf", weight=10];
+  q3 -> f3 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q3 -> d [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  d [label="Check that no module has its own\ngearing override, and that the wheels\naren't slipping: lower the path's\nmaximum acceleration", shape=box, style="rounded,filled", fillcolor="#d5e8d4", color="#82b366"];
 }

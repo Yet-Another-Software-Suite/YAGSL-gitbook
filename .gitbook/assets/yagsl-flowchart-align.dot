@@ -2,23 +2,43 @@ digraph G {
   graph [rankdir=TB, nodesep=0.5, ranksep=0.45, pad=0.3, bgcolor="white", dpi=150, splines=ortho];
   node  [fontname="DejaVu Sans", fontsize=13, margin="0.2,0.12", penwidth=1.6];
   edge  [fontname="DejaVu Sans", fontsize=12, penwidth=1.6, arrowhead=onormal, arrowsize=1.1];
+  graph [nodesep=1.1];
   s [label="Wheels don't all point\nstraight when you\ndrive straight", shape=box, style="rounded,filled", fillcolor="#dae8fc", color="#6c8ebf"];
-  q1 [label="Are the CAN IDs and\ndevice type strings right\nfor every module?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  h1 [label="List every device in Phoenix Tuner X\nor the REV Hardware Client", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q1 [label="Do the CAN IDs and\ndevice types match\neach module's JSON?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
   f1 [label="Fix them in each\nmodule's JSON file", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
-  q2 [label="Are the module files\nin swervedrive.json's modules\nlist in the right order?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  f2 [label="Put them in order:\nfront left, front right,\nback left, back right", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
-  q3 [label="Are the module locations\nand absolute encoder\noffsets right?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  f3 [label="Verify the module locations,\nand record each offset with\nevery wheel forward and its\nbevel gear on the left", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
-  q4 [label="Does each module reach\nits angle setpoint\non the graph?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  f4 [label="Tune the azimuth\nPID and feedforward", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
-  d [label="Check the module for\na loose encoder magnet,\nslipping gears or wiring", shape=box, style="rounded,filled", fillcolor="#d5e8d4", color="#82b366"];
-  s -> q1 [color="#6c8ebf"];
+  {rank=same; q1; f1;}
+  s -> h1 [color="#6c8ebf", weight=10];
+  h1 -> q1 [color="#6c8ebf", weight=10];
   q1 -> f1 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  q1 -> q2 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q1 -> h2 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  h2 [label="On blocks, turn one wheel by hand at a time\nand watch which module moves in\nAdvantageScope's Swerve tab", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q2 [label="Does the matching\nmodule move?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f2 [label="Put the module files in\nswervedrive.json's modules list in\norder: front left, front right,\nback left, back right", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; q2; f2;}
+  h2 -> q2 [color="#6c8ebf", weight=10];
   q2 -> f2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  q2 -> q3 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q2 -> h3 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  h3 [label="Measure from the robot's center to\neach module's center, and compare\nwith each module's location", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q3 [label="Do the locations\nmatch?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f3 [label="Fix the locations.\nSee Verify your\nmodule locations", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; q3; f3;}
+  h3 -> q3 [color="#6c8ebf", weight=10];
   q3 -> f3 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  q3 -> q4 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q3 -> h4 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  h4 [label="Point every wheel forward with its bevel\ngear on the left, then graph each absolute\nencoder, Mechanisms/swerve/modules/<name>/encoder", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q4 [label="Does each\nread 0?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f4 [label="Record that module's\nabsolute encoder\noffset again", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; q4; f4;}
+  h4 -> q4 [color="#6c8ebf", weight=10];
   q4 -> f4 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  q4 -> d [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q4 -> h5 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  h5 [label="Graph the desired and current module\nstates, Mechanisms/swerve/states/desired\nand Mechanisms/swerve/states/current", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q5 [label="Does each module\nreach its angle?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f5 [label="Tune the azimuth\nPID and feedforward", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; q5; f5;}
+  h5 -> q5 [color="#6c8ebf", weight=10];
+  q5 -> f5 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q5 -> d [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  d [label="Only one module still acts up:\nsee One module doesn't start\nin the right position", shape=box, style="rounded,filled", fillcolor="#d5e8d4", color="#82b366"];
 }

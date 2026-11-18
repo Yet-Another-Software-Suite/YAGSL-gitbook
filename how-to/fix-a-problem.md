@@ -28,7 +28,7 @@ it catches inversions, bad offsets and CAN ID mistakes in a few minutes.
 | What you see | Start here |
 | --- | --- |
 | One or more modules spin "out of control" | [Troubleshooting flowchart](troubleshooting-flowchart.md) |
-| One module acts up, or doesn't start in the right position every time | A disconnected absolute encoder, a loose magnet, a module built incorrectly, wrong gearing or a dying motor. See the [One module doesn't start in the right position](troubleshooting-flowchart.md#one-module-doesnt-start-in-the-right-position) flowchart. |
+| One module acts up, or doesn't start in the right position every time | A disconnected absolute encoder, a loose magnet, wrong gearing, a dying motor, or a module built incorrectly. See the [One module doesn't start in the right position](troubleshooting-flowchart.md#one-module-doesnt-start-in-the-right-position) flowchart. |
 | A module points the wrong way, or its readings go the wrong way when turned by hand | [Determine inversion](determine-inversion.md), steps 1 and 2 |
 | In the spin test, one wheel pushes against the others | That module's drive motor is inverted. See [Determine inversion](determine-inversion.md), step 3. |
 | In the spin test, the robot spins clockwise instead of counterclockwise | A diagonal module swap, inverted drive motors, or offsets captured with the bevel gears facing right. See [Determine inversion](determine-inversion.md), step 3. |
