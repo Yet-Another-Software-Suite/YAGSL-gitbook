@@ -49,8 +49,8 @@ it catches inversions, bad offsets and CAN ID mistakes in a few minutes.
 
 | What you see | Start here |
 | --- | --- |
-| The robot slides off its line while it drives | The [Translational drift](troubleshooting-flowchart.md#translational-drift) flowchart, then [Fix swerve drive drift](../reference/swerve-drift-causes.md) |
-| The robot's heading turns on its own while it drives | The [Rotational drift](troubleshooting-flowchart.md#rotational-drift) flowchart, then [Fix swerve drive drift](../reference/swerve-drift-causes.md) |
+| The robot slides off its line while it drives | The [Robot is drifting](troubleshooting-flowchart.md#robot-is-drifting) flowchart, left branch, then [Fix swerve drive drift](../reference/swerve-drift-causes.md) |
+| The robot's heading turns on its own while it drives | The [Robot is drifting](troubleshooting-flowchart.md#robot-is-drifting) flowchart, right branch, then [Fix swerve drive drift](../reference/swerve-drift-causes.md) |
 | The modules are slow to reach their angle, overshoot, or shake | [Tune PIDF gains](tune-pidf-gains.md) |
 | In a match, the modules fall behind their angles, but they're fine on blocks | The angle motor's current limit is too low. Raise `statorCurrentLimit.angle` in [physicalproperties.json](../reference/json-schema/physicalproperties-json.md). See the [Wheels not pointing straight](troubleshooting-flowchart.md#wheels-not-pointing-straight) flowchart. |
 | The robot drives slower than it should | A module running backwards, scaling in the drive code, the maximum speed, the gains, the gear ratio or wheel diameter, or a full SystemCore. See the [Robot drives slower than it should](troubleshooting-flowchart.md#robot-drives-slower-than-it-should) flowchart. |

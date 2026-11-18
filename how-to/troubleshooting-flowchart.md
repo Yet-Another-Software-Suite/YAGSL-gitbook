@@ -6,7 +6,7 @@ causes first. The yellow boxes tell you how to check, and the blue question afte
 * [Set up a robot with the config guide](#set-up-a-robot-with-the-config-guide)
 * [Robot drives slower than it should](#robot-drives-slower-than-it-should)
 * [Autonomous is consistently off](#autonomous-is-consistently-off)
-* [Robot is drifting](#robot-is-drifting): [translational](#translational-drift) or [rotational](#rotational-drift)
+* [Robot is drifting](#robot-is-drifting)
 * [Wheels not pointing straight](#wheels-not-pointing-straight)
 * [One module doesn't start in the right position](#one-module-doesnt-start-in-the-right-position)
 * [Swerve modules spinning "out of control"](#swerve-modules-spinning-out-of-control)
@@ -56,37 +56,24 @@ driving, in nine steps. This is the same path, with the checks that send you to 
 
 ## Robot is drifting
 
-Pick the chart for how it drifts. Both check the absolute encoder offsets, since bad offsets cause either kind.
+Both kinds of drift start with the same checks, since errors and bad absolute encoder offsets cause either. Then the
+chart branches on how it drifts:
 
-* **Translational drift**: the robot slides off its line while it drives, without turning.
-* **Rotational drift**: the robot's heading turns on its own while it drives.
+* **Slides off its line**: translational drift. The robot moves off its path without turning.
+* **Heading turns**: rotational drift. The robot's heading turns on its own while it drives.
 
-If it only drifts while it drives and rotates at once, that's usually discretization. YAGSL normally handles it, and
-both charts end with that check.
+Both branches end at discretization, which YAGSL normally handles.
 
-### Translational drift
-
-<figure><img src="../.gitbook/assets/yagsl-flowchart-drift-translation.png" alt="A flowchart for: Translational drift: the robot slides off its line while it drives, without turning. Drive around while you watch the Driver Station console. Loop overruns just after the code starts are normal. Any errors? If yes, fix them first: check the wiring of the encoder, motor controller and gyro. If no, continue. Point every wheel forward with its bevel gear on the left, reboot, then graph each absolute encoder, Mechanisms/swerve/modules/<name>/encoder. Does each read 0? If no, bad absolute encoder offsets: record them again. If they keep changing, see One module doesn't start in the right position. If yes, continue. Drive straight slowly, and graph each module's azimuth motor position with its absolute encoder: Mechanisms/swerve/modules/<name>/azimuth/mechanism/position and Mechanisms/swerve/modules/<name>/encoder. This only checks the angle gearing. Do the lines stay on top of each other? If no, the angle gear ratio doesn't match the absolute encoder: fix it for your module and its configuration. If yes, continue. Drive forward, turn 90°, then drive forward again. Does the drive direction change as the robot turns? If yes, work through the 8 steps. If no, continue. While driving, graph the desired and current module states, Mechanisms/swerve/states/desired and Mechanisms/swerve/states/current. Does each module reach its angle? If no, tune the azimuth PID and feedforward. If yes, continue. Drive straight while rotating, then drive straight without rotating. Does it drift only when driving and rotating at once? If yes, discretization, which YAGSL normally handles: if you set withDiscretizationTime, check it, then tune the gyro angular velocity scale factor. If no, continue. If every check passes: check the rest of Fix swerve drive drift: vision standard deviations, current limits, the center of gravity, PathPlanner."><figcaption><p>The robot slides off its line while it drives, without turning.</p></figcaption></figure>
-
-* Wiring: [Fix swerve drive drift](../reference/swerve-drift-causes.md#hardware-causes)
-* Recording offsets: [Check and calibrate your hardware](../tutorial/04-verify-and-calibrate-hardware.md)
-* Offsets that keep changing: [One module doesn't start in the right position](#one-module-doesnt-start-in-the-right-position)
-* Angle gearing: [Standard Conversion Factors](../reference/standard-conversion-factors.md)
-* Direction changes as the robot turns: [Forward is not forward: the 8 steps](#forward-is-not-forward-the-8-steps)
-* Tuning the azimuth: [Practice in simulation](../tutorial/practice-in-simulation.md) and
-  [Tune PIDF gains](tune-pidf-gains.md)
-* Discretization and everything else: [Fix swerve drive drift](../reference/swerve-drift-causes.md#tuning-order)
-
-### Rotational drift
-
-<figure><img src="../.gitbook/assets/yagsl-flowchart-drift-rotation.png" alt="A flowchart for: Rotational drift: the robot's heading turns on its own while it drives. Drive around while you watch the Driver Station console. Loop overruns just after the code starts are normal. Any errors? If yes, fix them first: check the wiring of the encoder, motor controller and gyro. If no, continue. Leave the robot still for a minute, and graph the gyro heading, Mechanisms/swerve/gyro. Does the heading change while the robot sits still? If yes, the gyro drifts: zero it at the start of your program. Older gyros like the Pigeon 1 and NavX 1 drift the longer they're powered on. If no, continue. Point every wheel forward with its bevel gear on the left, reboot, then graph each absolute encoder, Mechanisms/swerve/modules/<name>/encoder. Does each read 0? If no, bad absolute encoder offsets: record them again. If they keep changing, see One module doesn't start in the right position. If yes, continue. While driving straight, graph every module's drive stator current, Mechanisms/swerve/modules/<name>/drive/current/stator. Does one module need much more current than the others? If yes, its drive motor is dying, or the module binds. Turn the wheel by hand: if it turns freely, replace the motor. If not, clean and grease the module. If no, continue. While driving, graph the desired and current module states, Mechanisms/swerve/states/desired and Mechanisms/swerve/states/current. Does each module reach its speed? If no, tune the drive PID and feedforward. If yes, continue. Measure every wheel's diameter, and look for a gearing override in each module's JSON. Are the wheels the same size, with no per-module gearing? If no, replace worn tread so the wheels match, and remove per-module gearing overrides. If yes, continue. Drive straight while rotating, then drive straight without rotating. Does it drift only when driving and rotating at once? If yes, discretization, which YAGSL normally handles: if you set withDiscretizationTime, check it, then tune the gyro angular velocity scale factor. If no, continue. If every check passes: check the rest of Fix swerve drive drift: vision standard deviations, current limits, the center of gravity, PathPlanner."><figcaption><p>The robot's heading turns on its own while it drives.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/yagsl-flowchart-drift.png" alt="A flowchart for a robot that drifts while it drives. Drive around while you watch the Driver Station console. Loop overruns just after the code starts are normal. Any errors? If yes, fix them first: check the wiring of the encoder, motor controller and gyro. If no, continue. Point every wheel forward with its bevel gear on the left, reboot, then graph each absolute encoder, Mechanisms/swerve/modules/<name>/encoder. Does each read 0? If no, bad absolute encoder offsets: record them again. If they keep changing, see One module doesn't start in the right position. If yes, continue. How does it drift? If it slides off its line without turning, follow the translational checks. If its heading turns on its own, follow the rotational checks. Translational: Drive straight slowly, and graph each module's azimuth motor position with its absolute encoder: ../<name>/azimuth/mechanism/position and ../<name>/encoder. This only checks the angle gearing. Do the lines stay on top of each other? If no, the angle gear ratio doesn't match the absolute encoder: fix it for your module and its configuration. If yes, continue. Drive forward, turn 90°, then drive forward again. Does the drive direction change as the robot turns? If yes, work through the 8 steps. If no, continue. While driving, graph the desired and current module states, Mechanisms/swerve/states/desired and ../states/current. Does each module reach its angle? If no, tune the azimuth PID and feedforward. If yes, continue. Rotational: Leave the robot still for a minute, and graph the gyro heading, Mechanisms/swerve/gyro. Does the heading change while the robot sits still? If yes, the gyro drifts: zero it at the start of your program. Older gyros like the Pigeon 1 and NavX 1 drift the longer they're powered on. If no, continue. While driving straight, graph every module's drive stator current, ../<name>/drive/current/stator. Does one module need much more current than the others? If yes, its drive motor is dying, or the module binds. Turn the wheel by hand: if it turns freely, replace the motor. If not, clean and grease the module. If no, continue. While driving, graph the desired and current module states, Mechanisms/swerve/states/desired and ../states/current. Does each module reach its speed? If no, tune the drive PID and feedforward. If yes, continue. Measure every wheel's diameter, and look for a gearing override in each module's JSON. Are the wheels the same size, with no per-module gearing? If no, replace worn tread so the wheels match, and remove per-module gearing overrides. If yes, continue. Both paths then continue: Drive straight while rotating, then drive straight without rotating. Does it drift only when driving and rotating at once? If yes, discretization, which YAGSL normally handles: if you set withDiscretizationTime, check it, then tune the gyro angular velocity scale factor. If no, continue. If every check passes: check the rest of Fix swerve drive drift: vision standard deviations, current limits, the center of gravity, PathPlanner."><figcaption><p>Robot drifts while it drives: translational on the left, rotational on the right.</p></figcaption></figure>
 
 * Wiring and gyros: [Fix swerve drive drift](../reference/swerve-drift-causes.md#hardware-causes) and
   [Gyroscopes](../reference/hardware/gyroscopes.md)
 * Recording offsets: [Check and calibrate your hardware](../tutorial/04-verify-and-calibrate-hardware.md)
+* Offsets that keep changing: [One module doesn't start in the right position](#one-module-doesnt-start-in-the-right-position)
+* Angle gearing: [Standard Conversion Factors](../reference/standard-conversion-factors.md)
+* Direction changes as the robot turns: [Forward is not forward: the 8 steps](#forward-is-not-forward-the-8-steps)
 * A dying motor: [Fix swerve drive drift](../reference/swerve-drift-causes.md#physical-components)
-* Tuning the drive: [Practice in simulation](../tutorial/practice-in-simulation.md) and
-  [Tune PIDF gains](tune-pidf-gains.md)
+* Tuning: [Practice in simulation](../tutorial/practice-in-simulation.md) and [Tune PIDF gains](tune-pidf-gains.md)
 * Gearing overrides: [Module JSON](../reference/json-schema/module-json.md)
 * Discretization and everything else: [Fix swerve drive drift](../reference/swerve-drift-causes.md#tuning-order)
 
