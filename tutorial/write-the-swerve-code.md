@@ -283,6 +283,12 @@ public class AngularVelocityTeleop implements OpMode
 {% endtab %}
 {% endtabs %}
 
+{% hint style="info" %}
+**Why bind `zeroGyro()` to a button combo?** Gyros can drift, or power on facing the wrong direction.
+A button combo (Menu + View, or both bumpers) lets the driver instantly re-align field-relative
+control without touching the Driver Station. Always bind this. It has saved matches.
+{% endhint %}
+
 Complete projects for both are in the
 [YAGSL examples](https://github.com/Yet-Another-Software-Suite/YAGSL/tree/main/examples).
 
