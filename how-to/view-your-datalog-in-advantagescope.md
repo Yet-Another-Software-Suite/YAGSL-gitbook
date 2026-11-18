@@ -13,12 +13,14 @@ description: >-
 {% hint style="success" %}
 **DataLog is on by default.** YAGSL records a DataLog every time your robot code runs, on the robot and in
 simulation, with the swerve drive under `Swerve/`. You don't need to set anything up: drive a match or a practice, then
-skip to [Step 4](#step-4-pull-the-file-and-open-it-in-advantagescope) to pull the file. Steps 1 and 2 are optional.
+skip ahead to pulling the file. The first two steps are optional.
 {% endhint %}
 
 YAGSL's swerve telemetry is written to a WPILib `DataLog` as well as published to NetworkTables. See [Telemetry, Simulation & Vision](../explanation/telemetry-and-vision.md) for the live NetworkTables tree; this page is the practical walkthrough for looking at a _recorded_ run afterward.
 
-## Step 1 (optional): Start the DataLog at power-on
+{% stepper %}
+{% step %}
+### Start the DataLog at power-on (optional)
 
 `DataLogManager` owns the actual file on disk. It starts on its own, but you can start it yourself once, early, in your `Robot` constructor (WPILib 2027 has no `robotInit()`):
 
@@ -41,8 +43,10 @@ On the real robot, `.wpilog` files are written to a `logs` folder on a USB drive
 {% hint style="warning" %}
 `WPILIB_TBD_*` files left over from a previous boot are deleted on startup, and the oldest logs are deleted when the storage has less than 50 MB free. Pull the logs you care about off the robot.
 {% endhint %}
+{% endstep %}
 
-## Step 2 (optional): Change the swerve drive's DataLog name
+{% step %}
+### Change the swerve drive's DataLog name (optional)
 
 By default `DataLogManager` records every NetworkTables value change, so everything under `Mechanisms/swerve` is already in the file (as `NT:/Mechanisms/swerve/...`) without any setup. YAGSL also writes YAMS' dedicated DataLog entries under `Swerve/`, which keep recording when you turn NetworkTables publishing off for competition. To use a different name, set it on the telemetry config you pass to `SwerveDriveConfig`:
 
@@ -74,17 +78,25 @@ Note the DataLog tree uses a top-level `Swerve` (the name you chose, no `Mechani
 {% endhint %}
 
 Which fields exist depends on the `TelemetryVerbosity`: `LOW` logs the pose and gyro, `MID` adds the measured chassis speeds and module states, and `HIGH` adds the desired ones.
+{% endstep %}
 
-## Step 3: Run it and record
+{% step %}
+### Run it and record
 
 Deploy or simulate the robot, enable it, and drive around for a bit. Every field above writes to both NetworkTables and the DataLog on each `drive.updateTelemetry()` call.
+{% endstep %}
 
-## Step 4: Pull the file and open it in AdvantageScope
+{% step %}
+### Pull the file and open it in AdvantageScope
 
 1. Grab the `.wpilog` off the SystemCore (the USB drive, or `scp systemcore@10.TE.AM.2:/home/systemcore/logs/*.wpilog .`), or straight from your sim project's `logs/` folder.
-2. Open **AdvantageScope**, then **File → Open File...** (or drag the `.wpilog` onto the window). Do **not** use "Connect to Robot/Simulator". That connects live over NetworkTables, which shows _current_ values, not the recorded run.
+2. Open **AdvantageScope**, click **File → Open Log(s)...**, and pick the `.wpilog` (or drag it onto the window). Do **not** use **Connect to Robot** or **Connect to Simulator**. They connect live over NetworkTables, which shows _current_ values, not the recorded run.
 
-## Step 5: Explore the data
+<figure><img src="../.gitbook/assets/datalog-open-log.gif" alt="In AdvantageScope, the user clicks File, then Open Log(s). In the file dialog they open Home, Documents, MyRobot and logs, pick WPILIB_20261118_225704.wpilog and click Open. The sidebar shows 218 fields and 73 seconds of runtime, with Swerve, messages, NT, NTConnection and systemTime."><figcaption><p>Opening a DataLog with File → Open Log(s).</p></figcaption></figure>
+{% endstep %}
+
+{% step %}
+### Explore the data
 
 Add a tab to visualize the data:
 
@@ -105,6 +117,8 @@ Scrub the timeline at the top of the window to step through the run, or hit play
 {% hint style="success" %}
 Because this is just a file, you can open the same `.wpilog` in as many tabs/windows as you want, compare two different matches side by side, or hand the file to a teammate to look at independently. None of that requires the robot, the simulator, or AdvantageKit replay to be running.
 {% endhint %}
+{% endstep %}
+{% endstepper %}
 
 ## Related pages
 

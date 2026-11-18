@@ -7,41 +7,44 @@ description: >-
 
 # Set up AdvantageScope
 
-## Opening
+[AdvantageScope](https://github.com/Mechanical-Advantage/AdvantageScope) is included with WPILib, so there is no separate download. With every WPILib update, re-run the [WPILib installer](https://docs.wpilib.org/en/stable/docs/zero-to-robot/step-2/wpilib-setup.html) to get the latest tools.
 
-Since the 2024 season, [AdvantageScope](https://github.com/Mechanical-Advantage/AdvantageScope) has been included with the WPILib installation. There is no external download required, but with every WPILib update you should re-download the [WPILib installer](https://docs.wpilib.org/en/stable/docs/zero-to-robot/step-2/wpilib-setup.html) to get the latest version of WPILib tools.
+{% stepper %}
+{% step %}
+### Open AdvantageScope
 
-## Configuring AdvantageScope
+Open `AdvantageScope (WPILib)`, or in VS Code open the command palette, run **WPILib: Start Tool**, and click **AdvantageScope**.
+{% endstep %}
 
-1. Connect your laptop to the robot.
-2. Open `AdvantageScope (WPILib)`, or in VS Code open the command palette and type `WPILib: Start Tool`, then click `AdvantageScope`.
-3. Click `Help`, then `Show Preferences`.
+{% step %}
+### Set the robot address
 
-<figure><img src="../.gitbook/assets/AdvantageScope-Preferences.png" alt="AdvantageScope Help menu."><figcaption><p>AdvantageScope's help menu</p></figcaption></figure>
+Click **App → Show Preferences**. In **Robot Address**, enter the SystemCore's address for your team number, `10.TE.AM.2` (team 1234 is `10.12.34.2`), and click the check mark.
 
-4. In the **Robot Address** field, enter the SystemCore's IP address based on your team number: `10.TE.AM.2`.
+<figure><img src="../.gitbook/assets/advantagescope-robot-address.gif" alt="In AdvantageScope, the user clicks App, then Show Preferences. In the preferences, they replace the Robot Address 127.0.0.1 with 10.12.34.2 and click the check mark."><figcaption><p>Setting the robot address in App → Show Preferences.</p></figcaption></figure>
 
-<figure><img src="../.gitbook/assets/AdvantageScope-Preferences-IP.png" alt="Robot Address field in AdvantageScope preferences."><figcaption><p>Robot Address field highlighted</p></figcaption></figure>
+Connected to the SystemCore over USB, or to its built-in Wi-Fi access point? Click **File → Use Systemcore USB Address** or **File → Use Systemcore Wi-Fi Address** instead.
+{% endstep %}
 
-5. Connect to the robot (or the simulator).
+{% step %}
+### Connect to the robot or the simulator
 
-<figure><img src="../.gitbook/assets/AdvantageScope-Connect.png" alt="Connect to Robot menu in AdvantageScope."><figcaption><p>Connect to Robot menu</p></figcaption></figure>
+Click **File → Connect to Robot → Default: NetworkTables**. To watch the simulator instead, click **File → Connect to Simulator → Default: NetworkTables**. The robot's fields appear in the sidebar.
 
-6. On the right side of the window, click `+` to add a new tab.
+<figure><img src="../.gitbook/assets/advantagescope-connect.gif" alt="The user clicks File, then Connect to Simulator, then Default: NetworkTables. The sidebar fills with Mechanisms, PathPlanner, Robot, Tunables, DriverStation and Tuning."><figcaption><p>Connecting to the simulator.</p></figcaption></figure>
+{% endstep %}
 
-<figure><img src="../.gitbook/assets/AdvantageScope-Add.png" alt="Add new tab button in AdvantageScope."><figcaption><p>Add new tab</p></figcaption></figure>
+{% step %}
+### Add a Swerve tab
 
-7. Add a new 🦀 Swerve tab.
+Click **+** at the top right, then **Swerve**. In the sidebar, open **Mechanisms → swerve**, then drag each of these fields into **Sources**:
 
-<figure><img src="../.gitbook/assets/AdvantageScope-Swerve.png" alt="Swerve tab in AdvantageScope."><figcaption><p>Swerve tab</p></figcaption></figure>
+* `Mechanisms/swerve/states/current`
+* `Mechanisms/swerve/states/desired`
+* `Mechanisms/swerve/chassis/current`
+* `Mechanisms/swerve/chassis/desired`
 
-8. In the Sources field, drag in each `Mechanisms/swerve` field:
-   * `Mechanisms/swerve/states/current`
-   * `Mechanisms/swerve/states/desired`
-   * `Mechanisms/swerve/chassis/current`
-   * `Mechanisms/swerve/chassis/desired`
-
-<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/advantagescope-swerve-tab.gif" alt="The user clicks the plus button and picks Swerve. They open Mechanisms, swerve, states and chassis in the sidebar, and drag states current, states desired, chassis current and chassis desired into Sources. The swerve diagram shows each module's measured velocity in blue and desired velocity in red, and the robot's measured and desired velocity in green and orange."><figcaption><p>Adding the swerve fields to a Swerve tab.</p></figcaption></figure>
 
 {% hint style="info" %}
 You may need to enable your robot before AdvantageScope shows values for these fields.
@@ -52,13 +55,11 @@ You may need to enable your robot before AdvantageScope shows values for these f
 {% endhint %}
 
 To see the robot's pose on a 2D/3D field, add a **2D Field** or **3D Field** tab instead and drag in `Mechanisms/swerve/pose`.
+{% endstep %}
+{% endstepper %}
 
 ## Reading the display
 
-{% hint style="info" %}
-The **RED** lines are the measured velocity and position of each swerve module.
+Each source is drawn in the color shown beside it in **Sources**. Added in the order above, the **blue** arrows are each module's measured velocity and the **red** arrows are the velocity it was commanded to. The **green** and **orange** arrows are the robot's measured and commanded velocity.
 
-The **BLUE** lines are the velocity and position each module was commanded to.
-{% endhint %}
-
-Large, persistent gaps between the red and blue lines usually point to a tuning issue. See [how to tune PIDF gains](tune-pidf-gains.md) and [swerve drive drift causes](../reference/swerve-drift-causes.md).
+Large, persistent gaps between the measured and commanded arrows usually point to a tuning issue. See [how to tune PIDF gains](tune-pidf-gains.md) and [swerve drive drift causes](../reference/swerve-drift-causes.md).
