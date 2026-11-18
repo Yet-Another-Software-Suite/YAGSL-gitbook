@@ -15,7 +15,9 @@ SystemCore default, `can_s2`. If your TalonFX, CANcoder or Pigeon 2 devices are 
 they now need `"canbus": "2"`.
 {% endhint %}
 
-## 1. Find the bus each device is wired to
+{% stepper %}
+{% step %}
+### Find the bus each device is wired to
 
 <figure><img src="../.gitbook/assets/yagsl-can-buses.png" alt="Three groups of buses. SystemCore: can_s0 is an empty canbus or 0, then can_s1 to can_s4 are 1 to 4. Motioncore: can_d0 is 5, can_d1 is 6, up to can_d19 which is 24. CANivore: its name, for example canivore. An empty canbus is can_s0 for every vendor, a number outside 0 to 24 stops the program at startup, and any other text goes to the vendor as is."><figcaption><p>Which canbus value means which bus.</p></figcaption></figure>
 
@@ -33,8 +35,10 @@ So a device on `can_s1` gets `"canbus": "1"` or `"canbus": "CAN_S1"`, and the fi
 capitals: `"can_s1"` isn't a `CANPort` name, so it goes to the vendor as is.
 A number outside 0 to 24 stops the robot program at startup with
 `CAN bus <n> does not exist`.
+{% endstep %}
 
-## 2. Set `canbus` on each device
+{% step %}
+### Set `canbus` on each device
 
 `canbus` is a string, so bus numbers are quoted:
 
@@ -59,8 +63,10 @@ A number outside 0 to 24 stops the robot program at startup with
 ```
 
 Devices in one module don't have to share a bus, and neither do the modules.
+{% endstep %}
 
-## 3. Check what your vendor accepts
+{% step %}
+### Check what your vendor accepts
 
 Not every vendor can use a bus name:
 
@@ -84,11 +90,15 @@ REV devices only use the Systemcore and Motioncore CAN buses, but canbus is "can
 Encoders with an `_attached`, `_dio` or `_analog` type are not on CAN at all, so their `canbus` is
 ignored. An `_attached` encoder is read through the angle motor controller, on that controller's
 bus.
+{% endstep %}
 
-## 4. Verify it
+{% step %}
+### Verify it
 
 Deploy and check the Driver Station console. A wrong bus doesn't stop the program the way a
 malformed value does: the device is simply never found, so you get that vendor's usual "device not
 detected" alerts and a module that doesn't respond. If one module or one vendor's devices are
 missing, compare its `canbus` against the bus it is physically wired to before looking anywhere
 else.
+{% endstep %}
+{% endstepper %}
