@@ -47,5 +47,3 @@ robot's center, in inches:
 | Front Right (FR) | + | − |
 | Back Left (BL) | − | + |
 | Back Right (BR) | − | − |
-
-With this information in hand, move on to [installing YAGSL](02-install-yagsl.md).

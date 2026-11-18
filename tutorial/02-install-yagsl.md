@@ -75,4 +75,4 @@ If your network blocks the download, install YAGSL and YAMS from their offline z
 
 ## Build
 
-Run a Gradle build to pull down the libraries before continuing. Once your build succeeds with all vendordeps installed, move on to [generating your configuration](03-generate-your-configuration.md).
+Run a Gradle build to pull down the libraries, and make sure it succeeds.

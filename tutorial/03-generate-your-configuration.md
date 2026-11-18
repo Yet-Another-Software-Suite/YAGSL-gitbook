@@ -110,5 +110,3 @@ with an empty `canbus` moved from `can_s2` to `can_s0`.
 
 Commit these files to your project's version control along with your code. They're part of your
 robot program, not a build artifact.
-
-Next: [write the swerve code](write-the-swerve-code.md).

@@ -108,5 +108,3 @@ values for your robot.
 <figure><img src="../.gitbook/assets/yagsl-live-tuning-save.png" alt="The tuning values under Tuning/swerve/modules map to the JSON: azimuth/feedback/p to angle.p, azimuth/feedback/d to angle.d, drive/feedforward/v to drive.v and drive/feedback/p to drive.p. In simulation they go into pidfproperties_sim.json, which is read only in simulation. On the real robot they go into pidfproperties.json."><figcaption><p>Where the live values belong.</p></figcaption></figure>
 
 [YAMS' live tuning page](https://yams.yassrobotics.com/documentation/understanding/live-tuning#swerve-drive) covers every swerve tuning key, `feedforward/s`, and auto-align tuning.
-
-Next: [check and calibrate your hardware](04-verify-and-calibrate-hardware.md).

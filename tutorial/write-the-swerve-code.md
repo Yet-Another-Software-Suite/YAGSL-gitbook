@@ -292,4 +292,4 @@ control without touching the Driver Station. Always bind this. It has saved matc
 Complete projects for both are in the
 [YAGSL examples](https://github.com/Yet-Another-Software-Suite/YAGSL/tree/main/examples).
 
-Build the project. Once it compiles, move on to [practicing in simulation](practice-in-simulation.md).
+Build the project, and make sure it compiles.

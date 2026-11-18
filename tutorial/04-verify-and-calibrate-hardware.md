@@ -104,5 +104,3 @@ You can also run it from the dashboard: with drive tuning on, set `Tuning/swerve
 {% endstep %}
 
 {% endstepper %}
-
-Once every module reports correctly and has a captured offset, move on to [tuning and driving](05-deploy-and-drive.md).
