@@ -1,7 +1,7 @@
 # Your First Swerve Robot
 
 This tutorial takes a team from a bare WPILib project to a driving swerve robot using YAGSL. Follow
-the five steps in order. Each one builds on the last, and by the end your robot will be driving
+the seven steps in order. Each one builds on the last, and by the end your robot will be driving
 under field-relative control with a tuned configuration.
 
 {% hint style="success" %}
@@ -32,7 +32,7 @@ from CTRE, you can also consider the [Tuner X Swerve Drive Generator](https://pr
 as an alternative. YAGSL supports a much wider range of hardware and mixes vendors freely.
 {% endhint %}
 
-## The five steps
+## The seven steps
 
 1. [Gather your robot information](01-gather-your-robot-information.md): collect the CAN IDs,
    gear ratios, and module locations you'll need before you touch any software.
@@ -41,10 +41,14 @@ as an alternative. YAGSL supports a much wider range of hardware and mixes vendo
 3. [Generate your configuration](03-generate-your-configuration.md): use
    [config.yagsl.com](https://config.yagsl.com) to turn your robot information into a config
    directory.
-4. [Verify and calibrate your hardware](04-verify-and-calibrate-hardware.md): confirm every motor,
+4. [Write the swerve code](write-the-swerve-code.md): wire up `SwerveParser` in a subsystem
+   (Commands v2) or mechanism (Commands v3) and bind your controller.
+5. [Practice in simulation](practice-in-simulation.md): learn live tuning on the dashboard while
+   nothing can break.
+6. [Check and calibrate your hardware](04-verify-and-calibrate-hardware.md): confirm every motor,
    encoder, and gyro reports direction correctly, and capture absolute encoder offsets.
-5. [Deploy and drive](05-deploy-and-drive.md): wire up `SwerveParser` in a subsystem (Commands v2)
-   or mechanism (Commands v3), bind your controller, and take your robot for its first drive.
+7. [Tune and drive](05-deploy-and-drive.md): tune the modules on the real robot and take it for its
+   first drive.
 
-Once you're driving, see the **How-to Guides** section for tuning PIDF gains, diagnosing drift, and
-other tasks you'll come back to as you keep developing.
+If something goes wrong along the way, [Find your problem](../how-to/fix-a-problem.md) matches what
+your robot is doing to the page that fixes it.

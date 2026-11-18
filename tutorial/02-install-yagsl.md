@@ -1,4 +1,4 @@
-# Install YAGSL
+# 2. Install YAGSL
 
 YAGSL 2027 is built on WPILib 2027 (`2027_alpha7`) and Java 25, and runs on the SystemCore. Install the matching WPILib release first, then create or open your robot project.
 
@@ -44,14 +44,16 @@ YAGSL does not require any hardware vendor library. It only loads a vendor's cla
 | REVLib         | SparkMAX, SparkFlex, REV spline encoder                                    |
 | ReduxLib       | Canandgyro, Canandmag                                                      |
 | ThriftyLib     | Thrifty Nova                                                               |
-| Studica        | NavX3 (no `2027_alpha7` build yet, see the warning below)                  |
+| StudicaLib     | NavX3, over CAN or USB                                                     |
 | None           | SystemCore IMU, and encoders wired to the SystemCore's DIO or analog ports |
 
 Use the 2027 build of each vendor library. If your configuration names a device whose vendor library is not installed, the project still builds, but the robot program fails at startup when `SwerveParser` tries to create that device.
 
 {% hint style="warning" %}
-StudicaLib and the AndyMark library have not published a `2027_alpha7` vendordep yet. Until they do, the `navx3_can` gyro and the `andymarkhexbore_can` encoder cannot be used with YAGSL 2027.
+The AndyMark library has not published a `2027_alpha7` vendordep yet. Until it does, the `andymarkhexbore_can` encoder cannot be used with YAGSL 2027. Wire the encoder to a SmartIO port or the angle motor controller instead.
 {% endhint %}
+
+[Vendordeps and offline install](../reference/vendordep-installation.md#optional-vendor-libraries) lists which vendor library each device type string needs.
 
 {% hint style="info" %}
 If a vendor isn't in the Vendor Dependencies panel yet on your WPILib version, install it the manual way instead. [Installing 3rd-party libraries](https://docs.wpilib.org/en/2027/docs/software/vscode-overview/3rd-party-libraries.html) covers pasting a URL, which you can get from the vendor's own install page.
@@ -61,13 +63,11 @@ If a vendor isn't in the Vendor Dependencies panel yet on your WPILib version, i
 Your vendor's hardware client (REV Hardware Client, Phoenix Tuner X) is a separate tool from the vendordep. Install it too, it's needed for firmware updates and low-level device configuration.
 {% endhint %}
 
-## Offline install
+## No internet at the robot?
 
-If your network blocks the download, get `<version>-YAGSL-Offline.zip` from the [YAGSL GitHub releases](https://github.com/Yet-Another-Software-Suite/YAGSL/releases). It contains a `maven` folder and a `vendordeps` folder that merge into your WPILib `2027_alpha7` home folder:
+If your network blocks the download, install YAGSL and YAMS from their offline zips instead. See
+[Offline install](../reference/vendordep-installation.md#offline).
 
-* **Windows:** extract into `C:\Users\Public\wpilib\2027_alpha7`
-* **macOS and Linux:** extract into `~/wpilib/2027_alpha7`
+## Build
 
-Then run **WPILib: Manage Vendor Libraries → Install new libraries (offline)** and pick **YAGSL (Commands v2)** or **YAGSL (Commands v3)**. YAMS has a matching `<version>-YAMS-Offline.zip` on its own [releases page](https://github.com/Yet-Another-Software-Suite/YAMS/releases), installed the same way.
-
-Run a Gradle build afterward to pull down the libraries before continuing. Once your build succeeds with all vendordeps installed, move on to [generating your configuration](03-generate-your-configuration.md).
+Run a Gradle build to pull down the libraries before continuing. Once your build succeeds with all vendordeps installed, move on to [generating your configuration](03-generate-your-configuration.md).

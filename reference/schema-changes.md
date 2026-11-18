@@ -1,4 +1,4 @@
-# Schema Changes (Migrating to 2027 and from pre-2026.8.05)
+# Upgrade to YAGSL 2027
 
 This page covers the two breaking changes to YAGSL's configuration and entry point:
 
@@ -124,10 +124,10 @@ rules.
   [Motor Controllers](hardware/motor-controllers.md#thrifty-nova).
 - **`systemcore_internal`** now works: it is the IMU built into the SystemCore. See
   [Gyroscopes](hardware/gyroscopes.md#systemcore-imu).
-- **`navx3_can` and `andymarkhexbore_can` are not available yet**, because StudicaLib and
-  AndyMark's library have no `2027_alpha7` release. Use a
-  [custom gyro](hardware/gyroscopes.md#custom-gyro) or a different encoder connection until they
-  do.
+- **`navx3_usb`** is new: a NavX3 plugged into a SystemCore USB port. See
+  [Gyroscopes](hardware/gyroscopes.md#navx3-over-usb).
+- **`andymarkhexbore_can` is not available yet**, because AndyMark's library has no `2027_alpha7`
+  release. Use a different encoder connection until it does.
 - **`channel`** on `_dio` and `_analog` absolute encoders is a SystemCore SmartIO channel.
 
 ### Gyro API

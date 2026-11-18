@@ -156,7 +156,7 @@ var cfg = new SwerveDriveConfig()
    ```java
    RobotModeTriggers.utility().whileTrue(Commands.idle(swerve).withName("Live Tuning"));
    ```
-3. **Start the tuning command** YAMS publishes under `Mechanisms/swerve/tuning` (click it in your dashboard, or set its `running` entry to `true`). Values under `Tuning/swerve/` only take effect while it runs.
+3. **Start the tuning command** YAMS publishes as `Tuning/swerve/Live Tuning` (click it in your dashboard, or set its `running` entry to `true`). YAMS releases before 2026.11.03 published it under `Mechanisms/swerve/tuning`. Values under `Tuning/swerve/` only take effect while it runs.
 4. **Turn on one tuning mode** below and adjust its values. Only one mode drives at a time; if you enable more than one, auto-align wins over drive tuning, and drive tuning wins over azimuth tuning.
 5. **Copy the gains you settle on back** into `pidfproperties.json` (module gains) or your `SwerveDriveConfig` (drive-to-pose controllers). Live values are not saved and are gone on the next code restart.
 

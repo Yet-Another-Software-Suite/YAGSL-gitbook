@@ -1,9 +1,9 @@
 # Reference
 
-Information-oriented lookup material: exact JSON field names/types, supported hardware, and the
-YAMS API surface YAGSL hands you. Come here when you already know what you're doing and need a
-precise answer. For step-by-step guidance see [Tutorial](../tutorial/README.md) or
-[How-to Guides](../how-to/how-to.md).
+Lookup material: exact JSON field names and types, supported hardware, and the YAMS API YAGSL hands
+you. Come here when you know what you're doing and need a precise answer. For step-by-step guidance,
+see [Your first swerve robot](../tutorial/README.md), [Find your problem](../how-to/fix-a-problem.md)
+or [Tune and extend](../how-to/how-to.md).
 
 - [JSON Configuration Schema](json-schema/README.md): every field in `swervedrive.json`, module
   files, `physicalproperties.json`, and `pidfproperties.json`.
@@ -11,11 +11,10 @@ precise answer. For step-by-step guidance see [Tutorial](../tutorial/README.md) 
   tables plus per-device notes.
 - [Standard Conversion Factors](standard-conversion-factors.md): gear ratios/wheel diameters for
   common COTS swerve modules.
-- [Vendordep Installation](vendordep-installation.md): the two YAGSL vendordeps (Commands v2 and
-  Commands v3) and which vendor libraries you need for your hardware.
+- [Vendordeps and offline install](vendordep-installation.md): what each YAGSL vendordep contains,
+  pinning a release, offline installs, and which vendor library each device type needs.
 - [API Reference](api-reference.md): the `swervelib` packages, the `SwerveParser` entry points, and
   where to find docs for `SwerveDrive`, `SwerveModule`, and friends (they're YAMS classes).
-- [Schema Changes](schema-changes.md): migrating a 2026 project to YAGSL 2027, and migrating a
-  pre-2026.8.05 `swerve/` config directory.
-- [Swerve Drive Drift: Causes and Tuning Order](swerve-drift-causes.md): hardware/software/config
-  causes of drift, and the fixed order to tune them out.
+
+Upgrading from an older YAGSL? See [Upgrade to YAGSL 2027](schema-changes.md) and the
+[Changelog](../explanation/changelog.md).
