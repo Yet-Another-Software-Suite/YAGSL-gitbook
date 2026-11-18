@@ -41,6 +41,7 @@ Incorrect, worn, or loose wiring produces different symptoms depending on which 
 
 **Magnetic (absolute) encoder**
 
+* [ ] The encoder is too far from the magnet to read it reliably. The vendor's documentation says how to tell, usually from a status light or a magnet strength reading.
 * [ ] Magnet is not secured to the swerve module and slips while in motion; absolute encoder offsets would need constant readjustment until the magnet is secured (loctite/glue it in).
 * [ ] Magnetic encoder itself is not secured to the module.
 
@@ -60,7 +61,7 @@ Incorrect, worn, or loose wiring produces different symptoms depending on which 
 
 ## Software causes
 
-* [ ] Constant `Command Scheduler loop overruns` because of other parts of your code.
+* [ ] Constant `Command Scheduler loop overruns` because of other parts of your code. Overruns just after the code starts are normal, and on the SystemCore overruns may no longer cause drift.
 * [ ] Maximum physical velocity isn't set correctly. See `SwerveDriveConfig.withMaximumChassisSpeed()`/`withMaximumModuleSpeed()`.
 * [ ] If using open-loop control, modules run at different speeds.
 * [ ] Controller input filtering.

@@ -19,9 +19,9 @@ digraph G {
   h2 -> q2 [color="#6c8ebf", weight=10];
   q2 -> f2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
   q2 -> h3 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
-  h3 [label="Measure from the robot's center to\neach module's center, and compare\nwith each module's location", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  h3 [label="Measure from the robot's center to each\nmodule's center in inches, and compare\nwith each module's location, also in inches", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
   q3 [label="Do the locations\nmatch?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  f3 [label="Fix the locations.\nSee Verify your\nmodule locations", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  f3 [label="Fix the locations, in inches.\nSee Verify your\nmodule locations", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; q3; f3;}
   h3 -> q3 [color="#6c8ebf", weight=10];
   q3 -> f3 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];

@@ -12,39 +12,46 @@ digraph G {
   h1 -> q1 [color="#6c8ebf", weight=10];
   q1 -> f1 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
   q1 -> h2 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
-  h2 [label="With the wheel pointing straight, draw a straight
-line across the magnet and the module frame.
-Drive the robot, point the wheel straight again,
-and look at the line", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  q2 [label="Does the line
-still line up?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  f2 [label="The magnet slipped: glue or
-loctite it in, then record the
-absolute encoder offset again", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  h2 [label="Check the encoder's magnet reading: its status\nlight, or the magnet health in the vendor's tool.\nThe vendor's documentation says what each means", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q2 [label="Does it report a\ngood magnet?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f2 [label="The encoder is too far from\nthe magnet, or off center: close\nthe gap to the vendor's spec,\nthen record the offset again", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; q2; f2;}
   h2 -> q2 [color="#6c8ebf", weight=10];
   q2 -> f2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
   q2 -> h3 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
-  h3 [label="Graph the motor position,\nMechanisms/swerve/modules/<name>/azimuth/mechanism/position,\nwith the absolute encoder, and turn the wheel by hand", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  q3 [label="Do the lines stay\non top of each other?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  f3 [label="The gearing is wrong: set\nthe angle gear ratio for your\nmodule and its configuration", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  h3 [label="With the wheel pointing straight, draw a straight
+line across the magnet and the module frame.
+Drive the robot, point the wheel straight again,
+and look at the line", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q3 [label="Does the line
+still line up?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f3 [label="The magnet slipped: glue or
+loctite it in, then record the
+absolute encoder offset again", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; q3; f3;}
   h3 -> q3 [color="#6c8ebf", weight=10];
   q3 -> f3 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
   q3 -> h4 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
-  h4 [label="While the modules turn, graph every
-module's azimuth stator current,
-Mechanisms/swerve/modules/<name>/azimuth/current/stator", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  q4 [label="Does this motor need
-about the same current
-as the others to move?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  f4 [label="It's dying, or the module binds.
-Turn the wheel by hand: if it turns
-freely, replace the motor. If not,
-clean and grease the module", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  h4 [label="Graph the motor position,\nMechanisms/swerve/modules/<name>/azimuth/mechanism/position,\nwith the absolute encoder, and turn the wheel by hand", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q4 [label="Do the lines stay\non top of each other?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f4 [label="The gearing is wrong: set\nthe angle gear ratio for your\nmodule and its configuration", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; q4; f4;}
   h4 -> q4 [color="#6c8ebf", weight=10];
   q4 -> f4 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  q4 -> d [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  q4 -> h5 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  h5 [label="While the modules turn, graph every
+module's azimuth stator current,
+Mechanisms/swerve/modules/<name>/azimuth/current/stator", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q5 [label="Does this motor need
+about the same current
+as the others to move?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f5 [label="It's dying, or the module binds.
+Turn the wheel by hand: if it turns
+freely, replace the motor. If not,
+clean and grease the module", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; q5; f5;}
+  h5 -> q5 [color="#6c8ebf", weight=10];
+  q5 -> f5 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q5 -> d [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
   d [label="The module is built incorrectly. Turn the wheel\nexactly one turn by hand: the absolute encoder\nshould read one turn too. Compare it with another\nmodule part by part, and rebuild it by the\nmanufacturer's guide", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
 }

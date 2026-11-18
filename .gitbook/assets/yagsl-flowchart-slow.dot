@@ -4,48 +4,48 @@ digraph G {
   edge  [fontname="DejaVu Sans", fontsize=12, penwidth=1.6, arrowhead=onormal, arrowsize=1.1];
   graph [nodesep=1.1];
   s [label="Robot drives slower\nthan it should", shape=box, style="rounded,filled", fillcolor="#dae8fc", color="#6c8ebf"];
-  h1 [label="Check how much free storage\nthe SystemCore has left", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  q1 [label="Is it nearly full?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  f1 [label="Delete old logs,\nthen reboot the SystemCore", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  h1 [label="Put the robot on blocks, run the spin test\nfrom Determine inversion, and watch\nwhich way each wheel drives", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q1 [label="Does any module push\nagainst the others?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f1 [label="That module runs backwards:\nflip its drive inversion, or\nrecord its absolute encoder\noffset again if it's 180° off", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; q1; f1;}
   s -> h1 [color="#6c8ebf", weight=10];
   h1 -> q1 [color="#6c8ebf", weight=10];
   q1 -> f1 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
   q1 -> h2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b", weight=10];
-  h2 [label="Put the robot on blocks, run the spin test\nfrom Determine inversion, and watch\nwhich way each wheel drives", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  q2 [label="Does any module push\nagainst the others?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  f2 [label="That module runs backwards:\nflip its drive inversion, or\nrecord its absolute encoder\noffset again if it's 180° off", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  h2 [label="Check your drive code for scaling, such\nas withScaleTranslation or multiplying\nthe controller axis", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q2 [label="Is the input\nscaled down?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f2 [label="Remove the scaling, or\nmake it a slow mode\non purpose", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; q2; f2;}
   h2 -> q2 [color="#6c8ebf", weight=10];
   q2 -> f2 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
   q2 -> h3 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b", weight=10];
-  h3 [label="At full stick, print or graph the\njoystick values your code passes\nto the swerve drive", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  q3 [label="Are they less\nthan 1?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  f3 [label="Remove the scaling, such as\nwithScaleTranslation or a\nmultiplier on the axes, or\nmake it a slow mode on purpose", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  h3 [label="At full stick, graph the desired\nmodule states, Mechanisms/swerve/states/desired", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q3 [label="Do they reach\nyour robot's\ntop speed?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f3 [label="Check the maximum speed:\nthe drive motor type, gear ratio\nand wheel diameter it comes from,\nand any withMaximumChassisSpeed", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; q3; f3;}
   h3 -> q3 [color="#6c8ebf", weight=10];
-  q3 -> f3 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
-  q3 -> h4 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b", weight=10];
-  h4 [label="At full stick, graph the desired\nmodule states, Mechanisms/swerve/states/desired", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  q4 [label="Do they reach\nyour robot's\ntop speed?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  f4 [label="Check the maximum speed:\nthe drive motor type, gear ratio\nand wheel diameter it comes from,\nand any withMaximumChassisSpeed", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  q3 -> f3 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q3 -> h4 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  h4 [label="Graph a module's measured speed,\nMechanisms/swerve/modules/<name>/drive/measurement/velocity,\nwith the desired states", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q4 [label="Does the measured\nspeed reach the\ndesired speed?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f4 [label="Tune the drive\nPID and feedforward", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; q4; f4;}
   h4 -> q4 [color="#6c8ebf", weight=10];
   q4 -> f4 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
   q4 -> h5 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
-  h5 [label="Graph a module's measured speed,\nMechanisms/swerve/modules/<name>/drive/measurement/velocity,\nwith the desired states", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  q5 [label="Does the measured\nspeed reach the\ndesired speed?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  f5 [label="Tune the drive\nPID and feedforward", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  h5 [label="Push the robot a measured distance,\nsuch as 3 m, and compare odometry,\nMechanisms/swerve/pose", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q5 [label="Does odometry\nagree?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f5 [label="The robot thinks it's faster\nthan it is: check the gear\nratio and measure the wheels", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; q5; f5;}
   h5 -> q5 [color="#6c8ebf", weight=10];
   q5 -> f5 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
   q5 -> h6 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
-  h6 [label="Push the robot a measured distance,\nsuch as 3 m, and compare odometry,\nMechanisms/swerve/pose", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  q6 [label="Does odometry\nagree?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  f6 [label="The robot thinks it's faster\nthan it is: check the gear\nratio and measure the wheels", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  h6 [label="Check how much free storage\nthe SystemCore has left", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q6 [label="Is it nearly full?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f6 [label="Delete old logs,\nthen reboot the SystemCore", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; q6; f6;}
   h6 -> q6 [color="#6c8ebf", weight=10];
-  q6 -> f6 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  q6 -> d [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  q6 -> f6 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q6 -> d [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b", weight=10];
   d [label="Check the battery under load,\nand that statorCurrentLimit\nisn't set too low", shape=box, style="rounded,filled", fillcolor="#d5e8d4", color="#82b366"];
 }

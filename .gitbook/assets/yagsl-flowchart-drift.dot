@@ -4,17 +4,17 @@ digraph G {
   edge  [fontname="DejaVu Sans", fontsize=12, penwidth=1.6, arrowhead=onormal, arrowsize=1.1];
   graph [nodesep=1.1];
   s [label="Robot drifts sideways\nwhile driving or rotating", shape=box, style="rounded,filled", fillcolor="#dae8fc", color="#6c8ebf"];
-  h1 [label="Drive around while you watch\nthe Driver Station console", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  q1 [label="Any errors, or\nloop overruns?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  f1 [label="Fix them first: check the\nwiring of the encoder, motor\ncontroller and gyro, and\nspeed up slow code", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  h1 [label="Drive around while you watch the Driver\nStation console. Loop overruns just after\nthe code starts are normal", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q1 [label="Any errors?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f1 [label="Fix them first: check the\nwiring of the encoder, motor\ncontroller and gyro", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; q1; f1;}
   s -> h1 [color="#6c8ebf", weight=10];
   h1 -> q1 [color="#6c8ebf", weight=10];
   q1 -> f1 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
   q1 -> h2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b", weight=10];
-  h2 [label="Drive straight slowly, and watch the\nwheels or AdvantageScope's Swerve tab", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  q2 [label="Do all the wheels\npoint straight?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  f2 [label="See the Wheels not\npointing straight\nflowchart", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  h2 [label="Drive straight slowly, and graph each module's\nazimuth motor position with its absolute encoder:\nMechanisms/swerve/modules/<name>/azimuth/mechanism/position\nand Mechanisms/swerve/modules/<name>/encoder.\nThis only checks the angle gearing", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q2 [label="Do the lines stay\non top of each other?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f2 [label="The angle gear ratio doesn't\nmatch the absolute encoder:\nfix it for your module\nand its configuration", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; q2; f2;}
   h2 -> q2 [color="#6c8ebf", weight=10];
   q2 -> f2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];

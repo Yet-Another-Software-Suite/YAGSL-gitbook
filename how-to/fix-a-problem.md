@@ -28,7 +28,7 @@ it catches inversions, bad offsets and CAN ID mistakes in a few minutes.
 | What you see | Start here |
 | --- | --- |
 | One or more modules spin "out of control" | [Troubleshooting flowchart](troubleshooting-flowchart.md) |
-| One module acts up, or doesn't start in the right position every time | A disconnected absolute encoder, a loose magnet, wrong gearing, a dying motor, or a module built incorrectly. See the [One module doesn't start in the right position](troubleshooting-flowchart.md#one-module-doesnt-start-in-the-right-position) flowchart. |
+| One module acts up, or doesn't start in the right position every time | A disconnected absolute encoder, an encoder too far from its magnet, a loose magnet, wrong gearing, a dying motor, or a module built incorrectly. See the [One module doesn't start in the right position](troubleshooting-flowchart.md#one-module-doesnt-start-in-the-right-position) flowchart. |
 | A module points the wrong way, or its readings go the wrong way when turned by hand | [Determine inversion](determine-inversion.md), steps 1 and 2 |
 | In the spin test, one wheel pushes against the others | That module's drive motor is inverted. See [Determine inversion](determine-inversion.md), step 3. |
 | In the spin test, the robot spins clockwise instead of counterclockwise | A diagonal module swap, inverted drive motors, or offsets captured with the bevel gears facing right. See [Determine inversion](determine-inversion.md), step 3. |
@@ -52,7 +52,7 @@ it catches inversions, bad offsets and CAN ID mistakes in a few minutes.
 | The robot drifts sideways while driving or rotating | The [Robot is drifting](troubleshooting-flowchart.md#robot-is-drifting) flowchart, then [Fix swerve drive drift](../reference/swerve-drift-causes.md) |
 | The modules are slow to reach their angle, overshoot, or shake | [Tune PIDF gains](tune-pidf-gains.md) |
 | In a match, the modules fall behind their angles, but they're fine on blocks | The angle motor's current limit is too low. Raise `statorCurrentLimit.angle` in [physicalproperties.json](../reference/json-schema/physicalproperties-json.md). See the [Wheels not pointing straight](troubleshooting-flowchart.md#wheels-not-pointing-straight) flowchart. |
-| The robot drives slower than it should | A full SystemCore, a module running backwards, scaled-down joystick input, the maximum speed, the gear ratio or wheel diameter, or the gains. See the [Robot drives slower than it should](troubleshooting-flowchart.md#robot-drives-slower-than-it-should) flowchart. |
+| The robot drives slower than it should | A module running backwards, scaling in the drive code, the maximum speed, the gains, the gear ratio or wheel diameter, or a full SystemCore. See the [Robot drives slower than it should](troubleshooting-flowchart.md#robot-drives-slower-than-it-should) flowchart. |
 | Autonomous ends short or long by about the same amount every time | The gear ratio or wheel diameter is off, or the wheel tread has worn down. See the [Autonomous is consistently off](troubleshooting-flowchart.md#autonomous-is-consistently-off) flowchart. |
 | PathPlanner paths overshoot or end in the wrong place | [Fix swerve drive drift](../reference/swerve-drift-causes.md), then [Set up PathPlanner](setup-pathplanner.md) |
 
