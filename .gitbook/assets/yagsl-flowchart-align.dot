@@ -19,8 +19,8 @@ digraph G {
   h2 -> q2 [color="#6c8ebf", weight=10];
   q2 -> f2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
   q2 -> h3 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
-  h3 [label="Point every wheel forward with its bevel\ngear on the left, then graph each absolute\nencoder, Mechanisms/swerve/modules/<name>/encoder", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  q3 [label="Does each\nread 0?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  h3 [label="Point every wheel forward with its bevel gear on the left,\ngraph each module's azimuth motor position,\nMechanisms/swerve/modules/<name>/azimuth/mechanism/position,\nand its absolute encoder, .../<name>/encoder", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q3 [label="Does every motor\nposition read 0, with\nits encoder on top?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
   f3 [label="Record that module's\nabsolute encoder\noffset again", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; q3; f3;}
   h3 -> q3 [color="#6c8ebf", weight=10];

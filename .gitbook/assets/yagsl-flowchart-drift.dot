@@ -11,8 +11,8 @@ digraph G {
   s -> ah1 [color="#6c8ebf", weight=10];
   ah1 -> aq1 [color="#6c8ebf", weight=10];
   aq1 -> af1 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
-  ah2 [label="Point every wheel forward with its bevel\ngear on the left, reboot, then graph each\nabsolute encoder, Mechanisms/swerve/modules/<name>/encoder", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  aq2 [label="Does each\nread 0?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  ah2 [label="Point every wheel forward with its bevel gear on the left,\nreboot, then graph each module's azimuth motor position,\nMechanisms/swerve/modules/<name>/azimuth/mechanism/position,\nand its absolute encoder, .../<name>/encoder", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  aq2 [label="Does every motor\nposition read 0, with\nits encoder on top?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
   af2 [label="Bad absolute encoder offsets:\nrecord them again. If they keep\nchanging, see One module doesn't\nstart in the right position", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; aq2; af2;}
   aq1 -> ah2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b", weight=10];
