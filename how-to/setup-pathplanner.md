@@ -26,8 +26,8 @@ YAGSL `commands3` example does.
 ## 1. Install PathplannerLib
 
 For WPILib 2027 use PathPlanner's SystemCore alpha vendordep. In VS Code run
-**WPILib: Manage Vendor Libraries → Install new libraries (online)** (same place you installed
-YAGSL, see [Install YAGSL](../tutorial/02-install-yagsl.md)) with:
+**WPILib: Manage Vendor Libraries → Install new libraries (online)** (see
+[installing from a URL](../tutorial/02-install-yagsl.md#alternative-install-from-a-url)) with:
 
 ```
 https://3015rangerrobotics.github.io/pathplannerlib/PathplannerLibSystemCoreAlpha.json

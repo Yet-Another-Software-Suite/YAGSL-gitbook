@@ -27,4 +27,25 @@ to `24` for the Motioncore buses `can_d0` to `can_d19`. Only CTRE devices also a
 name. REV and Thrifty devices only accept a bus number. See
 [Put devices on a different CAN bus](../how-to/choose-a-can-bus.md).
 
+## Measuring module locations
+
+<figure><img src="../.gitbook/assets/yagsl-module-locations.png" alt="A robot seen from above with the front up. From the center, X points to the front and Y points to the left. The front left module is at plus 12, plus 12 inches, front right at plus 12, minus 12, back left at minus 12, plus 12 and back right at minus 12, minus 12. Dimension lines show x equals 12 inches and y equals minus 12 inches to the front right module."><figcaption><p>Module locations are from the robot's center to each module's center.</p></figcaption></figure>
+
+Measure in CAD if you can, for precision; otherwise, use this technique from Team 5010:
+
+1. Lay the robot on its side and rotate the wheels perpendicular to the direction you're measuring.
+2. Measure to the *outside* of each wheel and subtract one wheel width to get the center-to-center
+   measurement.
+3. Repeat in the other direction.
+
+Record all four module locations (front-left, front-right, back-left, back-right) relative to the
+robot's center, in inches:
+
+| Module | X "Front" (in) | Y "Left" (in) |
+|---|---|---|
+| Front Left (FL) | + | + |
+| Front Right (FR) | + | − |
+| Back Left (BL) | − | + |
+| Back Right (BR) | − | − |
+
 With this information in hand, move on to [installing YAGSL](02-install-yagsl.md).

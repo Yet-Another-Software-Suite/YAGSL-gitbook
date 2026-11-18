@@ -29,17 +29,12 @@ YAGSL 2027 is built on WPILib 2027 (`2027_alpha7`, Java 25) and runs on the Syst
 
 ## Install
 
-Install **exactly one** of these vendordeps, matching the WPILib command framework your robot uses (they conflict with each other):
+Install **exactly one** YAGSL vendordep, matching the WPILib command framework your robot uses (they conflict with each other). In WPILib's VS Code, open the **WPILib Vendor Dependencies** panel and install **Yet Another Generic Swerve Library (Commands v2)** or **(Commands v3)**.
 
-| Command framework | Vendordep URL                                       |
-| ----------------- | --------------------------------------------------- |
-| Commands v2       | `https://cdn.yassrobotics.com/yagsl_commands2.json` |
-| Commands v3       | `https://cdn.yassrobotics.com/yagsl_commands3.json` |
-
-[Install YAGSL](tutorial/02-install-yagsl.md) covers the YAMS vendordep each one requires and the vendor libraries for your hardware.
+[Install YAGSL](tutorial/02-install-yagsl.md) covers the YAMS vendordep each one requires, installing from a URL instead, updating to beta versions, and the vendor libraries for your hardware.
 
 {% hint style="warning" %}
-The old `https://yet-another-software-suite.github.io/YAGSL/...` vendordep and maven URLs are stale. Remove the old `yagsl.json` from your `vendordeps` folder and install one of the URLs above.
+The old `https://yet-another-software-suite.github.io/YAGSL/...` vendordep and maven URLs are stale. Remove the old `yagsl.json` from your `vendordeps` folder and install YAGSL again.
 {% endhint %}
 
 {% embed url="https://datawrapper.dwcdn.net/ZVxvE/13/" %}

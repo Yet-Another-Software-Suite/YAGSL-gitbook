@@ -6,33 +6,38 @@ YAGSL 2027 is built on WPILib 2027 (`2027_alpha7`) and Java 25, and runs on the 
 
 YAGSL ships as two vendordeps, one per WPILib command framework. Install **exactly one** of them, the one that matches the command framework your robot project uses. They conflict with each other, so do not install both.
 
-| Command framework | Vendordep name      | Vendordep URL                                       |
-| ----------------- | ------------------- | --------------------------------------------------- |
-| Commands v2       | YAGSL (Commands v2) | `https://cdn.yassrobotics.com/yagsl_commands2.json` |
-| Commands v3       | YAGSL (Commands v3) | `https://cdn.yassrobotics.com/yagsl_commands3.json` |
+In WPILib's VS Code, click the **WPILib Vendor Dependencies** icon in the sidebar. Under **Available Dependencies**, find **Yet Another Generic Swerve Library** for your command framework, **(Commands v2)** or **(Commands v3)**, and click **Install**.
 
-In VS Code, run **WPILib: Manage Vendor Libraries → Install new libraries (online)** and paste the URL for your command framework.
+<figure><img src="../.gitbook/assets/yagsl-vendordep-install.png" alt="The WPILib Vendor Dependencies panel in WPILib's VS Code. Under Available Dependencies, Yet Another Generic Swerve Library (Commands v2) and (Commands v3), version 2026.11.06, each have an Install button, followed by Yet Another Mechanism System (Commands v2) and (Commands v3)."><figcaption><p>YAGSL in the WPILib Vendor Dependencies panel.</p></figcaption></figure>
 
-<figure><img src="../.gitbook/assets/modern-yagsl.png" alt=""><figcaption><p>The WPILib Vendor Dependencies panel. If YAGSL is listed there for your WPILib version, you can install it from the panel instead of pasting a URL.</p></figcaption></figure>
+YAGSL builds a [YAMS](https://yams.yamgen.com/) `SwerveDrive`, so it requires the matching YAMS vendordep, **Yet Another Mechanism System**. It's installed along with YAGSL. If it isn't, install it from the same panel, for the same command framework. YAMS in turn requires the matching WPILib command framework vendordep (Commands v2 or Commands v3).
 
 {% hint style="info" %}
 Not sure which one to pick? Use Commands v2 if your project uses `SubsystemBase` and PathPlanner. Use Commands v3 if your project uses `Mechanism`s, coroutines and the OpMode framework. The rest of this tutorial shows both where they differ.
 {% endhint %}
 
+### Alternative: install from a URL
+
+If YAGSL isn't listed in the panel, open **Install from URL** at the top of the panel, or run **WPILib: Manage Vendor Libraries → Install new libraries (online)**, and paste the URLs for your command framework:
+
+| Command framework | YAGSL                                               | YAMS                                               |
+| ----------------- | --------------------------------------------------- | -------------------------------------------------- |
+| Commands v2       | `https://cdn.yassrobotics.com/yagsl_commands2.json` | `https://cdn.yassrobotics.com/yams_commands2.json` |
+| Commands v3       | `https://cdn.yassrobotics.com/yagsl_commands3.json` | `https://cdn.yassrobotics.com/yams_commands3.json` |
+
 {% hint style="warning" %}
-Upgrading an older project? The old `https://yet-another-software-suite.github.io/YAGSL/...` vendordep and maven URLs are stale. Delete the old `yagsl.json` (and the old `yams.json`) from your project's `vendordeps` folder, then install the URLs on this page. YAGSL now resolves from `https://cdn.yassrobotics.com/`.
+Upgrading an older project? The old `https://yet-another-software-suite.github.io/YAGSL/...` vendordep and maven URLs are stale. Delete the old `yagsl.json` (and the old `yams.json`) from your project's `vendordeps` folder, then install YAGSL again from the panel.
 {% endhint %}
 
-## Add the YAMS vendordep (required)
+## How to update to beta versions
 
-YAGSL builds a [YAMS](https://yams.yamgen.com/) `SwerveDrive`, so the matching YAMS vendordep is the one library the YAGSL vendordep requires. VS Code offers to install it when you add YAGSL. If it does not, install it the same way:
+The Vendor Dependencies panel installs the version WPILib has listed, which can lag behind the newest YAGSL and YAMS releases. To get the newest, beta versions included:
 
-| Command framework | Vendordep URL                                      |
-| ----------------- | -------------------------------------------------- |
-| Commands v2       | `https://cdn.yassrobotics.com/yams_commands2.json` |
-| Commands v3       | `https://cdn.yassrobotics.com/yams_commands3.json` |
+1. Open the command palette with **Ctrl+Shift+P**, and run **WPILib: Manage Vendor Libraries**.
+2. Click **Check for updates (online)**.
+3. Check YAGSL and YAMS, and click **OK**.
 
-YAMS in turn requires the matching WPILib command framework vendordep (Commands v2 or Commands v3).
+<figure><img src="../.gitbook/assets/yagsl-vendordep-update-online.gif" alt="WPILib: Manage Vendor Libraries is open, and the user clicks Check for updates (online). A list appears: YAGSL (Commands v2) 2026.11.06, old version 2026.10.08, and Yet Another Mechanism System (Commands v2) 2026.11.14, old version 2026.11.03. The user checks both and clicks OK."><figcaption><p>Updating YAGSL and YAMS with Check for updates (online).</p></figcaption></figure>
 
 ## Add vendordeps for your hardware (optional)
 
@@ -56,7 +61,7 @@ The AndyMark library has not published a `2027_alpha7` vendordep yet. Until it d
 [Vendordeps and offline install](../reference/vendordep-installation.md#optional-vendor-libraries) lists which vendor library each device type string needs.
 
 {% hint style="info" %}
-If a vendor isn't in the Vendor Dependencies panel yet on your WPILib version, install it the manual way instead. [Installing 3rd-party libraries](https://docs.wpilib.org/en/2027/docs/software/vscode-overview/3rd-party-libraries.html) covers pasting a URL, which you can get from the vendor's own install page.
+Install these from the Vendor Dependencies panel too. If a vendor isn't listed there yet on your WPILib version, install it from a URL instead. [Installing 3rd-party libraries](https://docs.wpilib.org/en/2027/docs/software/vscode-overview/3rd-party-libraries.html) covers pasting a URL, which you can get from the vendor's own install page.
 {% endhint %}
 
 {% hint style="warning" %}
