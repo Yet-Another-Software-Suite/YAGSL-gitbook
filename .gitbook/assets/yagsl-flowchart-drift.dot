@@ -27,8 +27,8 @@ digraph G {
   b -> th1 [xlabel=" Slides off its line ", color="#6c8ebf", fontcolor="#34558b", weight=2];
   th1 -> tq1 [color="#6c8ebf", weight=10];
   tq1 -> tf1 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  th2 [label="Drive forward, turn 90°,\nthen drive forward again", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  tq2 [label="Does the drive\ndirection change as\nthe robot turns?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  th2 [label="In field-relative driving, drive forward,\nturn 90°, then drive forward again.\nIn robot-relative driving the direction\nchanges as it turns, which is normal", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  tq2 [label="In field-relative\ndriving, does the\ndirection change as\nthe robot turns?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
   tf2 [label="Work through\nthe 8 steps", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; tq2; tf2;}
   tq1 -> th2 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];

@@ -10,6 +10,11 @@ When changing inversion states doesn't work and nothing else you know of fixes t
 
 Affectionately known as _"Translational Axis change based off of the robot heading"_ (the X and Y axis change in field-oriented control based on your robot turning), these steps will resolve it somewhere along the way.
 
+{% hint style="info" %}
+This is only a problem in field-relative driving. In robot-relative driving, the directions are supposed to change as
+the robot turns: forward is always the robot's front.
+{% endhint %}
+
 ## Prepare your robot code
 
 To run these tests, use the following (or a variation of it) as your drive code. You may need to port it to your joystick or negate axis data.

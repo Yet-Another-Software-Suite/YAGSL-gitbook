@@ -3,7 +3,7 @@ digraph G {
   node  [fontname="DejaVu Sans", fontsize=13, margin="0.2,0.12", penwidth=1.6];
   edge  [fontname="DejaVu Sans", fontsize=12, penwidth=1.6, arrowhead=onormal, arrowsize=1.1];
   s [label="Forward in real life isn't forward\nin odometry, or field-relative driving\nchanges as the robot turns", shape=box, style="rounded,filled", fillcolor="#dae8fc", color="#6c8ebf"];
-  test [label="The test, after every step:\ndrive forward, turn 90°,\nthen drive forward again", shape=note, style=filled, fillcolor="#f5f5f5", color="#666666"];
+  test [label="The test, after every step, in\nfield-relative driving: drive forward,\nturn 90°, then drive forward again", shape=note, style=filled, fillcolor="#f5f5f5", color="#666666"];
   {rank=same; s; test}
   s -> test [style=invis];
   st1 [label="1. Set gyroInvert to false\nand every inverted.drive to false", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
