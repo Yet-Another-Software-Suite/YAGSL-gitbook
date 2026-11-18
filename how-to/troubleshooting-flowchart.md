@@ -6,6 +6,7 @@ causes first. The links under each chart go to the pages its boxes mention.
 * [Set up a robot with the config guide](#set-up-a-robot-with-the-config-guide)
 * [Robot drives slower than it should](#robot-drives-slower-than-it-should)
 * [Autonomous is consistently off](#autonomous-is-consistently-off)
+* [Robot is drifting](#robot-is-drifting)
 * [Wheels not pointing straight](#wheels-not-pointing-straight)
 * [Swerve modules spinning "out of control"](#swerve-modules-spinning-out-of-control)
 * [Swerve module does not spin correctly](#swerve-module-does-not-spin-correctly)
@@ -50,6 +51,20 @@ driving, in nine steps. This is the same path, with the checks that send you to 
 
 * Gear ratios and wheel diameters: [Standard Conversion Factors](../reference/standard-conversion-factors.md)
 * Path following: [Fix swerve drive drift](../reference/swerve-drift-causes.md)
+
+## Robot is drifting
+
+<figure><img src="../.gitbook/assets/yagsl-flowchart-drift.png" alt="A flowchart for a robot that drifts sideways while driving or rotating. Are there errors in the Driver Station console, or loop overruns? If yes, fix them first: check the wiring of the encoder, motor controller and gyro, and speed up slow code. If no: driving straight, do all the wheels point straight? If no, see the Wheels not pointing straight flowchart. If yes: does the drive direction change as the robot turns? If yes, work through the 8 steps. If no: do the absolute encoder offsets still hold after driving and a reboot? If no, secure the magnet and encoder, loctiting the magnet, then record the offsets again. If yes: does each module track its speed and angle setpoints on the graph? If no, tune the drive and azimuth PID and feedforward, and if one module lags the others, grease its gears. If yes: do all modules share the right gear ratio and wheel diameter, with no per-module gearing? If no, fix them in physicalproperties.json and remove per-module gearing overrides. If yes: does it drift only when driving and rotating at once? If yes, tune withDiscretizationTime, then the gyro angular velocity scale factor. If no, check the rest of Fix swerve drive drift: vision standard deviations, current limits, the center of gravity and PathPlanner."><figcaption><p>Robot drifts sideways while driving or rotating.</p></figcaption></figure>
+
+* Wiring and loop overruns: [Fix swerve drive drift](../reference/swerve-drift-causes.md#hardware-causes)
+* Wheels not straight: [Wheels not pointing straight](#wheels-not-pointing-straight)
+* Direction changes as the robot turns: [Forward is not forward: the 8 steps](#forward-is-not-forward-the-8-steps)
+* Recording offsets: [Check and calibrate your hardware](../tutorial/04-verify-and-calibrate-hardware.md)
+* Tuning the modules: [Practice in simulation](../tutorial/practice-in-simulation.md) and
+  [Tune PIDF gains](tune-pidf-gains.md)
+* Gear ratios and wheel diameters: [Standard Conversion Factors](../reference/standard-conversion-factors.md)
+* Discretization, the gyro scale factor and everything else:
+  [Fix swerve drive drift](../reference/swerve-drift-causes.md#tuning-order)
 
 ## Wheels not pointing straight
 

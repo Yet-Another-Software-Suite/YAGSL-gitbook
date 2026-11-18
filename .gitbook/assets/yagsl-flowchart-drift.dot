@@ -1,0 +1,36 @@
+digraph G {
+  graph [rankdir=TB, nodesep=0.5, ranksep=0.45, pad=0.3, bgcolor="white", dpi=150, splines=ortho];
+  node  [fontname="DejaVu Sans", fontsize=13, margin="0.2,0.12", penwidth=1.6];
+  edge  [fontname="DejaVu Sans", fontsize=12, penwidth=1.6, arrowhead=onormal, arrowsize=1.1];
+  s [label="Robot drifts sideways\nwhile driving or rotating", shape=box, style="rounded,filled", fillcolor="#dae8fc", color="#6c8ebf"];
+  q1 [label="Any errors in the\nDriver Station console,\nor loop overruns?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f1 [label="Fix them first: check the\nwiring of the encoder, motor\ncontroller and gyro, and\nspeed up slow code", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  q2 [label="Driving straight,\ndo all the wheels\npoint straight?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f2 [label="See the Wheels not\npointing straight\nflowchart", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  q3 [label="Does the drive direction\nchange as the\nrobot turns?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f3 [label="Work through\nthe 8 steps", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  q4 [label="Do the absolute encoder\noffsets still hold after\ndriving and a reboot?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f4 [label="Secure the magnet and\nencoder (loctite the magnet),\nthen record the offsets again", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  q5 [label="Does each module track\nits speed and angle\nsetpoints on the graph?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f5 [label="Tune the drive and azimuth\nPID and feedforward. If one\nmodule lags the others,\ngrease its gears", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  q6 [label="Do all modules share\nthe right gear ratio and\nwheel diameter, with no\nper-module gearing?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f6 [label="Fix them in\nphysicalproperties.json,\nand remove per-module\ngearing overrides", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  q7 [label="Does it drift only\nwhen driving and\nrotating at once?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f7 [label="Tune withDiscretizationTime,\nthen the gyro angular\nvelocity scale factor", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  d [label="Check the rest of Fix swerve\ndrive drift: vision standard\ndeviations, current limits, the\ncenter of gravity, PathPlanner", shape=box, style="rounded,filled", fillcolor="#d5e8d4", color="#82b366"];
+  s -> q1 [color="#6c8ebf"];
+  q1 -> f1 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q1 -> q2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q2 -> f2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q2 -> q3 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q3 -> f3 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q3 -> q4 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q4 -> f4 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q4 -> q5 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q5 -> f5 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q5 -> q6 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q6 -> f6 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q6 -> q7 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q7 -> f7 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q7 -> d [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+}

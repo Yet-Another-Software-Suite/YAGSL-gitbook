@@ -48,7 +48,7 @@ it catches inversions, bad offsets and CAN ID mistakes in a few minutes.
 
 | What you see | Start here |
 | --- | --- |
-| The robot drifts sideways while driving or rotating | [Fix swerve drive drift](../reference/swerve-drift-causes.md) |
+| The robot drifts sideways while driving or rotating | The [Robot is drifting](troubleshooting-flowchart.md#robot-is-drifting) flowchart, then [Fix swerve drive drift](../reference/swerve-drift-causes.md) |
 | The modules are slow to reach their angle, overshoot, or shake | [Tune PIDF gains](tune-pidf-gains.md) |
 | The robot drives slower than it should | A full SystemCore, a module running backwards, scaled-down joystick input, the maximum speed, the gear ratio or wheel diameter, or the gains. See the [Robot drives slower than it should](troubleshooting-flowchart.md#robot-drives-slower-than-it-should) flowchart. |
 | Autonomous ends short or long by about the same amount every time | The gear ratio or wheel diameter is off, or the wheel tread has worn down. See the [Autonomous is consistently off](troubleshooting-flowchart.md#autonomous-is-consistently-off) flowchart. |
