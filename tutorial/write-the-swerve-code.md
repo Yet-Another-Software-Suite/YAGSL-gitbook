@@ -1,18 +1,8 @@
 # 4. Write the swerve code
 
 Wire YAGSL into your robot code. `SwerveParser` reads your `swerve/base` config directory and
-builds a YAMS `SwerveDrive` for you. You only write the subsystem (Commands v2) or mechanism
-(Commands v3) and the control bindings around it.
-
-Write this code before you touch the robot: simulation, the hardware checks and live tuning in the
-next three steps all read the telemetry it publishes.
-
-{% hint style="info" %}
-The entry point depends on the vendordep you installed in [step 2](02-install-yagsl.md):
-`swervelib.commands2.SwerveParser` returns a `yams.commands2.swerve.SwerveDrive`, and
-`swervelib.commands3.SwerveParser` returns a `yams.commands3.swerve.SwerveDrive`. Everything else
-about the two is the same. WPILib 2027 classes live under `org.wpilib.*`.
-{% endhint %}
+builds a YAMS `SwerveDrive` for you, so you only write the subsystem (Commands v2) or mechanism
+(Commands v3) and the controller bindings around it.
 
 ## Create a swerve subsystem
 
@@ -158,8 +148,7 @@ public class SwerveDriveMechanism implements Mechanism
 }
 ```
 
-A Commands v3 `Mechanism` has no `periodic()` of its own, so call these from your robot class,
-before the scheduler runs:
+Call `periodic()` and `simulationPeriodic()` from your robot class, before the scheduler runs:
 
 ```java
 package first.robot;
@@ -192,22 +181,8 @@ public class Robot extends OpModeRobot
 {% endtab %}
 {% endtabs %}
 
-`SwerveParser.parse(...)` reads `swervedrive.json` and every file it references under `modules/`.
-`SwerveParser.createSwerveDrive(cfg)` then resolves your hardware through the matching vendor
-library and hands back a fully constructed YAMS `SwerveDrive`. There's no constants file to maintain
-by hand. Both methods are static, so you never create a `SwerveParser` instance.
-
-The name passed to `withTelemetry("swerve", ...)` is where the drive publishes in NetworkTables
-(`Mechanisms/swerve`), which is where the dashboard values in steps 5 to 7 come from. `TelemetryVerbosity.HIGH`
-is useful while bringing your robot up but adds NetworkTables overhead, so turn it down once you've
-finished tuning.
-
-{% hint style="info" %}
-`SwerveDrive.getGyroAngle()` no longer exists. Read the robot's attitude with
-`drive.getGyroRotation3d()`, and use `drive.getGyroRotation3d().toRotation2d()` when you only need
-the heading. Driving with `setFieldRelativeChassisSpeeds(...)` as shown above needs neither: YAMS
-converts the field relative velocities with the gyro heading itself.
-{% endhint %}
+The drive publishes its telemetry under `Mechanisms/swerve`, which the next steps read. Turn
+`TelemetryVerbosity.HIGH` down once you've finished tuning.
 
 ## Bind your controller
 
@@ -260,8 +235,7 @@ public class RobotContainer
 {% endtab %}
 
 {% tab title="Commands v3" %}
-In Commands v3 the bindings live in a teleop opmode, so they only exist while that opmode is
-selected on the Driver Station. The drive command is a coroutine that loops until it is canceled:
+In Commands v3 the bindings live in a teleop opmode:
 
 ```java
 package first.robot.opmodes.teleop;
@@ -309,15 +283,7 @@ public class AngularVelocityTeleop implements OpMode
 {% endtab %}
 {% endtabs %}
 
-{% hint style="info" %}
-**Why bind `zeroGyro()` to a button combo?** Gyros can drift, or power on facing the wrong direction.
-A button combo (Menu + View, or both bumpers) lets the driver instantly re-align field-relative
-control without touching the Driver Station. Always bind this. It has saved matches.
-{% endhint %}
-
-Complete, buildable projects for both command frameworks are in the
-[YAGSL examples](https://github.com/Yet-Another-Software-Suite/YAGSL/tree/main/examples), and are
-attached to every [release](https://github.com/Yet-Another-Software-Suite/YAGSL/releases) as
-`example-commands2.zip` and `example-commands3.zip`.
+Complete projects for both are in the
+[YAGSL examples](https://github.com/Yet-Another-Software-Suite/YAGSL/tree/main/examples).
 
 Build the project. Once it compiles, move on to [practicing in simulation](practice-in-simulation.md).
