@@ -8,7 +8,7 @@ Swerve drive drift has been a persistent problem for many years, and there have 
 
 It's important to keep in mind that SEVERAL of these issues could be present on your robot at once.
 
-Prefer to work through it step by step? See [Troubleshooting](../how-to/troubleshooting-flowchart.md), and the [Robot is drifting](../how-to/troubleshooting-flowchart.md#robot-is-drifting) checks.
+Prefer to work through it step by step? See [Troubleshooting](../how-to/troubleshooting.md), and the [Robot is drifting](../how-to/troubleshooting.md#robot-is-drifting) checks.
 
 ## Hardware causes
 

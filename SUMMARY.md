@@ -16,7 +16,7 @@
 ## Fix a problem
 
 * [Find your problem](how-to/fix-a-problem.md)
-* [Troubleshooting](how-to/troubleshooting-flowchart.md)
+* [Troubleshooting](how-to/troubleshooting.md)
 * [Determine inversion](how-to/determine-inversion.md)
 * [Verify your module locations](how-to/verify-module-locations.md)
 * [The 8 steps](how-to/the-8-steps.md)
