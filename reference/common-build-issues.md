@@ -8,8 +8,6 @@ Many software problems are really build problems. This is a lookup of common bui
 
 It's important to keep in mind that SEVERAL of these issues could be present on your robot at once.
 
-Prefer to work through it step by step? See [Stage 1: Is it built right?](../how-to/troubleshooting-flowchart.md#stage-1-is-it-built-right) in the troubleshooting flowcharts.
-
 ## Swerve module
 
 **Drive**
@@ -23,16 +21,13 @@ Prefer to work through it step by step? See [Stage 1: Is it built right?](../how
 
 * [ ] Module doesn't turn freely.
 * [ ] Bearing is missing, cracked, or crooked.
-* [ ] Set screw or shaft collar is loose.
 * [ ] Module doesn't match the manufacturer's guide.
 
 **Absolute encoder**
 
 * [ ] Magnet is not secured and slips; loctite/glue it in.
-* [ ] Magnet is not centered.
 * [ ] Encoder is too far from the magnet. Check the vendor's documentation.
 * [ ] Encoder is not secured to the module.
-* [ ] Encoder is on the wrong shaft or gear.
 
 **Motor**
 

@@ -8,8 +8,6 @@ A wrong configuration value usually doesn't cause an error; the robot just drive
 
 It's important to keep in mind that SEVERAL of these issues could be present on your robot at once.
 
-Prefer to work through it step by step? See [Stage 3: Is the configuration right?](../how-to/troubleshooting-flowchart.md#stage-3-is-the-configuration-right) and the stages after it in the troubleshooting flowcharts.
-
 ## Project setup
 
 * [ ] Team number is wrong.
