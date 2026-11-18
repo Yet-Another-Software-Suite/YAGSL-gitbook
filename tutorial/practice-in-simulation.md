@@ -26,11 +26,17 @@ holds a position, and PID alone is enough for that, whichever method you use for
 3. Raise `feedback/p` until the wheels overshoot the angle and swing back.
 4. Add `feedback/d` until the overshoot is gone.
 
-<figure><img src="../.gitbook/assets/yagsl-tune-azimuth.gif" alt="A recording of AdvantageScope tuning the azimuth of the YAGSL example in simulation. A line graph shows the front left module's desired angle stepping between 0 and 45 degrees and its current angle following it, with the swerve view beside it. Step 1, P 0.5 and D 0: the angle crawls toward the setpoint. Step 2, P 60 and D 0: it overshoots to about 60 degrees and swings back. Step 3, P 60 and D 2: it reaches 45 degrees with no overshoot."><figcaption><p>Azimuth tuning, recorded in simulation: P too low, then overshooting, then D.</p></figcaption></figure>
+To see it, graph the angle you typed, `Tuning/swerve/modules/azimuth/angle`, against what a module's
+encoder measures, such as `Mechanisms/swerve/modules/frontleft/encoder`. Both are in degrees.
+
+<figure><img src="../.gitbook/assets/yagsl-tune-azimuth.gif" alt="A recording of AdvantageScope tuning the azimuth of the YAGSL example in simulation. A line graph shows the angle typed into Tuning/swerve/modules/azimuth/angle stepping between 0 and 45 degrees and the front left module's encoder following it, with the swerve view beside it. Step 1, P 0.5 and D 0: the angle crawls toward the setpoint. Step 2, P 60 and D 0: it overshoots to about 60 degrees and swings back. Step 3, P 60 and D 2: it reaches 45 degrees with no overshoot."><figcaption><p>Azimuth tuning, recorded in simulation: P too low, then overshooting, then D.</p></figcaption></figure>
 
 **Then tune the drive.** Turn azimuth tuning off, set `modules/drive/enabled` to `true`, and switch
-`modules/drive/velocity` between `0` and `2` meters per second. Pick one of these methods. PID only is
-often enough to get started.
+`modules/drive/velocity` between `0` and `2` meters per second. Graph that speed against what a module's
+drive motor measures, such as `Mechanisms/swerve/modules/frontleft/drive/measurement/velocity`. Both are
+in meters per second.
+
+Pick one of these methods. PID only is often enough to get started.
 
 {% tabs %}
 {% tab title="PID only" %}
@@ -40,7 +46,7 @@ Use the feedback gains alone, starting with every gain at `0`.
    much makes the speed shake.
 2. Add `feedback/i` until the speed reaches the setpoint. Too much I overshoots.
 
-<figure><img src="../.gitbook/assets/yagsl-tune-drive-pid.gif" alt="A recording of AdvantageScope tuning the drive of the YAGSL example in simulation with feedback only. A line graph shows the front left module's desired speed stepping between 0 and 2 meters per second and its current speed, with the swerve view beside it. Step 1, P 0.4 and I 0: the speed settles at about 0.7 meters per second. Step 2, P 2 and I 0: it settles at about 1.5. Step 3, P 2 and I 5: it reaches 2 meters per second."><figcaption><p>PID only, recorded in simulation: P alone stops short, and I closes the gap.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/yagsl-tune-drive-pid.gif" alt="A recording of AdvantageScope tuning the drive of the YAGSL example in simulation with feedback only. A line graph shows the speed typed into Tuning/swerve/modules/drive/velocity stepping between 0 and 2 meters per second and the speed the front left drive motor measures, with the swerve view beside it. Step 1, P 0.4 and I 0: the speed settles at about 0.7 meters per second. Step 2, P 2 and I 0: it settles at about 1.5. Step 3, P 2 and I 5: it reaches 2 meters per second."><figcaption><p>PID only, recorded in simulation: P alone stops short, and I closes the gap.</p></figcaption></figure>
 {% endtab %}
 
 {% tab title="PID and FF" %}
@@ -50,7 +56,7 @@ reach their speed sooner and track paths better than with PID only.
 1. With every feedback gain at `0`, raise `feedforward/v` until the speed lands on the setpoint.
 2. Add `feedback/p` so it gets there faster and holds.
 
-<figure><img src="../.gitbook/assets/yagsl-tune-drive-pid-ff.gif" alt="A recording of AdvantageScope tuning the drive of the YAGSL example in simulation with feedforward and feedback. A line graph shows the front left module's desired speed stepping between 0 and 2 meters per second and its current speed, with the swerve view beside it. Step 1, V 0.5 and P 0: the speed settles at about 1.6 meters per second. Step 2, V 0.64 and P 0: it lands on 2. Step 3, V 0.64 and P 2: it gets there faster and holds."><figcaption><p>PID and FF, recorded in simulation: V lands on the setpoint, then P makes it quicker.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/yagsl-tune-drive-pid-ff.gif" alt="A recording of AdvantageScope tuning the drive of the YAGSL example in simulation with feedforward and feedback. A line graph shows the speed typed into Tuning/swerve/modules/drive/velocity stepping between 0 and 2 meters per second and the speed the front left drive motor measures, with the swerve view beside it. Step 1, V 0.5 and P 0: the speed settles at about 1.6 meters per second. Step 2, V 0.64 and P 0: it lands on 2. Step 3, V 0.64 and P 2: it gets there faster and holds."><figcaption><p>PID and FF, recorded in simulation: V lands on the setpoint, then P makes it quicker.</p></figcaption></figure>
 {% endtab %}
 
 {% tab title="Config generator" %}
@@ -64,11 +70,20 @@ your browser, with a graph of every module and buttons for the setpoint.
 4. Type `feedforward/v`, then click away. Raise it until the speed lands on the setpoint.
 5. Type `feedback/p`, then click away, so it gets there faster and holds.
 
-Or press **Auto**: it drives the wheels slowly, then quickly, each way, and works out all six gains.
-**Azimuth** tunes the steering the same way. When you're done, **Download pidfproperties.json** gives you
-the gains to copy into your project.
+When you're done, **Download pidfproperties.json** gives you the gains to copy into your project.
+**Azimuth** tunes the steering the same way.
 
 <figure><img src="../.gitbook/assets/yagsl-tune-drive-generator.gif" alt="A recording of the config generator's live tuner connected to the YAGSL example in simulation, in Drive mode. Step 1: the switch to step the setpoint between 0 and 1 meter per second is turned on. Step 2: with every gain at 0 the wheels don't move. Step 3: feedforward/v is typed as 0.64 and the wheels reach the setpoint. Step 4: feedback/p is typed as 2 and they get there faster. Each value is applied by clicking away."><figcaption><p>The config generator's live tuner, connected to the simulator.</p></figcaption></figure>
+
+**Or press Auto.** Auto runs the same tests as WPILib's SysId: it drives every wheel slowly, then
+quickly, each way, and fits the feedforward to how they moved. Then it works out a P to go with it and
+fills in all six gains. Auto gets close, not perfect, so check its gains against the graph and adjust
+from there.
+
+In this recording Auto found `feedforward/v` = 0.63, close to the 0.64 found by hand in the other tabs.
+Its `feedback/p` made the speed shake a little in simulation, so P is lowered to 2 at the end.
+
+<figure><img src="../.gitbook/assets/yagsl-tune-drive-auto.gif" alt="A recording of the config generator's live tuner connected to the YAGSL example in simulation, in Drive mode, starting with every gain at 0. Auto is pressed and runs four tests while the graph shows the wheel speed: slowly forward, slowly backward, quickly forward and quickly backward. It then fills in the gains: feedback/p 5.76, feedforward/v 0.63 and feedforward/a 0.1. With the setpoint switching between 0 and 1 meter per second the speed shakes a little around it, so feedback/p is lowered to 2 by typing it and clicking away, and the speed then tracks the setpoint without shaking."><figcaption><p>Auto works out the gains with SysId's tests. They're a starting point to check against the graph.</p></figcaption></figure>
 {% endtab %}
 {% endtabs %}
 
