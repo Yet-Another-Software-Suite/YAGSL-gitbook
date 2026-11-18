@@ -10,11 +10,17 @@ description: >-
 **This is not "Log Replay."** [AdvantageKit's Log Replay](https://docs.advantagekit.org/getting-started/what-is-advantagekit) re-runs your robot code against a recorded log to deterministically reproduce a match in simulation, and requires the AdvantageKit IO-interface pattern. What this page covers is simpler and works with **every** YAGSL robot, AdvantageKit or not: opening the `.wpilog` file your robot already wrote and looking at the recorded values in AdvantageScope. Nothing re-executes; you're just viewing a file.
 {% endhint %}
 
-YAGSL's swerve telemetry can be written to a WPILib `DataLog` as well as published to NetworkTables. See [Telemetry, Simulation & Vision](../explanation/telemetry-and-vision.md) for the live NetworkTables tree; this page is the practical walkthrough for looking at a _recorded_ run afterward.
+{% hint style="success" %}
+**DataLog is on by default.** YAGSL records a DataLog every time your robot code runs, on the robot and in
+simulation, with the swerve drive under `Swerve/`. You don't need to set anything up: drive a match or a practice, then
+skip to [Step 4](#step-4-pull-the-file-and-open-it-in-advantagescope) to pull the file. Steps 1 and 2 are optional.
+{% endhint %}
 
-## Step 1: Make sure a DataLog is actually being written
+YAGSL's swerve telemetry is written to a WPILib `DataLog` as well as published to NetworkTables. See [Telemetry, Simulation & Vision](../explanation/telemetry-and-vision.md) for the live NetworkTables tree; this page is the practical walkthrough for looking at a _recorded_ run afterward.
 
-`DataLogManager` owns the actual file on disk. Start it once, early, in your `Robot` constructor (WPILib 2027 has no `robotInit()`):
+## Step 1 (optional): Start the DataLog at power-on
+
+`DataLogManager` owns the actual file on disk. It starts on its own, but you can start it yourself once, early, in your `Robot` constructor (WPILib 2027 has no `robotInit()`):
 
 ```java title="Robot.java"
 import org.wpilib.driverstation.DriverStation;
@@ -36,9 +42,9 @@ On the real robot, `.wpilog` files are written to a `logs` folder on a USB drive
 `WPILIB_TBD_*` files left over from a previous boot are deleted on startup, and the oldest logs are deleted when the storage has less than 50 MB free. Pull the logs you care about off the robot.
 {% endhint %}
 
-## Step 2: Give the swerve drive a DataLog name
+## Step 2 (optional): Change the swerve drive's DataLog name
 
-By default `DataLogManager` records every NetworkTables value change, so everything under `Mechanisms/swerve` is already in the file (as `NT:/Mechanisms/swerve/...`) without any setup. To also get YAMS' dedicated DataLog entries, which keep recording when you turn NetworkTables publishing off for competition, name them on the telemetry config you pass to `SwerveDriveConfig`:
+By default `DataLogManager` records every NetworkTables value change, so everything under `Mechanisms/swerve` is already in the file (as `NT:/Mechanisms/swerve/...`) without any setup. YAGSL also writes YAMS' dedicated DataLog entries under `Swerve/`, which keep recording when you turn NetworkTables publishing off for competition. To use a different name, set it on the telemetry config you pass to `SwerveDriveConfig`:
 
 ```java title="SwerveDriveSubsystem.java"
 import yams.core.telemetry.SwerveDriveTelemetryConfig;

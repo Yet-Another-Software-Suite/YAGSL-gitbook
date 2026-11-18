@@ -64,7 +64,7 @@ SwerveParser.parse(directory);
 drive = SwerveParser.createSwerveDrive(cfg);
 ```
 
-`withTelemetry("swerve", TelemetryVerbosity.HIGH)` is the short form. Passing a `SwerveDriveTelemetryConfig` (`yams.core.telemetry.SwerveDriveTelemetryConfig`) also lets you choose the DataLog name with `.withDataLogName(...)`; with the short form, YAGSL logs under `Swerve/`.
+`withTelemetry("swerve", TelemetryVerbosity.HIGH)` is the short form. Passing a `SwerveDriveTelemetryConfig` (`yams.core.telemetry.SwerveDriveTelemetryConfig`) also lets you choose the DataLog name with `.withDataLogName(...)`; with the short form, YAGSL logs under `Swerve/`. The DataLog is on by default, so every run is recorded; see [View your DataLog in AdvantageScope](../how-to/view-your-datalog-in-advantagescope.md).
 
 Telemetry is only published while your code calls `drive.updateTelemetry()` every loop: from the subsystem's `periodic()` in Commands v2, or from `robotPeriodic()` in Commands v3, where a `Mechanism` has no `periodic()` of its own.
 

@@ -59,6 +59,7 @@ it catches inversions, bad offsets and CAN ID mistakes in a few minutes.
 
 ## Still stuck?
 
-Record a DataLog of the problem and open it with
+Your robot records a DataLog every time it runs, since YAGSL turns it on by default. Open the one from when the
+problem happened with
 [View your DataLog in AdvantageScope](view-your-datalog-in-advantagescope.md). Then ask on the
 [YAGSL Discord](https://discord.gg/yass) with your `swerve/` config directory and the log attached.
