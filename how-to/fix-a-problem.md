@@ -43,7 +43,7 @@ it catches inversions, bad offsets and CAN ID mistakes in a few minutes.
 | In field-relative driving, driving is right at the starting heading, but the directions change as the robot turns, or forward isn't forward in odometry | [Fix steering that changes as the robot turns](the-8-steps.md) (the 8 steps), also [as a flowchart](troubleshooting-flowchart.md#forward-is-not-forward-the-8-steps) |
 | The robot drives forward, but odometry shows it driving backward | Add `180` to every `absoluteEncoderOffset`. See the "Odometry mismatch" note in [Determine inversion](determine-inversion.md), step 4. |
 | "Forward" is the wrong side of the robot | Front is whatever the gyro reports as `0`. See [Verify your module locations](verify-module-locations.md). |
-| The field-relative heading is off after a while, or the robot powered on facing the wrong way | Zero the gyro with the button combo from [Write the swerve code](../tutorial/write-the-swerve-code.md). An older gyro such as a Pigeon 1 or NavX 1 drifts the longer it's powered on. |
+| The field-relative heading is off after a while, or the robot powered on facing the wrong way | Zero the gyro with the button combo from [Write the swerve code](../tutorial/write-the-swerve-code.md). If the gyro drifts, recalibrate it too: gyros are sensitive to pressure, and sometimes humidity, and an older one such as a Pigeon 1 or NavX 1 drifts the longer it's powered on. |
 
 ## It drives, but not well
 

@@ -108,7 +108,7 @@ digraph G {
   s2q6 -> s2f6 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
   s2h7 [label="Leave the robot still for a minute,\nand graph the gyro", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
   s2q7 [label="Does the heading\nchange while the\nrobot sits still?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  s2f7 [label="The gyro drifts: zero it at\nthe start of your program.\nOlder gyros like the Pigeon 1\nand NavX 1 drift the longer\nthey're powered on", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  s2f7 [label="The gyro drifts: recalibrate it,\nand zero it at the start of your\nprogram. Gyros are sensitive to\npressure, and sometimes humidity.\nOlder gyros like the Pigeon 1 and\nNavX 1 drift the longer they're\npowered on", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; s2q7; s2f7;}
   s2q6 -> s2h7 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b", weight=10];
   s2h7 -> s2q7 [color="#6c8ebf", weight=10];
