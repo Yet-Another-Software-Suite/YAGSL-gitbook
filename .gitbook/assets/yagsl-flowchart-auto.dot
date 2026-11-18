@@ -1,0 +1,16 @@
+digraph G {
+  graph [rankdir=TB, nodesep=0.5, ranksep=0.45, pad=0.3, bgcolor="white", dpi=150, splines=ortho];
+  node  [fontname="DejaVu Sans", fontsize=13, margin="0.2,0.12", penwidth=1.6];
+  edge  [fontname="DejaVu Sans", fontsize=12, penwidth=1.6, arrowhead=onormal, arrowsize=1.1];
+  s [label="Autonomous is consistently off:\nit ends short or long\nby about the same amount", shape=box, style="rounded,filled", fillcolor="#dae8fc", color="#6c8ebf"];
+  q1 [label="Push the robot a measured\ndistance, such as 3 m.\nDoes odometry agree?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  q2 [label="Is the drive gear ratio\nright for your module\nand its configuration?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f2 [label="Fix the gear ratio, such as\nwith the config generator's\nmodule type and configuration", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  f3 [label="Measure the wheel diameter\nas the tread is now: worn tread\nis smaller than new. Update it,\nor replace the tread", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  d [label="Odometry is right, so the\npath following is off: see\nFix swerve drive drift", shape=box, style="rounded,filled", fillcolor="#d5e8d4", color="#82b366"];
+  s -> q1 [color="#6c8ebf"];
+  q1 -> q2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q1 -> d [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q2 -> f2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q2 -> f3 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+}

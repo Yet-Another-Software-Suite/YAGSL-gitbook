@@ -1,5 +1,5 @@
 ---
-description: Known-good gearing values for common commercial-off-the-shelf swerve modules
+description: Known-good gearing values and inversions for common commercial-off-the-shelf swerve modules
 ---
 
 # Standard Conversion Factors
@@ -20,8 +20,9 @@ a module's own `gearing` field (module-level `gearing` wins if both are present)
 - `angle.gearRatio`: motor revolutions per full azimuth revolution, as `X:1`.
 
 The config generator at [config.yagsl.com](https://config.yagsl.com) has the SDS, REV, Thrifty Bot and WCP modules
-below as presets: pick your module under **Physical Properties → Swerve Module** and it fills in all three values.
-They're listed here for reference and for teams hand-editing JSON.
+below as presets, and keeps them up to date. On its **Properties** tab, pick your **Module Type** and **Module
+Configuration**: it fills in all three values, and sets every module's [inversions](#inversions) too. The values are
+listed here for reference and for teams hand-editing JSON.
 
 Ratios are given to four decimal places. Where a module's gear train is published, the ratio is worked out from its
 tooth counts, so it can differ from the vendor's rounded value in the last places (MK4 L2 is 6.746, sold as 6.75).
@@ -174,6 +175,40 @@ Not a preset in the config generator.
 |---|---|---|---|
 | Corner, Mid Ratio | 28 | 4 | 2.5 |
 | Corner, High Ratio | 28 | 3.25 | 2.5 |
+
+## Inversions
+
+Picking a module type in the config generator also sets these inversions on every module. They come from the
+vendors' own code and from what most teams' CTRE swerve generator files use. They assume the wheels are lined up as YAGSL lines them up: every wheel facing forward with its bevel gear on the
+robot's left. EasySwerve's depend on whether its motors are on the bottom or the top of the module.
+
+In a module's JSON file, "Angle motor" is `inverted.angle`, "Drive motor" is `inverted.drive`, and "Absolute
+encoder" is `absoluteEncoderInverted`.
+
+| Vendor | Module | Angle motor | Absolute encoder | Drive motor |
+|---|---|---|---|---|
+| SDS | MK4 | — | — | Inverted |
+| SDS | MK4i | Inverted | — | Inverted |
+| SDS | MK4n | Inverted | — | Inverted |
+| SDS | MK4c | — | — | Inverted |
+| SDS | MK5i | — | — | Inverted |
+| SDS | MK5n | — | — | Inverted |
+| REV | MAXSwerve | — | Inverted | — |
+| REV | EasySwerve (Motors on bottom) | — | — | Inverted |
+| REV | EasySwerve (Motors on top) | Inverted | — | — |
+| REV | EasySwerve, Spiky Wheel (Motors on bottom) | — | — | Inverted |
+| REV | EasySwerve, Spiky Wheel (Motors on top) | Inverted | — | — |
+| Thrifty Bot | Thrifty Swerve | — | — | Inverted |
+| WCP | Swerve X2 (Standard) | — | — | Inverted |
+| WCP | Swerve X2i / X2c | Inverted | — | Inverted |
+| WCP | Swerve X2t | — | — | Inverted |
+| WCP | Swerve X2S / X2St | — | Inverted | Inverted |
+| WCP | Swerve X | Inverted | — | Inverted |
+| WCP | Swerve X Flipped | Inverted | — | Inverted |
+| WCP | Swerve XS | — | Inverted | — |
+
+They're a starting point, not a guarantee: check every module with
+[Determine inversion](../how-to/determine-inversion.md) before you drive.
 
 ## Deriving your own
 

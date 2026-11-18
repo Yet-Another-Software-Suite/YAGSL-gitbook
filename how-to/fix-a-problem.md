@@ -8,6 +8,7 @@ Find the row that matches what your robot is doing, and start with the page it p
 problems can be present at once, so if the first fix doesn't settle it, work down the table.
 
 {% hint style="info" %}
+Prefer flowcharts? The [troubleshooting flowcharts](troubleshooting-flowchart.md) cover the same problems.
 Most problems come from a step skipped during setup. If you haven't been through
 [Check and calibrate your hardware](../tutorial/04-verify-and-calibrate-hardware.md), do that first:
 it catches inversions, bad offsets and CAN ID mistakes in a few minutes.
@@ -30,7 +31,7 @@ it catches inversions, bad offsets and CAN ID mistakes in a few minutes.
 | A module points the wrong way, or its readings go the wrong way when turned by hand | [Determine inversion](determine-inversion.md), steps 1 and 2 |
 | In the spin test, one wheel pushes against the others | That module's drive motor is inverted. See [Determine inversion](determine-inversion.md), step 3. |
 | In the spin test, the robot spins clockwise instead of counterclockwise | A diagonal module swap, inverted drive motors, or offsets captured with the bevel gears facing right. See [Determine inversion](determine-inversion.md), step 3. |
-| Driving straight, the modules don't all point forward | A wrong module `location` or CAN ID. See [Verify your module locations](verify-module-locations.md). |
+| Driving straight, the modules don't all point forward | A wrong CAN ID, device type, module order, location or offset, or untuned azimuth gains. See the [Wheels not pointing straight](troubleshooting-flowchart.md#wheels-not-pointing-straight) flowchart. |
 | Gears grind on the ground but not on blocks, with every wheel pointing and spinning the right way | The gains need tuning, not inverting. See [Tune PIDF gains](tune-pidf-gains.md). |
 
 ## On the ground: field-relative driving is wrong
@@ -38,7 +39,7 @@ it catches inversions, bad offsets and CAN ID mistakes in a few minutes.
 | What you see | Start here |
 | --- | --- |
 | Driving is wrong at every heading, including the starting one | Check `gyroInvert`. See [Determine inversion](determine-inversion.md), step 4. |
-| Driving is right at the starting heading, but the directions change as the robot turns | [Fix steering that changes as the robot turns](the-8-steps.md) (the 8 steps) |
+| Driving is right at the starting heading, but the directions change as the robot turns, or forward isn't forward in odometry | [Fix steering that changes as the robot turns](the-8-steps.md) (the 8 steps), also [as a flowchart](troubleshooting-flowchart.md#forward-is-not-forward-the-8-steps) |
 | The robot drives forward, but odometry shows it driving backward | Add `180` to every `absoluteEncoderOffset`. See the "Odometry mismatch" note in [Determine inversion](determine-inversion.md), step 4. |
 | "Forward" is the wrong side of the robot | Front is whatever the gyro reports as `0`. See [Verify your module locations](verify-module-locations.md). |
 | The field-relative heading is off after a while, or the robot powered on facing the wrong way | Zero the gyro with the button combo from [Write the swerve code](../tutorial/write-the-swerve-code.md). An older gyro such as a Pigeon 1 or NavX 1 drifts the longer it's powered on. |
@@ -49,7 +50,8 @@ it catches inversions, bad offsets and CAN ID mistakes in a few minutes.
 | --- | --- |
 | The robot drifts sideways while driving or rotating | [Fix swerve drive drift](../reference/swerve-drift-causes.md) |
 | The modules are slow to reach their angle, overshoot, or shake | [Tune PIDF gains](tune-pidf-gains.md) |
-| The robot doesn't reach the speed you command | [Tune PIDF gains](tune-pidf-gains.md), then check the gear ratios against [Standard Conversion Factors](../reference/standard-conversion-factors.md) |
+| The robot drives slower than it should | A full SystemCore, a module running backwards, scaled-down joystick input, the maximum speed, the gear ratio or wheel diameter, or the gains. See the [Robot drives slower than it should](troubleshooting-flowchart.md#robot-drives-slower-than-it-should) flowchart. |
+| Autonomous ends short or long by about the same amount every time | The gear ratio or wheel diameter is off, or the wheel tread has worn down. See the [Autonomous is consistently off](troubleshooting-flowchart.md#autonomous-is-consistently-off) flowchart. |
 | PathPlanner paths overshoot or end in the wrong place | [Fix swerve drive drift](../reference/swerve-drift-causes.md), then [Set up PathPlanner](setup-pathplanner.md) |
 
 ## Still stuck?

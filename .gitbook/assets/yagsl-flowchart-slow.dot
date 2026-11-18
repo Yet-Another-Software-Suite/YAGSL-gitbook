@@ -1,0 +1,28 @@
+digraph G {
+  graph [rankdir=TB, nodesep=0.5, ranksep=0.45, pad=0.3, bgcolor="white", dpi=150, splines=ortho];
+  node  [fontname="DejaVu Sans", fontsize=13, margin="0.2,0.12", penwidth=1.6];
+  edge  [fontname="DejaVu Sans", fontsize=12, penwidth=1.6, arrowhead=onormal, arrowsize=1.1];
+  s [label="Robot drives slower\nthan it should", shape=box, style="rounded,filled", fillcolor="#dae8fc", color="#6c8ebf"];
+  q1 [label="Is the SystemCore\nnearly out of\nstorage space?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f1 [label="Free up space,\nsuch as old logs,\nthen reboot the SystemCore", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  q2 [label="In the spin test,\ndoes any module push\nagainst the others?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f2 [label="That module runs backwards:\nits drive inversion is wrong,\nor its absolute encoder\noffset is 180° off", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  q3 [label="Does your code scale\nthe joystick down?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f3 [label="Remove the scaling, such as\nwithScaleTranslation or a\nmultiplier on the axes, or\nmake it the slow mode it\nwas meant to be", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  q4 [label="At full stick, is the\ncommanded module speed\nyour robot's top speed?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f4 [label="Check the maximum speed:\nthe drive motor type, gear ratio\nand wheel diameter it comes from,\nand any withMaximumChassisSpeed", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  q5 [label="Does each module's\nmeasured speed reach\nits commanded speed?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f5 [label="Tune the drive\nPID and feedforward", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  d [label="The robot thinks it's fast but isn't:\ncheck the gear ratio and\nmeasure the wheel diameter", shape=box, style="rounded,filled", fillcolor="#d5e8d4", color="#82b366"];
+  s -> q1 [color="#6c8ebf"];
+  q1 -> f1 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q1 -> q2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q2 -> f2 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q2 -> q3 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q3 -> f3 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q3 -> q4 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q4 -> f4 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q4 -> q5 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q5 -> f5 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q5 -> d [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+}

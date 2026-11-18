@@ -1,0 +1,24 @@
+digraph G {
+  graph [rankdir=TB, nodesep=0.5, ranksep=0.45, pad=0.3, bgcolor="white", dpi=150, splines=ortho];
+  node  [fontname="DejaVu Sans", fontsize=13, margin="0.2,0.12", penwidth=1.6];
+  edge  [fontname="DejaVu Sans", fontsize=12, penwidth=1.6, arrowhead=onormal, arrowsize=1.1];
+  s [label="Wheels don't all point\nstraight when you\ndrive straight", shape=box, style="rounded,filled", fillcolor="#dae8fc", color="#6c8ebf"];
+  q1 [label="Are the CAN IDs and\ndevice type strings right\nfor every module?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f1 [label="Fix them in each\nmodule's JSON file", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  q2 [label="Are the module files\nin swervedrive.json's modules\nlist in the right order?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f2 [label="Put them in order:\nfront left, front right,\nback left, back right", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  q3 [label="Are the module locations\nand absolute encoder\noffsets right?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f3 [label="Verify the module locations,\nand record each offset with\nevery wheel forward and its\nbevel gear on the left", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  q4 [label="Does each module reach\nits angle setpoint\non the graph?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f4 [label="Tune the azimuth\nPID and feedforward", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  d [label="Check the module for\na loose encoder magnet,\nslipping gears or wiring", shape=box, style="rounded,filled", fillcolor="#d5e8d4", color="#82b366"];
+  s -> q1 [color="#6c8ebf"];
+  q1 -> f1 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q1 -> q2 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q2 -> f2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q2 -> q3 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q3 -> f3 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q3 -> q4 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q4 -> f4 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q4 -> d [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+}

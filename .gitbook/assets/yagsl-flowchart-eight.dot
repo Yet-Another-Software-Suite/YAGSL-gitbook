@@ -1,0 +1,67 @@
+digraph G {
+  graph [rankdir=TB, nodesep=0.5, ranksep=0.45, pad=0.3, bgcolor="white", dpi=150, splines=ortho, nodesep=0.35, ranksep=0.3];
+  node  [fontname="DejaVu Sans", fontsize=13, margin="0.2,0.12", penwidth=1.6];
+  edge  [fontname="DejaVu Sans", fontsize=12, penwidth=1.6, arrowhead=onormal, arrowsize=1.1];
+  s [label="Forward in real life isn't forward\nin odometry, or field-relative driving\nchanges as the robot turns", shape=box, style="rounded,filled", fillcolor="#dae8fc", color="#6c8ebf"];
+  test [label="The test, after every step:\ndrive forward, turn 90°,\nthen drive forward again", shape=note, style=filled, fillcolor="#f5f5f5", color="#666666"];
+  {rank=same; s; test}
+  s -> test [style=invis];
+  st1 [label="1. Set gyroInvert to false\nand every inverted.drive to false", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q1 [label="Does it go where\nyou push the stick\nat every heading?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  d1 [label="Fixed", shape=box, style="rounded,filled", fillcolor="#d5e8d4", color="#82b366"];
+  s -> st1 [color="#6c8ebf"];
+  st1 -> q1 [color="#6c8ebf"];
+  q1 -> d1 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  {rank=same; q1; d1}
+  st2 [label="2. Set gyroInvert to true", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q2 [label="Does it go where\nyou push the stick\nat every heading?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  d2 [label="Fixed", shape=box, style="rounded,filled", fillcolor="#d5e8d4", color="#82b366"];
+  q1 -> st2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  st2 -> q2 [color="#6c8ebf"];
+  q2 -> d2 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  {rank=same; q2; d2}
+  st3 [label="3. Set every inverted.drive to true", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q3 [label="Does it go where\nyou push the stick\nat every heading?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  d3 [label="Fixed", shape=box, style="rounded,filled", fillcolor="#d5e8d4", color="#82b366"];
+  q2 -> st3 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  st3 -> q3 [color="#6c8ebf"];
+  q3 -> d3 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  {rank=same; q3; d3}
+  st4 [label="4. Set gyroInvert to false", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q4 [label="Does it go where\nyou push the stick\nat every heading?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  d4 [label="Fixed", shape=box, style="rounded,filled", fillcolor="#d5e8d4", color="#82b366"];
+  q3 -> st4 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  st4 -> q4 [color="#6c8ebf"];
+  q4 -> d4 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  {rank=same; q4; d4}
+  st5 [label="5. Flip the modules: swap\nthe module files diagonally", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q5 [label="Does it go where\nyou push the stick\nat every heading?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  d5 [label="Fixed", shape=box, style="rounded,filled", fillcolor="#d5e8d4", color="#82b366"];
+  q4 -> st5 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  st5 -> q5 [color="#6c8ebf"];
+  q5 -> d5 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  {rank=same; q5; d5}
+  st6 [label="6. Set every inverted.drive to false", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q6 [label="Does it go where\nyou push the stick\nat every heading?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  d6 [label="Fixed", shape=box, style="rounded,filled", fillcolor="#d5e8d4", color="#82b366"];
+  q5 -> st6 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  st6 -> q6 [color="#6c8ebf"];
+  q6 -> d6 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  {rank=same; q6; d6}
+  st7 [label="7. Set gyroInvert to true", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q7 [label="Does it go where\nyou push the stick\nat every heading?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  d7 [label="Fixed", shape=box, style="rounded,filled", fillcolor="#d5e8d4", color="#82b366"];
+  q6 -> st7 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  st7 -> q7 [color="#6c8ebf"];
+  q7 -> d7 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  {rank=same; q7; d7}
+  st8 [label="8. Set every inverted.drive to true", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q8 [label="Does it go where\nyou push the stick\nat every heading?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  d8 [label="Fixed", shape=box, style="rounded,filled", fillcolor="#d5e8d4", color="#82b366"];
+  q7 -> st8 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  st8 -> q8 [color="#6c8ebf"];
+  q8 -> d8 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  {rank=same; q8; d8}
+  hw [label="Something is wired or set up\nwrong: check the wiring, CAN IDs\nand absolute encoders", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  q8 -> hw [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+}
