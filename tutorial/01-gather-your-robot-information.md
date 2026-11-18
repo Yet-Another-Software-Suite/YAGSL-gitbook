@@ -17,7 +17,7 @@ etc.). Don't assume your numbers match another team's example.
 
 | Feature | Notes |
 |---|---|
-| Gyroscope model and connection | e.g. Pigeon 2.0 on CAN, Canandgyro on CAN, NavX3 on CAN (not usable with YAGSL 2027 yet, because StudicaLib has no `2027_alpha7` build), or the IMU built into the SystemCore (no wiring or CAN ID needed). |
+| Gyroscope model and connection | e.g. Pigeon 2.0 on CAN, Canandgyro on CAN, NavX3 on CAN or USB (record the USB port), or the IMU built into the SystemCore (no wiring or CAN ID needed). |
 | Drive motor + controller for each module | e.g. Kraken X60 on TalonFX, NEO on SparkMAX, NEO on a Thrifty Nova, etc. |
 | Angle/steering motor + controller for each module | Same as above, per module. |
 | Absolute encoder model and connection for each module | e.g. CANcoder on CAN, a REV Through Bore attached to the angle motor controller's data port, or an encoder wired to a SystemCore DIO or analog port (record the channel). |
@@ -61,7 +61,7 @@ robot's center, in inches:
 ## Inversion and offsets: record placeholders now, fill in later
 
 You won't be able to determine these until your code is deployed (that happens in
-[step 4](04-verify-and-calibrate-hardware.md)), but it helps to have a table ready:
+[step 6](04-verify-and-calibrate-hardware.md)), but it helps to have a table ready:
 
 | Module | Drive Inverted? | Angle Inverted? | Absolute Encoder Inverted? | Absolute Encoder Offset (°) |
 |---|---|---|---|---|

@@ -1,12 +1,13 @@
 ---
-description: Vendor dependencies YAGSL requires and how to install them
+description: What each YAGSL vendordep contains, pinning a release, offline installs, and the vendor library each device needs
 ---
 
-# Vendordep Installation
+# Vendordeps and offline install
 
 YAGSL 2027 targets WPILib `2027_alpha7` (Java 25) on the SystemCore. It is published as **two**
 vendordeps, one per WPILib command framework. Install exactly one of them: each one declares a
-conflict with the other.
+conflict with the other. For step-by-step instructions, see
+[Install YAGSL](../tutorial/02-install-yagsl.md).
 
 | Command framework | Vendordep name        | Vendordep URL                                       |
 | ----------------- | --------------------- | --------------------------------------------------- |
@@ -19,33 +20,12 @@ The old `https://yet-another-software-suite.github.io/YAGSL/yagsl.json` URL (and
 project; remove `vendordeps/yagsl.json` if you are upgrading.
 {% endhint %}
 
-## Install YAGSL
+## Pin a release
 
-### Online
+The URLs above always install the latest release. To pin a project to one release, use the versioned
+URL instead, for example `https://cdn.yassrobotics.com/yagsl_commands2-2026.10.09.json`.
 
-In VS Code, run **WPILib: Manage Vendor Libraries → Install new libraries (online)** and paste the
-URL for your command framework:
-
-{% tabs %}
-{% tab title="Commands v2" %}
-```
-https://cdn.yassrobotics.com/yagsl_commands2.json
-```
-{% endtab %}
-
-{% tab title="Commands v3" %}
-```
-https://cdn.yassrobotics.com/yagsl_commands3.json
-```
-{% endtab %}
-{% endtabs %}
-
-To pin a project to one release, use the versioned URL instead, for example
-`https://cdn.yassrobotics.com/yagsl_commands2-2026.10.09.json`.
-
-See the [WPILib guide to installing 3rd-party libraries](https://docs.wpilib.org/en/stable/docs/software/vscode-overview/3rd-party-libraries.html#installing-libraries) for the general workflow.
-
-### Offline
+## Offline
 
 Every [GitHub release](https://github.com/Yet-Another-Software-Suite/YAGSL/releases) has a
 `<version>-YAGSL-Offline.zip` asset (for example `2026.10.09-YAGSL-Offline.zip`). It contains a
@@ -115,6 +95,7 @@ install the libraries for the hardware you actually have:
 | CTRE Phoenix 6   | `talonfx_*`, `talonfxs_*`, `pigeon2_can`, `cancoder_can`                              |
 | ReduxLib         | `canandgyro_can`, `canandmag_can`                                                     |
 | ThriftyLib       | `nova_*`, or an `_attached` encoder on a Nova                                          |
+| StudicaLib       | `navx3_can`, `navx3_usb`                                                              |
 | *(none)*         | `systemcore_internal` (WPILib's built in `OnboardIMU`), and `_dio` / `_analog` encoders on SmartIO ports |
 
 Phoenix 5 is no longer needed for anything.
@@ -126,11 +107,9 @@ device. Install the vendor library and redeploy.
 {% endhint %}
 
 {% hint style="warning" %}
-**NavX3-CAN (`navx3_can`) and the AndyMark CAN Hex Bore encoder (`andymarkhexbore_can`) are not
-available in the 2027 builds yet.** StudicaLib and AndyMark's library have no `2027_alpha7` release,
-so YAGSL 2027 is built without their device classes. See
-[Gyroscopes](hardware/gyroscopes.md#navx3-can) and
-[Absolute Encoders](hardware/absolute-encoders.md) for what to use instead.
+**The AndyMark CAN Hex Bore encoder (`andymarkhexbore_can`) is not available in the 2027 builds
+yet.** AndyMark's library has no `2027_alpha7` release, so YAGSL 2027 is built without its device
+class. See [Absolute Encoders](hardware/absolute-encoders.md) for what to use instead.
 {% endhint %}
 
 Use the 2027 (`2027_alpha7`) release of each vendor library, installed from the vendor's own
@@ -141,4 +120,4 @@ You'll also want the vendor's own tuning/firmware tools installed on your develo
 
 * [REV Hardware Client 2](https://docs.revrobotics.com/rev-hardware-client-2)
 * [CTRE Tuner X](https://v6.docs.ctr-electronics.com/en/latest/docs/installation/installation-frc.html)
-* Studica Hardware Manager (NavX3-CAN)
+* Studica Hardware Manager (NavX3)

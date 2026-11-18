@@ -5,7 +5,7 @@ web app that builds your configuration files from a guided form instead of you h
 It runs entirely in your browser, and it produces the same files for Commands v2 and Commands v3
 projects.
 
-<figure><img src="../.gitbook/assets/yagsl-config-generator.png" alt="The YAGSL config generator three ways. On a desktop: the Gyro tab of the form, with Need Help, Quick Start Guide, Upload Config, Print and Download Config buttons. On a phone: the same form in one column with every button stacked. Printed: every tab on paper, with the dropdown options listed and blank lines to write each value on."><figcaption><p>The config generator on a desktop, on a phone, and printed.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/yagsl-config-generator-2027.png" alt="The YAGSL config generator on a desktop. Along the top are the Need Help, Quick Start Guide, Upload Config, Print and Download Config buttons. Below them are the Properties, Gyro, Front Left, Front Right, Back Left, Back Right and PID/FF tabs. The Properties tab is open, with the module type set to SDS MK4i, its configuration set to L2, the inversions that module sets automatically, and the drive and angle gear ratios and wheel diameter it fills in."><figcaption><p>The config generator. Picking a module type fills in its gear ratios, wheel diameter and inversions.</p></figcaption></figure>
 
 * **On a phone:** the whole generator works on a phone, so you can fill it in at the robot.
 * **On paper:** **Print** prints every tab, with the dropdown options listed and a blank line for each value. Fill it in by hand, then type it in later.
@@ -20,22 +20,25 @@ inputs and always produces a schema-correct config.
 
 ## Fill in the form
 
-The generator is organized into six tabs. Work through them using the information you collected in
-[step 1](01-gather-your-robot-information.md):
+The generator is organized into seven tabs. Work through them in order, using the information you
+collected in [step 1](01-gather-your-robot-information.md):
 
-1. **Gyro**: select your gyro type (`pigeon2_can`, `canandgyro_can`, `navx3_can`,
-   `systemcore_internal` for the IMU built into the SystemCore, or `custom` to supply your own in
-   code), its CAN ID and CAN bus, which axis reports yaw, and whether it needs to be inverted. The
-   SystemCore IMU is not on CAN, so the CAN fields disappear when you pick it. `navx3_can` cannot
-   be used with YAGSL 2027 yet, because StudicaLib has no `2027_alpha7` build.
-2. **Front Left**, **Front Right**, **Back Left**, **Back Right** (one tab each): for every module,
+1. **Properties**: pick your **Module Type** and **Module Configuration** (for example SDS MK4i,
+   L2). That fills in the drive and angle gear ratios and the wheel diameter, and sets each
+   module's inversions for that module type. Measure your wheels: worn tread is smaller than the
+   nominal diameter. Stator current limits for the drive and angle motors are optional.
+2. **Gyro**: pick the **Connection** (CAN, USB, SystemCore for the IMU built into the SystemCore,
+   or Custom to supply your own in code), then the gyro on it, which axis reports yaw, and whether
+   it needs to be inverted. A CAN gyro also needs its CAN ID and CAN bus, and a NavX3 on USB needs
+   the SystemCore USB port it's plugged into.
+3. **Front Left**, **Front Right**, **Back Left**, **Back Right** (one tab each): for every module,
    set the drive motor type/ID, angle motor type/ID, absolute encoder type/ID (or channel, for an
-   encoder on a SystemCore DIO or analog port), any needed inversions, and the module's location
-   relative to the robot center. Thrifty Nova motor types (`nova_neo`, `nova_minion`,
+   encoder on a SystemCore DIO or analog port), and the module's location relative to the robot
+   center. The inversions start at the ones your module type set, and a module can override the
+   gearing from the Properties tab. Thrifty Nova motor types (`nova_neo`, `nova_minion`,
    `nova_pulsar`, and so on) are in the motor list alongside TalonFX, TalonFXS, SparkMAX and
    SparkFlex.
-3. **Properties**: shared physical properties (gearing defaults, current limits) and starting PIDF
-   gains for the drive and angle motors.
+4. **PID/FF**: starting PID and feedforward gains for the drive and angle motors.
 
 ### CAN bus fields
 
@@ -89,7 +92,7 @@ without touching the gains for your real robot.
 
 {% hint style="info" %}
 The folder name is up to you, as long as it matches the path you hand to `SwerveParser.parse(...)`
-in [step 5](05-deploy-and-drive.md). This tutorial uses `swerve/base` throughout.
+in [step 4](write-the-swerve-code.md). This tutorial uses `swerve/base` throughout.
 {% endhint %}
 
 {% hint style="success" %}
@@ -108,4 +111,4 @@ with an empty `canbus` moved from `can_s2` to `can_s0`.
 Commit these files to your project's version control along with your code. They're part of your
 robot program, not a build artifact.
 
-Next: [verify and calibrate your hardware](04-verify-and-calibrate-hardware.md).
+Next: [write the swerve code](write-the-swerve-code.md).
