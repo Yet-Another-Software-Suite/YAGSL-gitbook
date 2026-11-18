@@ -47,7 +47,7 @@ Incorrect, worn, or loose wiring produces different symptoms depending on which 
 **Motor**
 
 * [ ] Motor doesn't have a firm connection to the module shaft; it will "twitch" while running if a current limit is set.
-* [ ] Motor is dying; it may pull more current to hit the same speeds.
+* [ ] Motor is dying; it needs more stator current to move than the same motor on the other modules. Graph `Mechanisms/swerve/modules/<name>/azimuth/current/stator` (or `drive/current/stator`) for every module and compare.
 
 **Swerve module**
 

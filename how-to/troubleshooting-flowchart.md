@@ -93,7 +93,14 @@ Drive the robot, point the wheel straight again,
 and look at the line. Does the line
 still line up? If no, the magnet slipped: glue or
 loctite it in, then record the
-absolute encoder offset again. If yes, continue. Graph the motor position, Mechanisms/swerve/modules/<name>/azimuth/mechanism/position, with the absolute encoder, and turn the wheel by hand. Do the lines stay on top of each other? If no, the gearing is wrong: set the angle gear ratio for your module and its configuration. If yes, continue. Turn the wheel by hand, then compare the azimuth motor's current with the other modules' on the same gains. Does it turn freely, and draw about the same current? If no, the motor is dying or the module binds: clean and grease it, then swap the motor with another module's. If the problem follows, replace it. If yes, continue. If every check passes: the module is built incorrectly. Turn the wheel exactly one turn by hand: the absolute encoder should read one turn too. Compare it with another module part by part, and rebuild it by the manufacturer's guide."><figcaption><p>One module's azimuth acts up, or doesn't start in the right position every time.</p></figcaption></figure>
+absolute encoder offset again. If yes, continue. Graph the motor position, Mechanisms/swerve/modules/<name>/azimuth/mechanism/position, with the absolute encoder, and turn the wheel by hand. Do the lines stay on top of each other? If no, the gearing is wrong: set the angle gear ratio for your module and its configuration. If yes, continue. While the modules turn, graph every
+module's azimuth stator current,
+Mechanisms/swerve/modules/<name>/azimuth/current/stator. Does this motor need
+about the same current
+as the others to move? If no, it's dying, or the module binds.
+Turn the wheel by hand: if it turns
+freely, replace the motor. If not,
+clean and grease the module. If yes, continue. If every check passes: the module is built incorrectly. Turn the wheel exactly one turn by hand: the absolute encoder should read one turn too. Compare it with another module part by part, and rebuild it by the manufacturer's guide."><figcaption><p>One module's azimuth acts up, or doesn't start in the right position every time.</p></figcaption></figure>
 
 * Reading the absolute encoder and recording offsets: [Check and calibrate your hardware](../tutorial/04-verify-and-calibrate-hardware.md)
 * Graphing the motor position with the absolute encoder: [Practice in simulation](../tutorial/practice-in-simulation.md)

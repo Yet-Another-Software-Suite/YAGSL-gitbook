@@ -32,9 +32,16 @@ absolute encoder offset again", shape=box, style="rounded,filled", fillcolor="#f
   h3 -> q3 [color="#6c8ebf", weight=10];
   q3 -> f3 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
   q3 -> h4 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
-  h4 [label="Turn the wheel by hand, then compare\nthe azimuth motor's current with\nthe other modules' on the same gains", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  q4 [label="Does it turn freely,\nand draw about the\nsame current?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  f4 [label="The motor is dying or the module\nbinds: clean and grease it, then swap\nthe motor with another module's.\nIf the problem follows, replace it", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  h4 [label="While the modules turn, graph every
+module's azimuth stator current,
+Mechanisms/swerve/modules/<name>/azimuth/current/stator", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q4 [label="Does this motor need
+about the same current
+as the others to move?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f4 [label="It's dying, or the module binds.
+Turn the wheel by hand: if it turns
+freely, replace the motor. If not,
+clean and grease the module", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; q4; f4;}
   h4 -> q4 [color="#6c8ebf", weight=10];
   q4 -> f4 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
