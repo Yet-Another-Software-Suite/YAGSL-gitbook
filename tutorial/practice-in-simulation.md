@@ -26,10 +26,18 @@ holds a position, and PID alone is enough for that, whichever method you use for
 3. Raise `feedback/p` until the wheels overshoot the angle and swing back.
 4. Add `feedback/d` until the overshoot is gone.
 
-To see it, graph the angle you typed, `Tuning/swerve/modules/azimuth/angle`, against what a module's
-encoder measures, such as `Mechanisms/swerve/modules/frontleft/encoder`. Both are in degrees.
+To see it, graph three things for one module, in degrees:
 
-<figure><img src="../.gitbook/assets/yagsl-tune-azimuth.gif" alt="A recording of AdvantageScope tuning the azimuth of the YAGSL example in simulation. A line graph shows the angle typed into Tuning/swerve/modules/azimuth/angle stepping between 0 and 45 degrees and the front left module's encoder following it, with the swerve view beside it. Step 1, P 0.5 and D 0: the angle crawls toward the setpoint. Step 2, P 60 and D 0: it overshoots to about 60 degrees and swings back. Step 3, P 60 and D 2: it reaches 45 degrees with no overshoot."><figcaption><p>Azimuth tuning, recorded in simulation: P too low, then overshooting, then D.</p></figcaption></figure>
+* the angle you typed, `Tuning/swerve/modules/azimuth/angle`;
+* the azimuth motor's position, `Mechanisms/swerve/modules/frontleft/azimuth/mechanism/position`;
+* the absolute encoder, `Mechanisms/swerve/modules/frontleft/encoder`, added after the motor's position so
+  it's drawn underneath it.
+
+The motor's position and the absolute encoder should line up exactly, so the absolute encoder's line
+stays hidden. If you can see it, the two readings disagree: check that module's absolute encoder offset,
+its inversion and the angle gear ratio.
+
+<figure><img src="../.gitbook/assets/yagsl-tune-azimuth.gif" alt="A recording of AdvantageScope tuning the azimuth of the YAGSL example in simulation. A line graph shows the angle typed into Tuning/swerve/modules/azimuth/angle stepping between 0 and 45 degrees and the front left azimuth motor's position following it, with the absolute encoder drawn underneath and hidden because it lines up exactly, with the swerve view beside it. Step 1, P 0.5 and D 0: the angle crawls toward the setpoint. Step 2, P 60 and D 0: it overshoots to about 60 degrees and swings back. Step 3, P 60 and D 2: it reaches 45 degrees with no overshoot."><figcaption><p>Azimuth tuning, recorded in simulation: P too low, then overshooting, then D.</p></figcaption></figure>
 
 **Then tune the drive.** Turn azimuth tuning off, set `modules/drive/enabled` to `true`, and switch
 `modules/drive/velocity` between `0` and `2` meters per second. Graph that speed against what a module's
