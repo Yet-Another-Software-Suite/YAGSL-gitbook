@@ -48,8 +48,8 @@ digraph G {
   s1q5 -> s1h6 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
   s1h6 -> s1q6 [color="#6c8ebf", weight=10];
   s1q6 -> s1f6 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  s1h7 [label="Test the battery under load", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  s1q7 [label="Does it hold\nits voltage?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  s1h7 [label="Test the battery with a Battery Beak\nor another load tester", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  s1q7 [label="Does it pass?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
   s1f7 [label="Charge or\nreplace it", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; s1q7; s1f7;}
   s1q6 -> s1h7 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
