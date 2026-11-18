@@ -58,62 +58,6 @@ The schema changed in YAGSL 2026.8.05; `f` and `iz` (integral zone) and the old 
 ```json
 {
   "drive": {
-    "p": 0.02,
-    "i": 0,
-    "d": 0,
-    "s": 0,
-    "v": 0,
-    "a": 0
-  },
-  "angle": {
-    "p": 0.01,
-    "i": 0,
-    "d": 0,
-    "s": 0,
-    "v": 0,
-    "a": 0
-  }
-}
-```
-
-If you leave drive `v` (kV) at `0`, YAGSL auto-derives it from the drive motor's free speed and your gearing, so a reasonable feedforward exists even before you've tuned anything by hand.
-
-You can also add a `pidfproperties_sim.json` alongside it. YAGSL will load that one instead when running in simulation (`RobotBase.isSimulation()`), so you can use looser gains in sim without touching your competition robot's config.
-
-## Starting points
-
-The right PIDF values vary per-robot, but these are reasonable starting points to iterate from, organized by motor controller type.
-
-{% tabs %}
-{% tab title="SparkMax / SparkFlex" %}
-```json
-{
-  "drive": {
-    "p": 0.0020645,
-    "i": 0,
-    "d": 0,
-    "s": 0,
-    "v": 0,
-    "a": 0
-  },
-  "angle": {
-    "p": 0.01,
-    "i": 0,
-    "d": 0,
-    "s": 0,
-    "v": 0,
-    "a": 0
-  }
-}
-```
-{% endtab %}
-
-{% tab title="TalonFX" %}
-When the drive motor `type` for every module is `talonfx_*` (or alike: `krakenx60`, `falcon500`) this is a reasonable starting point:
-
-```json
-{
-  "drive": {
     "p": 1,
     "i": 0,
     "d": 0,
@@ -122,16 +66,67 @@ When the drive motor `type` for every module is `talonfx_*` (or alike: `krakenx6
     "a": 0
   },
   "angle": {
-    "p": 50,
+    "p": 40,
     "i": 0,
-    "d": 0.32,
+    "d": 0.3,
     "s": 0,
     "v": 0,
     "a": 0
   }
 }
 ```
+
+These are the generator's starting gains for SparkMAX NEO modules.
+
+If you leave drive `v` (kV) at `0`, YAGSL auto-derives it from the drive motor's free speed and your gearing, so a reasonable feedforward exists even before you've tuned anything by hand.
+
+You can also add a `pidfproperties_sim.json` alongside it. YAGSL will load that one instead when running in simulation (`RobotBase.isSimulation()`), so you can use looser gains in sim without touching your competition robot's config.
+
+## Starting points
+
+The config generator fills these in when you pick a motor type, so a generated `pidfproperties.json` already has
+them. They were checked in YAGSL's simulation on 5.36:1 and 6.75:1 drive gearing, and 12.8:1, 18.75:1 and 21.43:1
+azimuth gearing. Your robot will still need tuning, but they're close enough to drive.
+
+* They're PID only. `i` and the feedforward (`s`, `v`, `a`) start at `0`. With drive `v` at `0`, YAGSL works out the
+  drive's kV from the motor's free speed and your gearing.
+* Drive gains are in volts per wheel rotation per second of error. Angle gains are in volts per rotation of error.
+  The gains no longer depend on the motor controller's own units, so old SparkMAX values like `0.0020645` are far
+  too small.
+
+{% tabs %}
+{% tab title="TalonFX" %}
+| Motor | Drive `p` | Angle `p` | Angle `d` |
+| --- | --- | --- | --- |
+| Kraken X60, Kraken X44, Falcon 500 | 1 | 15 | 0.3 |
 {% endtab %}
+
+{% tab title="TalonFXS" %}
+The Pulsar gains are the NEO gains, unchecked: the TalonFXS simulation of the Pulsar does not drive.
+
+| Motor | Drive `p` | Angle `p` | Angle `d` |
+| --- | --- | --- | --- |
+| NEO, NEO 2.0, Vortex, Minion | 1 | 15 | 0.3 |
+| NEO 550 | 1 | 8 | 0.6 |
+| Pulsar | 1 | 15 | 0.3 |
+{% endtab %}
+
+{% tab title="SparkMax / SparkFlex" %}
+| Motor | Drive `p` | Angle `p` | Angle `d` |
+| --- | --- | --- | --- |
+| NEO, NEO 2.0, Vortex | 1 | 40 | 0.3 |
+| Minion, Pulsar | 1 | 30 | 0.3 |
+| NEO 550 | 4 | 12 | 0.6 |
+{% endtab %}
+
+{% tab title="Nova" %}
+| Motor | Drive `p` | Angle `p` | Angle `d` |
+| --- | --- | --- | --- |
+| NEO, NEO 2.0, Vortex | 2 | 40 | 0.3 |
+| Minion, Pulsar | 2 | 30 | 0.3 |
+| NEO 550 | 4 | 12 | 0.6 |
+{% endtab %}
+
 {% endtabs %}
 
 Once you have a reasonable starting point, use **[config.yagsl.com](https://config.yagsl.com)** to regenerate `pidfproperties.json` with your updated numbers, or hand-edit the file directly. Both work, since the parser only cares about the final JSON.

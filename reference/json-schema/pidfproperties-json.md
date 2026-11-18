@@ -7,21 +7,24 @@ Default closed-loop PID + feedforward gains shared by every module. Parsed into
 ```json
 {
   "drive": {
-    "p": 0.5,
-    "i": 0.0,
-    "d": 0.01
+    "p": 1,
+    "i": 0,
+    "d": 0
   },
   "angle": {
-    "p": 2.0,
-    "i": 0.0,
-    "d": 0.1
+    "p": 40,
+    "i": 0,
+    "d": 0.3
   }
 }
 ```
 
+These are the starting gains for SparkMAX NEO modules. See [Tune PIDF gains](../../how-to/tune-pidf-gains.md#starting-points)
+for every motor's.
+
 | Field | Type   | Required | Description                                                          |
 | ----- | ------ | -------- | ------------------------------------------------------------------------ |
-| `p`   | number | yes      | Proportional gain.                                                    |
+| `p`   | number | yes      | Proportional gain. Volts per wheel rotation per second of error for `drive`, volts per rotation of error for `angle`. |
 | `i`   | number | yes      | Integral gain.                                                        |
 | `d`   | number | yes      | Derivative gain.                                                      |
 | `s`   | number | no       | `kS`: static friction feedforward (`SimpleMotorFeedforward`).          |
