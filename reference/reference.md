@@ -11,6 +11,9 @@ or [Tune and extend](../how-to/how-to.md).
   tables plus per-device notes.
 - [Standard Conversion Factors](standard-conversion-factors.md): gear ratios/wheel diameters for
   common COTS swerve modules.
+- [Common build issues](common-build-issues.md) and
+  [Common configuration issues](common-configuration-issues.md): checklists of what's commonly built
+  or configured wrong on a swerve drive.
 - [Vendordeps and offline install](vendordep-installation.md): what each YAGSL vendordep contains,
   pinning a release, offline installs, and which vendor library each device type needs.
 - [API Reference](api-reference.md): the `swervelib` packages, the `SwerveParser` entry points, and

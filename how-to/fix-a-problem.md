@@ -12,6 +12,8 @@ Prefer flowcharts? The [troubleshooting flowcharts](troubleshooting-flowchart.md
 Most problems come from a step skipped during setup. If you haven't been through
 [Check and calibrate your hardware](../tutorial/04-verify-and-calibrate-hardware.md), do that first:
 it catches inversions, bad offsets and CAN ID mistakes in a few minutes.
+For checklists, see [Common build issues](../reference/common-build-issues.md) and
+[Common configuration issues](../reference/common-configuration-issues.md).
 {% endhint %}
 
 ## The robot program won't start, or a device does nothing

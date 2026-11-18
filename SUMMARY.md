@@ -21,6 +21,8 @@
 * [Verify your module locations](how-to/verify-module-locations.md)
 * [Fix steering that changes as the robot turns](how-to/the-8-steps.md)
 * [Fix swerve drive drift](reference/swerve-drift-causes.md)
+* [Common build issues](reference/common-build-issues.md)
+* [Common configuration issues](reference/common-configuration-issues.md)
 * [Fix common SparkMAX/SparkFlex problems](how-to/fix-sparkmax-common-problems.md)
 
 ## Tune and extend
