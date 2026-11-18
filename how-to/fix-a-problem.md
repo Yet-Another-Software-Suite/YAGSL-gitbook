@@ -8,7 +8,7 @@ Find the row that matches what your robot is doing, and start with the page it p
 problems can be present at once, so if the first fix doesn't settle it, work down the table.
 
 {% hint style="info" %}
-Prefer flowcharts? The [troubleshooting flowcharts](troubleshooting-flowchart.md) check a swerve drive in stages, from the basics up.
+Prefer to work step by step? [Troubleshooting](troubleshooting-flowchart.md) checks a swerve drive in stages, from the basics up.
 Most problems come from a step skipped during setup. If you haven't been through
 [Check and calibrate your hardware](../tutorial/04-verify-and-calibrate-hardware.md), do that first:
 it catches inversions, bad offsets and CAN ID mistakes in a few minutes.
@@ -29,7 +29,7 @@ For checklists, see [Common build issues](../reference/common-build-issues.md) a
 
 | What you see | Start here |
 | --- | --- |
-| One or more modules spin "out of control" | [Troubleshooting flowchart](troubleshooting-flowchart.md) |
+| One or more modules spin "out of control" | [Troubleshooting](troubleshooting-flowchart.md) |
 | One module acts up, or doesn't start in the right position every time | A disconnected absolute encoder, an encoder too far from its magnet, a loose magnet, wrong gearing, a dying motor, or a module built incorrectly. See the [One module doesn't start in the right position](troubleshooting-flowchart.md#one-module-doesnt-start-in-the-right-position) checks. |
 | A module points the wrong way, or its readings go the wrong way when turned by hand | [Determine inversion](determine-inversion.md), steps 1 and 2 |
 | In the spin test, one wheel pushes against the others | That module's drive motor is inverted. See [Determine inversion](determine-inversion.md), step 3. |
@@ -42,7 +42,7 @@ For checklists, see [Common build issues](../reference/common-build-issues.md) a
 | What you see | Start here |
 | --- | --- |
 | Driving is wrong at every heading, including the starting one | Check `gyroInvert`. See [Determine inversion](determine-inversion.md), step 4. |
-| In field-relative driving, driving is right at the starting heading, but the directions change as the robot turns, or forward isn't forward in odometry | [The 8 steps](the-8-steps.md), also [as a flowchart](troubleshooting-flowchart.md#forward-is-not-forward-the-8-steps) |
+| In field-relative driving, driving is right at the starting heading, but the directions change as the robot turns, or forward isn't forward in odometry | [The 8 steps](the-8-steps.md) |
 | The robot drives forward, but odometry shows it driving backward | Add `180` to every `absoluteEncoderOffset`. See the "Odometry mismatch" note in [Determine inversion](determine-inversion.md), step 4. |
 | "Forward" is the wrong side of the robot | Front is whatever the gyro reports as `0`. See [Verify your module locations](verify-module-locations.md). |
 | The field-relative heading is off after a while, or the robot powered on facing the wrong way | Zero the gyro with the button combo from [Write the swerve code](../tutorial/write-the-swerve-code.md). If the gyro drifts, recalibrate it too: gyros are sensitive to pressure, and sometimes humidity, and an older one such as a Pigeon 1 or NavX 1 drifts the longer it's powered on. |
