@@ -8,6 +8,7 @@ causes first. The links under each chart go to the pages its boxes mention.
 * [Autonomous is consistently off](#autonomous-is-consistently-off)
 * [Robot is drifting](#robot-is-drifting)
 * [Wheels not pointing straight](#wheels-not-pointing-straight)
+* [One module doesn't start in the right position](#one-module-doesnt-start-in-the-right-position)
 * [Swerve modules spinning "out of control"](#swerve-modules-spinning-out-of-control)
 * [Swerve module does not spin correctly](#swerve-module-does-not-spin-correctly)
 * [Swerve drive "spins out of control"](#swerve-drive-spins-out-of-control)
@@ -74,6 +75,19 @@ driving, in nine steps. This is the same path, with the checks that send you to 
 * Module locations: [Verify your module locations](verify-module-locations.md)
 * Recording offsets: [Check and calibrate your hardware](../tutorial/04-verify-and-calibrate-hardware.md)
 * Tuning the azimuth: [Practice in simulation](../tutorial/practice-in-simulation.md)
+* Only one module acts up: [One module doesn't start in the right position](#one-module-doesnt-start-in-the-right-position)
+
+## One module doesn't start in the right position
+
+When one module's azimuth acts up, or points somewhere different each time the robot starts, the problem is almost
+always in that module's hardware or its gearing.
+
+<figure><img src="../.gitbook/assets/yagsl-flowchart-azimuth.png" alt="A flowchart for one module whose azimuth acts up, and doesn't start in the right position every time. Is its absolute encoder connected, with no errors, and its reading changing when you turn the wheel by hand? If no, the absolute encoder is disconnected: reseat or replace its cable, and check its CAN ID, power and status light. If yes: is the magnet glued in, centered and tight, so it can't slip on its shaft? If no, glue or loctite the magnet in, then record the absolute encoder offset again. If yes: turn the wheel exactly one turn by hand. Does the absolute encoder read one turn too? If no, the module is built incorrectly: the encoder or magnet is on the wrong shaft or gear, so rebuild it by the manufacturer's guide. If yes: graph the motor position with the absolute encoder. Do the lines stay on top of each other? If no, the gearing is wrong: set the angle gear ratio for your module and its configuration. If yes: does the azimuth turn freely by hand, and draw about the same current as the other modules with the same gains? If no, the motor is dying or the module binds: clean and grease the module, then replace the motor if it still struggles. If yes, swap this module's motor and encoder with another module's: if the problem moves, replace that part."><figcaption><p>One module's azimuth acts up, or doesn't start in the right position every time.</p></figcaption></figure>
+
+* Reading the absolute encoder and recording offsets: [Check and calibrate your hardware](../tutorial/04-verify-and-calibrate-hardware.md)
+* Graphing the motor position with the absolute encoder: [Practice in simulation](../tutorial/practice-in-simulation.md)
+* Angle gear ratios: [Standard Conversion Factors](../reference/standard-conversion-factors.md)
+* A dying motor or a loose magnet: [Fix swerve drive drift](../reference/swerve-drift-causes.md#physical-components)
 
 ## Swerve modules spinning "out of control"
 

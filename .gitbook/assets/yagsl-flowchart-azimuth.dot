@@ -1,0 +1,28 @@
+digraph G {
+  graph [rankdir=TB, nodesep=0.5, ranksep=0.45, pad=0.3, bgcolor="white", dpi=150, splines=ortho];
+  node  [fontname="DejaVu Sans", fontsize=13, margin="0.2,0.12", penwidth=1.6];
+  edge  [fontname="DejaVu Sans", fontsize=12, penwidth=1.6, arrowhead=onormal, arrowsize=1.1];
+  s [label="One module's azimuth acts up:\nit doesn't start in the\nright position every time", shape=box, style="rounded,filled", fillcolor="#dae8fc", color="#6c8ebf"];
+  q1 [label="Is its absolute encoder\nconnected: no errors, and\nits reading changes when\nyou turn the wheel by hand?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f1 [label="The absolute encoder is\ndisconnected: reseat or replace\nits cable, and check its CAN ID,\npower and status light", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  q2 [label="Is the magnet glued in,\ncentered and tight, so it\ncan't slip on its shaft?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f2 [label="Glue or loctite the magnet in,\nthen record the absolute\nencoder offset again", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  q3 [label="Turn the wheel exactly one\nturn by hand. Does the\nabsolute encoder read\none turn too?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f3 [label="The module is built incorrectly:\nthe encoder or magnet is on the\nwrong shaft or gear. Rebuild it\nby the manufacturer's guide", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  q4 [label="Graph the motor position\nwith the absolute encoder.\nDo the lines stay on top\nof each other?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f4 [label="The gearing is wrong: set\nthe angle gear ratio for your\nmodule and its configuration", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  q5 [label="Does the azimuth turn freely\nby hand, and draw about the\nsame current as the other\nmodules with the same gains?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f5 [label="The motor is dying or the\nmodule binds: clean and grease\nthe module, then replace\nthe motor if it still struggles", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  d [label="Swap this module's motor\nand encoder with another\nmodule's: if the problem\nmoves, replace that part", shape=box, style="rounded,filled", fillcolor="#d5e8d4", color="#82b366"];
+  s -> q1 [color="#6c8ebf"];
+  q1 -> f1 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q1 -> q2 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q2 -> f2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q2 -> q3 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q3 -> f3 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q3 -> q4 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q4 -> f4 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q4 -> q5 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q5 -> f5 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q5 -> d [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+}
