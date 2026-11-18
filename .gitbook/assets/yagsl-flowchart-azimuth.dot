@@ -12,9 +12,15 @@ digraph G {
   h1 -> q1 [color="#6c8ebf", weight=10];
   q1 -> f1 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
   q1 -> h2 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
-  h2 [label="Wiggle the magnet. Then hold the wheel\nstill and power cycle the robot three\ntimes, reading the absolute encoder each time", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  q2 [label="Is the magnet tight,\nand does the reading\ncome back the same?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  f2 [label="Glue or loctite the magnet in,\nthen record the absolute\nencoder offset again", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  h2 [label="With the wheel pointing straight, draw a straight
+line across the magnet and the module frame.
+Drive the robot, point the wheel straight again,
+and look at the line", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q2 [label="Does the line
+still line up?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f2 [label="The magnet slipped: glue or
+loctite it in, then record the
+absolute encoder offset again", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; q2; f2;}
   h2 -> q2 [color="#6c8ebf", weight=10];
   q2 -> f2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
