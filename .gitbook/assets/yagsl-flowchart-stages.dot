@@ -13,8 +13,8 @@ digraph G {
   b1 -> s1h1 [color="#6c8ebf", weight=10];
   s1h1 -> s1q1 [color="#6c8ebf", weight=10];
   s1q1 -> s1f1 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  s1h2 [label="Look at each absolute encoder's magnet", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  s1q2 [label="Is it glued or\nloctited in, and\ncentered?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  s1h2 [label="Check each absolute encoder's magnet,\nby gently trying to pull it out", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  s1q2 [label="Does it stay put,\nglued or loctited in\nand centered?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
   s1f2 [label="Glue or loctite it in.\nYou'll record the offset\nagain in stage 4", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; s1q2; s1f2;}
   s1q1 -> s1h2 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
