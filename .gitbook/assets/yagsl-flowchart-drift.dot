@@ -20,55 +20,55 @@ digraph G {
   aq2 -> af2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
   b [label="How does it drift?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
   aq2 -> b [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
-  th1 [label="Drive straight slowly, and graph each module's\nazimuth motor position with its absolute encoder:\n.../<name>/azimuth/mechanism/position\nand .../<name>/encoder.\nThis only checks the angle gearing", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  tq1 [label="Do the lines stay\non top of each other?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  tf1 [label="The angle gear ratio doesn't\nmatch the absolute encoder:\nfix it for your module\nand its configuration", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  th1 [label="While driving, graph the desired and\ncurrent module states,\nMechanisms/swerve/states/desired\nand .../states/current", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  tq1 [label="Does each module\nreach its angle?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  tf1 [label="Tune the azimuth\nPID and feedforward", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; tq1; tf1;}
   b -> th1 [xlabel=" Slides off its line ", color="#6c8ebf", fontcolor="#34558b", weight=2];
   th1 -> tq1 [color="#6c8ebf", weight=10];
   tq1 -> tf1 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  th2 [label="In field-relative driving, drive forward,\nturn 90°, then drive forward again.\nIn robot-relative driving the direction\nchanges as it turns, which is normal", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  tq2 [label="In field-relative\ndriving, does the\ndirection change as\nthe robot turns?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  tf2 [label="Work through\nthe 8 steps", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  th2 [label="Drive straight slowly, and graph each module's\nazimuth motor position with its absolute encoder:\n.../<name>/azimuth/mechanism/position\nand .../<name>/encoder.\nThis only checks the angle gearing", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  tq2 [label="Do the lines stay\non top of each other?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  tf2 [label="The angle gear ratio doesn't\nmatch the absolute encoder:\nfix it for your module\nand its configuration", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; tq2; tf2;}
   tq1 -> th2 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
   th2 -> tq2 [color="#6c8ebf", weight=10];
-  tq2 -> tf2 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
-  th3 [label="While driving, graph the desired and\ncurrent module states,\nMechanisms/swerve/states/desired\nand .../states/current", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  tq3 [label="Does each module\nreach its angle?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  tf3 [label="Tune the azimuth\nPID and feedforward", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  tq2 -> tf2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  th3 [label="In field-relative driving, drive forward,\nturn 90°, then drive forward again.\nIn robot-relative driving the direction\nchanges as it turns, which is normal", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  tq3 [label="In field-relative\ndriving, does the\ndirection change as\nthe robot turns?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  tf3 [label="Work through\nthe 8 steps", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; tq3; tf3;}
-  tq2 -> th3 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b", weight=10];
+  tq2 -> th3 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
   th3 -> tq3 [color="#6c8ebf", weight=10];
-  tq3 -> tf3 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  rh1 [label="Leave the robot still for a minute,\nand graph the gyro heading,\nMechanisms/swerve/gyro", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  rq1 [label="Does the heading\nchange while the\nrobot sits still?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  rf1 [label="The gyro drifts: zero it at\nthe start of your program.\nOlder gyros like the Pigeon 1\nand NavX 1 drift the longer\nthey're powered on", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  tq3 -> tf3 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  rh1 [label="While driving, graph the desired and\ncurrent module states,\nMechanisms/swerve/states/desired\nand .../states/current", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  rq1 [label="Does each module\nreach its speed?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  rf1 [label="Tune the drive\nPID and feedforward", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; rq1; rf1;}
   b -> rh1 [xlabel=" Heading turns ", color="#6c8ebf", fontcolor="#34558b", weight=2];
   rh1 -> rq1 [color="#6c8ebf", weight=10];
-  rq1 -> rf1 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  rq1 -> rf1 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
   rh2 [label="While driving straight, graph every\nmodule's drive stator current,\n.../<name>/drive/current/stator", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
   rq2 [label="Does one module\nneed much more current\nthan the others?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
   rf2 [label="Its drive motor is dying, or\nthe module binds. Turn the wheel\nby hand: if it turns freely,\nreplace the motor. If not,\nclean and grease the module", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; rq2; rf2;}
-  rq1 -> rh2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b", weight=10];
+  rq1 -> rh2 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
   rh2 -> rq2 [color="#6c8ebf", weight=10];
   rq2 -> rf2 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
-  rh3 [label="While driving, graph the desired and\ncurrent module states,\nMechanisms/swerve/states/desired\nand .../states/current", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  rq3 [label="Does each module\nreach its speed?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  rf3 [label="Tune the drive\nPID and feedforward", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  rh3 [label="Measure every wheel's diameter,\nand look for a gearing override\nin each module's JSON", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  rq3 [label="Are the wheels the\nsame size, with no\nper-module gearing?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  rf3 [label="Replace worn tread so the\nwheels match, and remove\nper-module gearing overrides", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; rq3; rf3;}
   rq2 -> rh3 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b", weight=10];
   rh3 -> rq3 [color="#6c8ebf", weight=10];
   rq3 -> rf3 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  rh4 [label="Measure every wheel's diameter,\nand look for a gearing override\nin each module's JSON", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  rq4 [label="Are the wheels the\nsame size, with no\nper-module gearing?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  rf4 [label="Replace worn tread so the\nwheels match, and remove\nper-module gearing overrides", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  rh4 [label="Leave the robot still for a minute,\nand graph the gyro heading,\nMechanisms/swerve/gyro", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  rq4 [label="Does the heading\nchange while the\nrobot sits still?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  rf4 [label="The gyro drifts: zero it at\nthe start of your program.\nOlder gyros like the Pigeon 1\nand NavX 1 drift the longer\nthey're powered on", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; rq4; rf4;}
   rq3 -> rh4 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
   rh4 -> rq4 [color="#6c8ebf", weight=10];
-  rq4 -> rf4 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  rq4 -> rf4 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
   {rank=same; tq1; tf1; rq1; rf1;}
   tf1 -> rq1 [style=invis];
   {rank=same; th1; rh1;}
@@ -85,10 +85,10 @@ digraph G {
   zq1 [label="Does it drift only\nwhen driving and\nrotating at once?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
   zf1 [label="Discretization, which YAGSL\nnormally handles: if you set\nwithDiscretizationTime, check it,\nthen tune the gyro angular\nvelocity scale factor", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; zq1; zf1;}
-  tq3 -> zh1 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  tq3 -> zh1 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b", weight=10];
   zh1 -> zq1 [color="#6c8ebf", weight=10];
   zq1 -> zf1 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
-  rq4 -> zh1 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=1];
+  rq4 -> zh1 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b", weight=1];
   d [label="Check the rest of Fix swerve\ndrive drift: vision standard\ndeviations, current limits, the\ncenter of gravity, PathPlanner", shape=box, style="rounded,filled", fillcolor="#d5e8d4", color="#82b366"];
   zq1 -> d [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b", weight=10];
 }

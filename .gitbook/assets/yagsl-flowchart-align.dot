@@ -4,9 +4,9 @@ digraph G {
   edge  [fontname="DejaVu Sans", fontsize=12, penwidth=1.6, arrowhead=onormal, arrowsize=1.1];
   graph [nodesep=1.1];
   s [label="Wheels don't all point\nstraight when you\ndrive straight", shape=box, style="rounded,filled", fillcolor="#dae8fc", color="#6c8ebf"];
-  h1 [label="List every device in Phoenix Tuner X\nor the REV Hardware Client", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  q1 [label="Do the CAN IDs and\ndevice types match\neach module's JSON?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  f1 [label="Fix them in each\nmodule's JSON file", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  h1 [label="Graph the desired and current module\nstates, Mechanisms/swerve/states/desired\nand Mechanisms/swerve/states/current", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q1 [label="Does each module\nreach its angle?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f1 [label="Tune the azimuth\nPID and feedforward", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; q1; f1;}
   s -> h1 [color="#6c8ebf", weight=10];
   h1 -> q1 [color="#6c8ebf", weight=10];
@@ -19,23 +19,23 @@ digraph G {
   h2 -> q2 [color="#6c8ebf", weight=10];
   q2 -> f2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
   q2 -> h3 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
-  h3 [label="Measure from the robot's center to each\nmodule's center in inches, and compare\nwith each module's location, also in inches", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  q3 [label="Do the locations\nmatch?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  f3 [label="Fix the locations, in inches.\nSee Verify your\nmodule locations", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  h3 [label="Point every wheel forward with its bevel\ngear on the left, then graph each absolute\nencoder, Mechanisms/swerve/modules/<name>/encoder", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q3 [label="Does each\nread 0?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f3 [label="Record that module's\nabsolute encoder\noffset again", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; q3; f3;}
   h3 -> q3 [color="#6c8ebf", weight=10];
   q3 -> f3 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
   q3 -> h4 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
-  h4 [label="Point every wheel forward with its bevel\ngear on the left, then graph each absolute\nencoder, Mechanisms/swerve/modules/<name>/encoder", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  q4 [label="Does each\nread 0?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  f4 [label="Record that module's\nabsolute encoder\noffset again", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  h4 [label="List every device in Phoenix Tuner X\nor the REV Hardware Client", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q4 [label="Do the CAN IDs and\ndevice types match\neach module's JSON?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f4 [label="Fix them in each\nmodule's JSON file", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; q4; f4;}
   h4 -> q4 [color="#6c8ebf", weight=10];
   q4 -> f4 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
   q4 -> h5 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
-  h5 [label="Graph the desired and current module\nstates, Mechanisms/swerve/states/desired\nand Mechanisms/swerve/states/current", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  q5 [label="Does each module\nreach its angle?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  f5 [label="Tune the azimuth\nPID and feedforward", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  h5 [label="Measure from the robot's center to each\nmodule's center in inches, and compare\nwith each module's location, also in inches", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q5 [label="Do the locations\nmatch?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f5 [label="Fix the locations, in inches.\nSee Verify your\nmodule locations", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; q5; f5;}
   h5 -> q5 [color="#6c8ebf", weight=10];
   q5 -> f5 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
