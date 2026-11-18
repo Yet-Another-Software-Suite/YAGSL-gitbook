@@ -1,0 +1,44 @@
+digraph G {
+  graph [rankdir=TB, nodesep=0.5, ranksep=0.45, pad=0.3, bgcolor="white", dpi=150, splines=ortho];
+  node  [fontname="DejaVu Sans", fontsize=13, margin="0.2,0.12", penwidth=1.6];
+  edge  [fontname="DejaVu Sans", fontsize=12, penwidth=1.6, arrowhead=onormal, arrowsize=1.1];
+  graph [nodesep=1.1];
+  s [label="Stage 7: Does the code\ndrive it right?", shape=box, style="rounded,filled", fillcolor="#dae8fc", color="#6c8ebf"];
+  h1 [label="Read your drive code for scaling, such as\nwithScaleTranslation or multiplying\nthe controller axis", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q1 [label="Is the input\nscaled down?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f1 [label="Remove the scaling, or\nmake it a slow mode\non purpose", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; q1; f1;}
+  s -> h1 [color="#6c8ebf", weight=10];
+  h1 -> q1 [color="#6c8ebf", weight=10];
+  q1 -> f1 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q1 -> h2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b", weight=10];
+  h2 [label="Read your code for a way to\nzero the gyro", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q2 [label="Can the driver\nzero it?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f2 [label="Add the button combo from\nWrite the swerve code", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; q2; f2;}
+  h2 -> q2 [color="#6c8ebf", weight=10];
+  q2 -> f2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q2 -> h3 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  h3 [label="Move each stick while you watch the\ndesired module states in\nAdvantageScope's Swerve tab", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q3 [label="Do they follow\nthe sticks?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f3 [label="The controller input is\nwrong: check the port, and\nnegate the axes", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; q3; f3;}
+  h3 -> q3 [color="#6c8ebf", weight=10];
+  q3 -> f3 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q3 -> h4 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  h4 [label="At full stick, graph the desired\nmodule states, Mechanisms/swerve/states/desired", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q4 [label="Do they reach\nyour robot's\ntop speed?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f4 [label="Check the maximum speed: the\ndrive motor type, gear ratio and\nwheel diameter it comes from,\nand any withMaximumChassisSpeed", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; q4; f4;}
+  h4 -> q4 [color="#6c8ebf", weight=10];
+  q4 -> f4 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q4 -> h5 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  h5 [label="In field-relative driving, drive each direction\nat 0°, 45° and 125° headings. In robot-relative\ndriving the direction changes as the\nrobot turns, which is normal", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q5 [label="Does it go where\nyou push the stick\nat every heading?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f5 [label="Work through\nthe 8 steps", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; q5; f5;}
+  h5 -> q5 [color="#6c8ebf", weight=10];
+  q5 -> f5 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q5 -> d [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  d [label="Go to stage 8:\nare the gains right?", shape=box, style="rounded,filled", fillcolor="#d5e8d4", color="#82b366"];
+}

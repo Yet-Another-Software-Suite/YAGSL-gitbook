@@ -1,0 +1,29 @@
+digraph G {
+  graph [rankdir=TB, nodesep=0.5, ranksep=0.45, pad=0.3, bgcolor="white", dpi=150, splines=ortho];
+  node  [fontname="DejaVu Sans", fontsize=13, margin="0.2,0.12", penwidth=1.6];
+  edge  [fontname="DejaVu Sans", fontsize=12, penwidth=1.6, arrowhead=onormal, arrowsize=1.1];
+  graph [ranksep=0.35];
+  s [label="Something is wrong\nwith the swerve drive", shape=box, style="rounded,filled", fillcolor="#dae8fc", color="#6c8ebf"];
+  n1 [label="1. Is it built right?", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  s -> n1 [color="#6c8ebf"];
+  n2 [label="2. Do the sensors and motors work?", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  n1 -> n2 [color="#6c8ebf"];
+  n3 [label="3. Is the configuration right?\nCAN IDs, buses, device types, module order", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  n2 -> n3 [color="#6c8ebf"];
+  n4 [label="4. Are the inversions and offsets right?", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  n3 -> n4 [color="#6c8ebf"];
+  n5 [label="5. Are the gear ratios and wheel size right?", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  n4 -> n5 [color="#6c8ebf"];
+  n6 [label="6. Are the module locations right?", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  n5 -> n6 [color="#6c8ebf"];
+  n7 [label="7. Does the code drive it right?\nScaling, controller input, field-relative", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  n6 -> n7 [color="#6c8ebf"];
+  n8 [label="8. Are the PID, feedforward\nand current limits right?", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  n7 -> n8 [color="#6c8ebf"];
+  n9 [label="9. Is the code right for\nodometry and autonomous?", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  n8 -> n9 [color="#6c8ebf"];
+  d [label="It drives right", shape=box, style="rounded,filled", fillcolor="#d5e8d4", color="#82b366"];
+  n9 -> d [color="#6c8ebf"];
+  note [label="If a stage finds a problem,\nfix it, then start that\nstage again", shape=note, style=filled, fillcolor="#f5f5f5", color="#666666"];
+  {rank=same; s; note;}
+}

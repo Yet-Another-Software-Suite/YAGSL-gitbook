@@ -1,0 +1,65 @@
+digraph G {
+  graph [rankdir=TB, nodesep=0.5, ranksep=0.45, pad=0.3, bgcolor="white", dpi=150, splines=ortho];
+  node  [fontname="DejaVu Sans", fontsize=13, margin="0.2,0.12", penwidth=1.6];
+  edge  [fontname="DejaVu Sans", fontsize=12, penwidth=1.6, arrowhead=onormal, arrowsize=1.1];
+  graph [nodesep=1.1];
+  s [label="Stage 1: Is it built right?", shape=box, style="rounded,filled", fillcolor="#dae8fc", color="#6c8ebf"];
+  h1 [label="Compare each module with the manufacturer's\nguide, and with the other modules,\npart by part", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q1 [label="Does every module\nmatch?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f1 [label="Rebuild it by the\nmanufacturer's guide", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; q1; f1;}
+  s -> h1 [color="#6c8ebf", weight=10];
+  h1 -> q1 [color="#6c8ebf", weight=10];
+  q1 -> f1 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q1 -> h2 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  h2 [label="Look at each absolute encoder's magnet", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q2 [label="Is it glued or\nloctited in, and\ncentered?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f2 [label="Glue or loctite it in.\nYou'll record the offset\nagain in stage 4", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; q2; f2;}
+  h2 -> q2 [color="#6c8ebf", weight=10];
+  q2 -> f2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q2 -> h3 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  h3 [label="Tug every wire and connector:\nencoders, motor controllers,\ngyro and CAN", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q3 [label="Are they all\ntight?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f3 [label="Fix the wiring. Loose sensor\ncables cause errors and\nmotors that spin out of control", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; q3; f3;}
+  h3 -> q3 [color="#6c8ebf", weight=10];
+  q3 -> f3 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q3 -> h4 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  h4 [label="Push on the gyro", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q4 [label="Is it mounted\nfirmly?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f4 [label="Mount it so it can't\nshift or shake", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; q4; f4;}
+  h4 -> q4 [color="#6c8ebf", weight=10];
+  q4 -> f4 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q4 -> h5 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  h5 [label="Turn each wheel, and steer each\nmodule, by hand", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q5 [label="Do they turn\nfreely?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f5 [label="The module binds:\nclean and grease it", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; q5; f5;}
+  h5 -> q5 [color="#6c8ebf", weight=10];
+  q5 -> f5 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q5 -> h6 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  h6 [label="Measure every wheel: use calipers, or roll\nit one turn and divide the distance by π", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q6 [label="Are they the same\nsize, and the tread\nnot worn down?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f6 [label="Replace worn tread.\nWorn tread is smaller\nthan new", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; q6; f6;}
+  h6 -> q6 [color="#6c8ebf", weight=10];
+  q6 -> f6 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q6 -> h7 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  h7 [label="Test the battery under load", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q7 [label="Does it hold\nits voltage?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f7 [label="Charge or\nreplace it", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; q7; f7;}
+  h7 -> q7 [color="#6c8ebf", weight=10];
+  q7 -> f7 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q7 -> h8 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  h8 [label="Check how much free storage\nthe SystemCore has left", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q8 [label="Is it nearly full?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f8 [label="Delete old logs,\nthen reboot the SystemCore", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; q8; f8;}
+  h8 -> q8 [color="#6c8ebf", weight=10];
+  q8 -> f8 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q8 -> d [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b", weight=10];
+  d [label="Go to stage 2:\ndo the sensors work?", shape=box, style="rounded,filled", fillcolor="#d5e8d4", color="#82b366"];
+}

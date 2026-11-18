@@ -1,0 +1,65 @@
+digraph G {
+  graph [rankdir=TB, nodesep=0.5, ranksep=0.45, pad=0.3, bgcolor="white", dpi=150, splines=ortho];
+  node  [fontname="DejaVu Sans", fontsize=13, margin="0.2,0.12", penwidth=1.6];
+  edge  [fontname="DejaVu Sans", fontsize=12, penwidth=1.6, arrowhead=onormal, arrowsize=1.1];
+  graph [nodesep=1.1];
+  s [label="Stage 2: Do the sensors\nand motors work?", shape=box, style="rounded,filled", fillcolor="#dae8fc", color="#6c8ebf"];
+  h1 [label="Start the code and watch the Driver Station\nconsole. Loop overruns just after\nthe code starts are normal", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q1 [label="Any errors?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f1 [label="Fix them first. See the program\nwon't start table in Find your\nproblem: a missing vendor library,\na SPARK not found, a loose cable", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; q1; f1;}
+  s -> h1 [color="#6c8ebf", weight=10];
+  h1 -> q1 [color="#6c8ebf", weight=10];
+  q1 -> f1 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q1 -> h2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b", weight=10];
+  h2 [label="Turn each wheel by hand while you graph its\nabsolute encoder, Mechanisms/swerve/modules/<name>/encoder", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q2 [label="Does the reading\nchange smoothly?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f2 [label="The absolute encoder is\ndisconnected: reseat or replace\nits cable, and check its\npower and status light", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; q2; f2;}
+  h2 -> q2 [color="#6c8ebf", weight=10];
+  q2 -> f2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q2 -> h3 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  h3 [label="Check each encoder's magnet reading: its\nstatus light, or the magnet health in the\nvendor's tool. The vendor's documentation\nsays what each means", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q3 [label="Does it report a\ngood magnet?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f3 [label="The encoder is too far from\nthe magnet, or off center:\nclose the gap to the\nvendor's spec", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; q3; f3;}
+  h3 -> q3 [color="#6c8ebf", weight=10];
+  q3 -> f3 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q3 -> h4 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  h4 [label="Turn each wheel exactly one turn by hand", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q4 [label="Does its absolute\nencoder read\none turn too?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f4 [label="The encoder or magnet is on\nthe wrong shaft or gear:\nrebuild it by the\nmanufacturer's guide", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; q4; f4;}
+  h4 -> q4 [color="#6c8ebf", weight=10];
+  q4 -> f4 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q4 -> h5 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  h5 [label="Rotate the robot by hand while you\ngraph the gyro, Mechanisms/swerve/gyro", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q5 [label="Does the\nheading change?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f5 [label="The gyro isn't working:\ncheck its wiring, CAN ID\nand type", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; q5; f5;}
+  h5 -> q5 [color="#6c8ebf", weight=10];
+  q5 -> f5 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q5 -> h6 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  h6 [label="On blocks, enable and steer and drive the\nmodules. Graph every module's azimuth and\ndrive stator current, .../<name>/azimuth/current/stator\nand .../<name>/drive/current/stator", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q6 [label="Does one motor need\nmuch more current\nthan the same motor\non the others?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f6 [label="It's dying, or its module binds.\nSwap it with another module's\nmotor: if the problem follows,\nreplace the motor", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; q6; f6;}
+  h6 -> q6 [color="#6c8ebf", weight=10];
+  q6 -> f6 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q6 -> h7 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b", weight=10];
+  h7 [label="Leave the robot still for a minute,\nand graph the gyro", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q7 [label="Does the heading\nchange while the\nrobot sits still?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f7 [label="The gyro drifts: zero it at\nthe start of your program.\nOlder gyros like the Pigeon 1\nand NavX 1 drift the longer\nthey're powered on", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; q7; f7;}
+  h7 -> q7 [color="#6c8ebf", weight=10];
+  q7 -> f7 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  q7 -> h8 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b", weight=10];
+  h8 [label="With a wheel pointing straight, draw a\nstraight line across its magnet and the\nmodule frame. Drive, point it straight\nagain, and look at the line", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q8 [label="Does the line\nstill line up?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  f8 [label="The magnet slipped:\nglue or loctite it in", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; q8; f8;}
+  h8 -> q8 [color="#6c8ebf", weight=10];
+  q8 -> f8 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  q8 -> d [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  d [label="Go to stage 3:\nis the configuration right?", shape=box, style="rounded,filled", fillcolor="#d5e8d4", color="#82b366"];
+}
