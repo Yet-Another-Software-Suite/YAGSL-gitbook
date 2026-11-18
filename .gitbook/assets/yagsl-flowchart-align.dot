@@ -40,8 +40,8 @@ digraph G {
   h5 -> q5 [color="#6c8ebf", weight=10];
   q5 -> f5 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
   q5 -> h6 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
-  h6 [label="Open a DataLog from a match, and graph\nthe desired and current module states\nwhile the robot is pushed or turning hard", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  q6 [label="Do the modules fall\nbehind their angle in\na match, but not\non blocks?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  h6 [label="Open the DataLog from a match or a practice\n(YAGSL records one by default), and graph the\ndesired and current module states while the\nrobot is pushed or turning hard", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  q6 [label="Do the modules fall\nbehind their angle while\ndriving hard, but not\non blocks?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
   f6 [label="The angle current limit is too\nlow: raise statorCurrentLimit.angle\nin physicalproperties.json\n(the default is 20 A)", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; q6; f6;}
   h6 -> q6 [color="#6c8ebf", weight=10];
