@@ -41,7 +41,7 @@ digraph G {
   s1q4 -> s1h5 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
   s1h5 -> s1q5 [color="#6c8ebf", weight=10];
   s1q5 -> s1f5 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  s1h6 [label="Measure every wheel: use calipers, or roll\nit one turn and divide the distance by π", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  s1h6 [label="Measure every wheel's diameter with its tread\non: use calipers, or roll it one turn and\ndivide the distance by π", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
   s1q6 [label="Are they the same\nsize, and the tread\nnot worn down?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
   s1f6 [label="Replace worn tread.\nWorn tread is smaller\nthan new", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; s1q6; s1f6;}
@@ -224,7 +224,7 @@ digraph G {
   s5q2 -> s5h3 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b", weight=10];
   s5h3 -> s5q3 [color="#6c8ebf", weight=10];
   s5q3 -> s5f3 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  s5h4 [label="Measure a wheel as it is now: use calipers,\nor roll it one turn and divide the distance by π", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  s5h4 [label="Measure a wheel's diameter with its tread\non, as it is now: use calipers, or roll it one\nturn and divide the distance by π", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
   s5q4 [label="Does the diameter\nmatch your config?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
   s5f4 [label="Update the wheel diameter,\nor replace the tread", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; s5q4; s5f4;}
