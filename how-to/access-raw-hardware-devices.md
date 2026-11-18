@@ -19,7 +19,9 @@ effectively private. `SwerveParser.createSwerveDriveDevices(config)` builds the 
 hardware, but also gives you the raw vendor objects it created along the way, alongside the
 `SwerveDrive` itself.
 
-## 1. Call `createSwerveDriveDevices` instead of `createSwerveDrive`
+{% stepper %}
+{% step %}
+### Call `createSwerveDriveDevices` instead of `createSwerveDrive`
 
 {% tabs %}
 {% tab title="Commands v2" %}
@@ -59,8 +61,10 @@ parsed directory, not both. Each call builds the hardware from scratch, so calli
 construct every motor controller, encoder, and gyro twice (two CAN objects fighting over the
 same ID).
 {% endhint %}
+{% endstep %}
 
-## 2. Read the devices back out
+{% step %}
+### Read the devices back out
 
 `SwerveDriveDevices<D>` is a record with three components:
 
@@ -116,8 +120,10 @@ YAGSL only loads a vendor's classes when your JSON uses that vendor's devices, b
 is ordinary Java: the vendor library you cast to (Phoenix 6, REVLib, ReduxLib, ThriftyLib, ...)
 has to be installed as a vendordep in your project.
 {% endhint %}
+{% endstep %}
 
-## 3. Example: gyro angular rates for vision
+{% step %}
+### Example: gyro angular rates for vision
 
 `SwerveDrive.getGyroRotation3d()` already gives you the robot's full attitude (roll, pitch and
 yaw, with `gyroAxis` and `gyroInvert` applied), so you don't need the raw device for orientation.
@@ -168,13 +174,17 @@ for `gyroAxis`, `gyroInvert` or a zeroed heading, and they don't follow the simu
 simulation. Prefer `drive.getGyroRotation3d()` for orientation and keep the raw device for what
 only it can give you.
 {% endhint %}
+{% endstep %}
 
-## 4. Handle a `custom` gyro
+{% step %}
+### Handle a `custom` gyro
 
 If `swervedrive.json`'s `gyro.type` is `"custom"`, the parser never builds a gyro device at all,
 see [How to use a custom gyro](use-a-custom-gyro.md), so `devices.gyro()` is `null`. Your own
 gyro object (the one you constructed to call `SwerveDriveConfig.withGyro(...)`) is already in
 scope wherever you built it; there's nothing to retrieve here.
+{% endstep %}
+{% endstepper %}
 
 ## Why `Object`?
 
