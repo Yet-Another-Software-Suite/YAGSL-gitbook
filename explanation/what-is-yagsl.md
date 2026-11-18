@@ -6,7 +6,7 @@ description: We make your swerve drive run!
 
 ## Where does YAGSL fit into my program?
 
-YAGSL used to be a full swerve drive implementation of its own. It no longer is. **YAGSL is a thin JSON configuration parser that builds a** [**YAMS**](https://yams.yamgen.com/) **`SwerveDrive`.**
+**YAGSL is a thin JSON configuration parser that builds a** [**YAMS**](https://yams.yamgen.com/) **`SwerveDrive`.**
 
 YAMS ([Yet Another Mechanism Suite](https://yams.yamgen.com/)) is a general-purpose FRC mechanism library: arms, elevators, flywheels, and swerve drives all share the same underlying `SmartMotorController` abstraction, feedforward/feedback plumbing, simulation support, and telemetry. YAMS's `SwerveDrive` (`yams.commands2.swerve.SwerveDrive` for Commands v2, `yams.commands3.swerve.SwerveDrive` for Commands v3) is a complete, hardware-agnostic swerve implementation in its own right; it does not need YAGSL to function.
 

@@ -51,10 +51,6 @@ public enum TelemetryVerbosity {
 }
 ```
 
-{% hint style="info" %}
-This enum replaces the old `NONE`/`LOW`/`INFO`/`POSE`/`HIGH`/`MACHINE` levels from pre-2026 YAGSL. If you're migrating an older robot project, map your old verbosity choice down to the nearest of `LOW`/`MID`/`HIGH`. See [Schema Changes](../reference/schema-changes.md).
-{% endhint %}
-
 ```java
 var cfg = new SwerveDriveConfig()
     .withSubsystem(this) // .withMechanism(this) for Commands v3

@@ -368,6 +368,23 @@ just JSON. This is a real capability change, not a documentation gap. For a gyro
   `SwerveParser.createSwerveDrive(new SwerveDriveConfig()...)`. See
   [Deploy and Drive](../tutorial/05-deploy-and-drive.md).
 
+- **Heading correction** was a JSON-configured PID run inside `SwerveDrive.drive()`. It's now
+  built in your code with `SwerveInputStream`, with gains from
+  `SwerveDriveConfig.withRotationController(PIDController)`. See `controllerproperties.json` above.
+- **Module encoder auto-synchronization**, `SwerveDrive.setModuleEncoderAutoSynchronize(boolean, double)`,
+  is now set per motor controller with
+  `SmartMotorControllerConfig.withFeedbackSynchronizationThreshold(Angle)`.
+- **`SwerveDrive.pushOffsetsToEncoders()` and `SwerveDrive.restoreInternalOffset()`** are removed.
+  The parser picks external or internal feedback for you. See
+  [Module Behaviors](../explanation/module-behaviors.md#offset-offloading-external-vs-internal-feedback-sensor).
+- **Auto-centering modules** (`SwerveDrive.setAutoCenteringModules`, `SwerveModule.setAntiJitter`),
+  which snapped idle modules back to `0°`, was not carried over. Open an issue if you need it back.
+- **Angular velocity compensation**, `SwerveDrive.setAngularVelocityCompensation(boolean, boolean, double)`,
+  is now `SwerveDriveConfig.withGyroAngularVelocityScaleFactor(double)`. See
+  [Module Behaviors](../explanation/module-behaviors.md#angular-velocity-compensation).
+- **Telemetry verbosity** levels `NONE`/`LOW`/`INFO`/`POSE`/`HIGH`/`MACHINE` are now `LOW`, `MID`
+  and `HIGH`. Pick the nearest one.
+
 ### Pre-2026.8.05 migration checklist
 
 1. Regenerate from [config.yagsl.com](https://config.yagsl.com) if at all possible. It's faster and

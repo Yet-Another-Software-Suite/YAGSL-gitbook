@@ -45,10 +45,6 @@ This is not a complete list and will grow over time.
 Swerve Drives move each module to a specific angle determined by the direction you want to go and heading you want to face. For FRC we can get these values by hand by calculating the kinematics of the robot, or use WPILib's `SwerveDriveKinematics` (`org.wpilib.math.kinematics`), which uses the module locations to determine what the rotation and speed of each wheel should be given a `ChassisVelocities` object, and returns a `SwerveModuleVelocity` array. The `SwerveModuleVelocity` can then be used to set the angle/azimuth and speed corresponding to each Swerve Module to go in the desired direction while facing the desired heading.
 
 {% hint style="info" %}
-WPILib 2027 renamed these classes and moved them from `edu.wpi.first.*` to `org.wpilib.*`. `ChassisSpeeds` is now `ChassisVelocities`, and `SwerveModuleState` is now `SwerveModuleVelocity`. If you are reading older swerve code or tutorials, they are the same concepts under the old names.
-{% endhint %}
-
-{% hint style="info" %}
 YAMS's `SwerveDrive` builds and manages `SwerveDriveKinematics`, `SwerveModuleVelocity`, and odometry for you internally based on the module locations in your JSON config. The illustration below shows what it's doing under the hood. It is useful for debugging, not something you need to write yourself.
 {% endhint %}
 
