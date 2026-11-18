@@ -102,11 +102,5 @@ instead of starting from scratch. **Print** gives you a paper copy of the whole 
 bring-up.
 {% endhint %}
 
-{% hint style="info" %}
-Bringing a config forward from a release before `2026.10.09`? Check every `canbus` value against the
-table above: REV devices no longer accept port names such as `CAN_S1` (use `1`), and CTRE devices
-with an empty `canbus` moved from `can_s2` to `can_s0`.
-{% endhint %}
-
 Commit these files to your project's version control along with your code. They're part of your
 robot program, not a build artifact.
