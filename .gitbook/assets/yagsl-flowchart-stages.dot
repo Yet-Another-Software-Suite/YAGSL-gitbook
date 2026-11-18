@@ -13,57 +13,64 @@ digraph G {
   b1 -> s1h1 [color="#6c8ebf", weight=10];
   s1h1 -> s1q1 [color="#6c8ebf", weight=10];
   s1q1 -> s1f1 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  s1h2 [label="Check each absolute encoder's magnet,\nby gently trying to pull it out", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  s1q2 [label="Does it stay put,\nglued or loctited in\nand centered?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  s1f2 [label="Glue or loctite it in.\nYou'll record the offset\nagain in stage 5", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  s1h2 [label="Count the teeth on each drive motor's pinion.\nSome kits come with more than one, such as\n12T and 14T, and they're easy to mix up", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  s1q2 [label="Does every pinion\nmatch the gear ratio\nyou configured?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  s1f2 [label="Install the right pinion, or\nset the gear ratio for the\none you have. See stage 6", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; s1q2; s1f2;}
   s1q1 -> s1h2 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
   s1h2 -> s1q2 [color="#6c8ebf", weight=10];
   s1q2 -> s1f2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  s1h3 [label="Tug every wire and connector:\nencoders, motor controllers,\ngyro and CAN", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  s1q3 [label="Are they all\ntight?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  s1f3 [label="Fix the wiring. Loose sensor\ncables cause errors and\nmotors that spin out of control", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  s1h3 [label="Check each absolute encoder's magnet,\nby gently trying to pull it out", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  s1q3 [label="Does it stay put,\nglued or loctited in\nand centered?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  s1f3 [label="Glue or loctite it in.\nYou'll record the offset\nagain in stage 5", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; s1q3; s1f3;}
   s1q2 -> s1h3 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
   s1h3 -> s1q3 [color="#6c8ebf", weight=10];
   s1q3 -> s1f3 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  s1h4 [label="Push on the gyro", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  s1q4 [label="Is it mounted\nfirmly?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  s1f4 [label="Mount it so it can't\nshift or shake", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  s1h4 [label="Tug every wire and connector:\nencoders, motor controllers,\ngyro and CAN", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  s1q4 [label="Are they all\ntight?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  s1f4 [label="Fix the wiring. Loose sensor\ncables cause errors and\nmotors that spin out of control", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; s1q4; s1f4;}
   s1q3 -> s1h4 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
   s1h4 -> s1q4 [color="#6c8ebf", weight=10];
   s1q4 -> s1f4 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  s1h5 [label="Turn each wheel, and steer each\nmodule, by hand", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  s1q5 [label="Do they turn\nfreely?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  s1f5 [label="The module binds:\nclean and grease it", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  s1h5 [label="Push on the gyro", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  s1q5 [label="Is it mounted\nfirmly?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  s1f5 [label="Mount it so it can't\nshift or shake", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; s1q5; s1f5;}
   s1q4 -> s1h5 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
   s1h5 -> s1q5 [color="#6c8ebf", weight=10];
   s1q5 -> s1f5 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  s1h6 [label="Measure every wheel's diameter\nwith calipers, with its tread on", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  s1q6 [label="Are they the same\nsize, and the tread\nnot worn down?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  s1f6 [label="Replace worn tread.\nWorn tread is smaller\nthan new", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  s1h6 [label="Turn each wheel, and steer each\nmodule, by hand", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  s1q6 [label="Do they turn\nfreely?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  s1f6 [label="The module binds:\nclean and grease it", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; s1q6; s1f6;}
   s1q5 -> s1h6 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
   s1h6 -> s1q6 [color="#6c8ebf", weight=10];
   s1q6 -> s1f6 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  s1h7 [label="Test the battery with a Battery Beak\nor another load tester", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  s1q7 [label="Does it pass?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  s1f7 [label="Charge or\nreplace it", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  s1h7 [label="Measure every wheel's diameter\nwith calipers, with its tread on", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  s1q7 [label="Are they the same\nsize, and the tread\nnot worn down?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  s1f7 [label="Replace worn tread.\nWorn tread is smaller\nthan new", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; s1q7; s1f7;}
   s1q6 -> s1h7 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
   s1h7 -> s1q7 [color="#6c8ebf", weight=10];
   s1q7 -> s1f7 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
-  s1h8 [label="Check how much free storage\nthe SystemCore has left", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
-  s1q8 [label="Is it nearly full?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
-  s1f8 [label="Delete old logs,\nthen reboot the SystemCore", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  s1h8 [label="Test the battery with a Battery Beak\nor another load tester", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  s1q8 [label="Does it pass?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  s1f8 [label="Charge or\nreplace it", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
   {rank=same; s1q8; s1f8;}
   s1q7 -> s1h8 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
   s1h8 -> s1q8 [color="#6c8ebf", weight=10];
-  s1q8 -> s1f8 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
+  s1q8 -> s1f8 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b"];
+  s1h9 [label="Check how much free storage\nthe SystemCore has left", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
+  s1q9 [label="Is it nearly full?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
+  s1f9 [label="Delete old logs,\nthen reboot the SystemCore", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
+  {rank=same; s1q9; s1f9;}
+  s1q8 -> s1h9 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f", weight=10];
+  s1h9 -> s1q9 [color="#6c8ebf", weight=10];
+  s1q9 -> s1f9 [xlabel=" Yes ", color="#82b366", fontcolor="#3d6b2f"];
   b2 [label="Stage 2: Do the sensors and motors work?", shape=box, style="rounded,filled,bold", fillcolor="#dae8fc", color="#6c8ebf", fontsize=16, penwidth=2.4];
-  s1q8 -> b2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b", weight=10];
+  s1q9 -> b2 [xlabel=" No ", color="#b85450", fontcolor="#8c2f2b", weight=10];
   s2h1 [label="Start the code and watch the Driver Station\nconsole. Loop overruns just after\nthe code starts are normal", shape=box, style="rounded,filled", fillcolor="#fff2cc", color="#d6b656"];
   s2q1 [label="Any errors?", shape=diamond, style=filled, fillcolor="#dae8fc", color="#6c8ebf", margin="0.05,0.05"];
   s2f1 [label="Fix them first. See the program\nwon't start table in Find your\nproblem: a missing vendor library,\na SPARK not found, a loose cable", shape=box, style="rounded,filled", fillcolor="#f8cecc", color="#b85450"];
