@@ -19,7 +19,7 @@
 * [Troubleshooting flowchart](how-to/troubleshooting-flowchart.md)
 * [Determine inversion](how-to/determine-inversion.md)
 * [Verify your module locations](how-to/verify-module-locations.md)
-* [Fix steering that changes as the robot turns](how-to/the-8-steps.md)
+* [The 8 steps](how-to/the-8-steps.md)
 * [Fix swerve drive drift](reference/swerve-drift-causes.md)
 * [Common build issues](reference/common-build-issues.md)
 * [Common configuration issues](reference/common-configuration-issues.md)

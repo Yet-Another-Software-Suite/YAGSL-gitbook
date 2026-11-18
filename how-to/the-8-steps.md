@@ -1,8 +1,4 @@
-# Fix steering that changes as the robot turns
-
-{% hint style="info" %}
-This page is known as **the 8 steps**.
-{% endhint %}
+# The 8 steps
 
 ## Something is wrong but it's driving-ish?
 

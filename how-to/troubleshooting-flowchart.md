@@ -112,7 +112,7 @@ Stage 7 sends you here when field-relative driving goes the wrong way at some he
 
 When forward in real life isn't forward in odometry, or field-relative driving changes as the robot turns, the 8 steps
 try every combination of gyro inversion, drive inversion and module order that can cause it. Somewhere along the way it
-gets fixed. [Fix steering that changes as the robot turns](the-8-steps.md) has the drive code to test with, and how to
+gets fixed. [The 8 steps](the-8-steps.md) has the drive code to test with, and how to
 flip the modules.
 
 Test in field-relative driving. In robot-relative driving the direction is supposed to change as the robot turns, so
