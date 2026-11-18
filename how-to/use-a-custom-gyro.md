@@ -17,7 +17,9 @@ and own yourself. Anything that can produce a WPILib `Rotation3d` works.
 The examples below construct WPILib's `OnboardIMU` (the SystemCore's built-in IMU) by hand, because
 every SystemCore has one. Swap in your own device; the wiring into YAGSL is identical.
 
-## 1. Set `gyro.type` to `custom`
+{% stepper %}
+{% step %}
+### Set `gyro.type` to `custom`
 
 In `swervedrive.json`, set the gyro's `type` to `custom`. The `id`/`canbus` fields are unused for a
 custom gyro (leave them at `0`/`""`), and `gyroAxis` and `gyroInvert` are **also ignored**, which is
@@ -31,8 +33,10 @@ the part that catches people out. The parser sees `custom` and skips gyro config
   "modules": ["frontleft.json", "frontright.json", "backleft.json", "backright.json"]
 }
 ```
+{% endstep %}
 
-## 2. Construct the gyro and supply it yourself
+{% step %}
+### Construct the gyro and supply it yourself
 
 Because the parser never calls `SwerveDriveConfig.withGyro()` for a `custom` gyro, you call it
 yourself on the `SwerveDriveConfig` you build **before** handing it to
@@ -114,8 +118,10 @@ If you forget to call `withGyro()` before `createSwerveDrive()`, YAMS has no att
 read. Expect an `IllegalStateException` ("Gyro supplier is not set!") the first time the drive reads
 its heading on a real robot, not a silent fallback.
 {% endhint %}
+{% endstep %}
 
-## 3. Handle the heading axis and inversion yourself
+{% step %}
+### Handle the heading axis and inversion yourself
 
 Since `gyroAxis` and `gyroInvert` are ignored for a `custom` gyro, set their Java equivalents on
 the same `SwerveDriveConfig`. Hand YAMS the gyro's attitude untouched and let it do both in one
@@ -137,8 +143,10 @@ import yams.core.mechanisms.config.enums.GyroAxis;
 `withGyroHeadingAxis` says which axis of the gyro points up through the robot. YAMS rotates the
 whole attitude into the robot's frame for that axis, then applies the inversion (and
 `withGyroOffset(Angle)`, if you set one) to the resulting heading.
+{% endstep %}
 
-## 4. Verify it
+{% step %}
+### Verify it
 
 Follow the normal [gyro CCW+ check](determine-inversion.md#2-confirm-the-gyro-reads-ccw).
 `Mechanisms/swerve/gyro` in NetworkTables still populates and behaves exactly like a parser-built
@@ -154,6 +162,8 @@ axis, inversion and offset applied. For just the heading, use
 In simulation YAMS reports its simulated heading from `getGyroRotation3d()` and never calls your
 supplier, so a custom gyro needs no simulation support of its own.
 {% endhint %}
+{% endstep %}
+{% endstepper %}
 
 ## Optional: angular velocity for skew correction
 
