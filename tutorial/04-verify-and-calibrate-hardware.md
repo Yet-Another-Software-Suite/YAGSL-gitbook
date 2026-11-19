@@ -80,6 +80,10 @@ Turn all four wheels by hand so they point forward, with their bevel gears facin
 
 With the wheels still aligned and the robot still disabled, read each module's `Mechanisms/swerve/modules/<name>/encoder` and enter it as that module's absolute encoder offset.
 
+In AdvantageScope, connected to the robot as in [Set up AdvantageScope](../how-to/set-up-advantagescope.md), open **Mechanisms → swerve → modules** in the sidebar. Open each module in turn and read the number beside **encoder**. It's in degrees; hover over it to check.
+
+<figure><img src="../.gitbook/assets/advantagescope-read-offsets.gif" alt="In AdvantageScope's sidebar, the user opens Mechanisms, swerve and modules, then opens each module in turn and points at its encoder reading: frontleft 5.713, frontright 13.447, backleft 25.752 and backright 39.023. Hovering shows units: degrees."><figcaption><p>Reading each module's encoder in AdvantageScope.</p></figcaption></figure>
+
 <figure><img src="../.gitbook/assets/yagsl-record-offsets.gif" alt="An animation of each module's encoder reading in AdvantageScope being copied into its JSON, one module at a time: frontleft 132.363 degrees, frontright minus 50.977, backleft 271.143 and backright 12.656, each into that module's absoluteEncoderOffset."><figcaption><p>Each encoder reading becomes that module's offset.</p></figcaption></figure>
 
 The config generator walks you through it. Its Quick Start Guide's [Align Modules step](https://config.yagsl.com/guide#align) shows how to align the wheels and which reading to copy for each module.
