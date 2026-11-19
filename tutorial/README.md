@@ -36,11 +36,11 @@ as an alternative. YAGSL supports a much wider range of hardware and mixes vendo
 
 1. [Gather your robot information](01-gather-your-robot-information.md): collect the CAN IDs,
    gear ratios, and module locations you'll need before you touch any software.
-2. [Install YAGSL](02-install-yagsl.md): add the YAGSL vendordep for your command framework, the
-   YAMS vendordep it requires, and the vendordeps for the hardware your robot has.
-3. [Generate your configuration](03-generate-your-configuration.md): use
+2. [Generate your configuration](03-generate-your-configuration.md): use
    [config.yagsl.com](https://config.yagsl.com) to turn your robot information into a config
    directory.
+3. [Install YAGSL](02-install-yagsl.md): add the YAGSL vendordep for your command framework, the
+   YAMS vendordep it requires, and the vendordeps for the hardware your robot has.
 4. [Write the swerve code](write-the-swerve-code.md): wire up `SwerveParser` in a subsystem
    (Commands v2) or mechanism (Commands v3) and bind your controller.
 5. [Practice in simulation](practice-in-simulation.md): learn live tuning on the dashboard while

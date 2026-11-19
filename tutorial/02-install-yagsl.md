@@ -1,4 +1,4 @@
-# 2. Install YAGSL
+# 3. Install YAGSL
 
 YAGSL 2027 is built on WPILib 2027 (`2027_alpha7`) and Java 25, and runs on the SystemCore. Install the matching WPILib release first, then create or open your robot project.
 
@@ -72,6 +72,39 @@ Your vendor's hardware client (REV Hardware Client, Phoenix Tuner X) is a separa
 
 If your network blocks the download, install YAGSL and YAMS from their offline zips instead. See
 [Offline install](../reference/vendordep-installation.md#offline).
+
+## Add your configuration
+
+Create the folder `src/main/deploy/swerve/base` in your project and extract the contents of the
+`swerve-config.zip` you downloaded in [step 2](03-generate-your-configuration.md) into it, so the
+layout looks like this:
+
+```text
+src/main/deploy
+└── swerve
+    └── base
+        ├── swervedrive.json
+        └── modules
+            ├── frontleft.json
+            ├── frontright.json
+            ├── backleft.json
+            ├── backright.json
+            ├── physicalproperties.json
+            ├── pidfproperties.json
+            └── pidfproperties_sim.json
+```
+
+`pidfproperties_sim.json` starts as a copy of `pidfproperties.json`. YAGSL reads it in place of
+`pidfproperties.json` when the robot program runs in simulation, so you can tune simulation gains
+without touching the gains for your real robot.
+
+{% hint style="info" %}
+The folder name is up to you, as long as it matches the path you hand to `SwerveParser.parse(...)`
+in [step 4](write-the-swerve-code.md). This tutorial uses `swerve/base` throughout.
+{% endhint %}
+
+Commit these files to your project's version control along with your code. They're part of your
+robot program, not a build artifact.
 
 ## Build
 

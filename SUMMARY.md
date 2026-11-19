@@ -6,8 +6,8 @@
 
 * [Your first swerve robot](tutorial/README.md)
 * [1. Gather your robot information](tutorial/01-gather-your-robot-information.md)
-* [2. Install YAGSL](tutorial/02-install-yagsl.md)
-* [3. Generate your configuration](tutorial/03-generate-your-configuration.md)
+* [2. Generate your configuration](tutorial/03-generate-your-configuration.md)
+* [3. Install YAGSL](tutorial/02-install-yagsl.md)
 * [4. Write the swerve code](tutorial/write-the-swerve-code.md)
 * [5. Practice in simulation](tutorial/practice-in-simulation.md)
 * [6. Check and calibrate your hardware](tutorial/04-verify-and-calibrate-hardware.md)

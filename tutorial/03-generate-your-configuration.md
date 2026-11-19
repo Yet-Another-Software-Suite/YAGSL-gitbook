@@ -1,4 +1,4 @@
-# 3. Generate your configuration
+# 2. Generate your configuration
 
 Since 2026, the supported way to configure YAGSL is [config.yagsl.com](https://config.yagsl.com), a
 web app that builds your configuration files from a guided form instead of you hand-writing JSON.
@@ -61,39 +61,14 @@ devices are wired to `can_s2`, enter `2`.
 {% endhint %}
 
 You can leave absolute encoder offsets and final PIDF gains at their defaults for now. You'll
-measure and tune those in the next two steps. The important thing at this stage is getting hardware
+measure and tune those in later steps. The important thing at this stage is getting hardware
 types, IDs, CAN buses and module locations correct.
 
-## Download and unzip
+## Download
 
 When you're done, click **Download Config**. You get `swerve-config.zip`, which has
-`swervedrive.json` and the `modules` folder at its top level. Create the folder
-`src/main/deploy/swerve/base` in your project and extract the zip's contents into it, so the layout
-looks like this:
-
-```text
-src/main/deploy
-└── swerve
-    └── base
-        ├── swervedrive.json
-        └── modules
-            ├── frontleft.json
-            ├── frontright.json
-            ├── backleft.json
-            ├── backright.json
-            ├── physicalproperties.json
-            ├── pidfproperties.json
-            └── pidfproperties_sim.json
-```
-
-`pidfproperties_sim.json` starts as a copy of `pidfproperties.json`. YAGSL reads it in place of
-`pidfproperties.json` when the robot program runs in simulation, so you can tune simulation gains
-without touching the gains for your real robot.
-
-{% hint style="info" %}
-The folder name is up to you, as long as it matches the path you hand to `SwerveParser.parse(...)`
-in [step 4](write-the-swerve-code.md). This tutorial uses `swerve/base` throughout.
-{% endhint %}
+`swervedrive.json` and the `modules` folder at its top level. You'll add it to your robot project in
+the [next step](02-install-yagsl.md#add-your-configuration).
 
 {% hint style="success" %}
 If you already have a config directory from a different robot, zip up its `swervedrive.json` and
@@ -101,6 +76,3 @@ If you already have a config directory from a different robot, zip up its `swerv
 instead of starting from scratch. **Print** gives you a paper copy of the whole configuration for
 bring-up.
 {% endhint %}
-
-Commit these files to your project's version control along with your code. They're part of your
-robot program, not a build artifact.

@@ -25,7 +25,7 @@ Make sure every CAN ID is unique across your entire robot, and that each device'
 {% step %}
 ### Deploy, stay disabled, and open AdvantageScope
 
-Deploy your code from [step 4](write-the-swerve-code.md) with the config from step 3 and **keep the robot disabled**. Open AdvantageScope's `Mechanisms/swerve` NetworkTables tree, where the swerve code publishes these values. The `swerve` in the path is the name that code passes to `SwerveDriveConfig.withTelemetry("swerve", ...)`.
+Deploy your code from [step 4](write-the-swerve-code.md) with the config from step 2 and **keep the robot disabled**. Open AdvantageScope's `Mechanisms/swerve` NetworkTables tree, where the swerve code publishes these values. The `swerve` in the path is the name that code passes to `SwerveDriveConfig.withTelemetry("swerve", ...)`.
 
 <figure><img src="../.gitbook/assets/yagsl-telemetry.png" alt="The Mechanisms/swerve tree in AdvantageScope, with each module's drive and azimuth telemetry and its raw absolute encoder."><figcaption><p>The Mechanisms/swerve tree in AdvantageScope. Each module's drive/azimuth telemetry and raw absolute encoder are visible per-module.</p></figcaption></figure>
 
