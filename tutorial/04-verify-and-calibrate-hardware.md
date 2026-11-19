@@ -78,15 +78,19 @@ Turn all four wheels by hand so they point forward, with their bevel gears facin
 {% step %}
 ### Record each module's offset
 
-With the wheels still aligned and the robot still disabled, read each module's `Mechanisms/swerve/modules/<name>/encoder` and enter it as that module's absolute encoder offset. Use the [config generator](https://config.yagsl.com) (recommended: upload your existing config, update the four offset fields, and re-download) or `absoluteEncoderOffset` in the module's JSON file.
+With the wheels still aligned and the robot still disabled, read each module's `Mechanisms/swerve/modules/<name>/encoder` and enter it as that module's absolute encoder offset.
 
 <figure><img src="../.gitbook/assets/yagsl-record-offsets.gif" alt="An animation of each module's encoder reading in AdvantageScope being copied into its JSON, one module at a time: frontleft 132.363 degrees, frontright minus 50.977, backleft 271.143 and backright 12.656, each into that module's absoluteEncoderOffset."><figcaption><p>Each encoder reading becomes that module's offset.</p></figcaption></figure>
 
-The absolute encoder offset is what lets your swerve module remember wheel orientation across power cycles. Redeploy once all four are in.
+The config generator walks you through it. Its Quick Start Guide's [Align Modules step](https://config.yagsl.com/guide#align) shows how to align the wheels and which reading to copy for each module.
 
-{% hint style="warning" %}
-**Special note for MAXSwerve teams:** after aligning the wheels, you may need to add or subtract `90` from the measured offset to get the module pointing truly forward, and set `absoluteEncoderInverted` to `true`. This is a quirk of how MAXSwerve mounts its absolute encoder, not a bug in your measurement.
-{% endhint %}
+<figure><img src="../.gitbook/assets/yagsl-generator-guide-align.png" alt="The config generator's Quick Start Guide on step 6, Align Modules. A checklist item says to rotate every wheel forward with the bevel gear left, over an animation of four modules turning to face forward. The next says to record each module's absolute encoder offset, reading NT:/Mechanisms/swerve/modules/[module_name]/encoder in AdvantageScope and copying it into that module's absoluteEncoderOffset."><figcaption><p>The Align Modules step of the config generator's Quick Start Guide.</p></figcaption></figure>
+
+Then, in the [config generator](https://config.yagsl.com), click **Upload Config** to load your configuration, enter each reading in that module's tab under **Offset (degrees)**, and click **Download Config**. You can also edit `absoluteEncoderOffset` in each module's JSON file directly.
+
+<figure><img src="../.gitbook/assets/yagsl-generator-offsets.gif" alt="In the config generator, the user opens the Front Left, Front Right, Back Left and Back Right tabs in turn, and types each module's offset under Offset (degrees): 132.363, minus 50.977, 271.143 and 12.656."><figcaption><p>Entering each module's offset in the config generator.</p></figcaption></figure>
+
+The absolute encoder offset is what lets your swerve module remember wheel orientation across power cycles. Redeploy once all four are in.
 {% endstep %}
 
 {% step %}
