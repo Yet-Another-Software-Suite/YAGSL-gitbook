@@ -97,7 +97,7 @@ Which `_attached` types work depends on the angle motor controller:
 
 | Angle motor controller | `_attached` types it accepts                                                                                                                                               |
 | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| SparkMAX / SparkFlex   | `revthroughbore`, `canandmag`, `srxmag`, `andymarkhexbore` and `dutycycle` (all read as a duty cycle encoder), `analog` (3.3 V), `analog5v` (5 V). Not `thrifty_attached`. |
+| SparkMAX / SparkFlex   | `revthroughbore`, `canandmag`, `srxmag`, `andymarkhexbore` and `dutycycle` (all read as a duty cycle encoder), `analog` (3.3 V per rotation) and `analog5v` (5 V per rotation), which the module reads rather than the SPARK. Not `thrifty_attached`. |
 | Thrifty Nova           | `thrifty`, `revthroughbore`, `canandmag`, `srxmag`, `andymarkhexbore`, `dutycycle`, `analog`. Not `analog5v_attached`.                                                     |
 | TalonFX / TalonFXS     | None. Use a `_can`, `_dio` or `_analog` encoder.                                                                                                                           |
 
