@@ -22,7 +22,7 @@ YAGSL 2027 is built on WPILib 2027 (`2027_alpha7`, Java 25) and runs on the Syst
 | are setting up YAGSL for the first time | [**Your first swerve robot**](tutorial/README.md), seven steps from a bare WPILib project to a driving robot |
 | have a robot that isn't driving right | [**Find your problem**](how-to/fix-a-problem.md), which matches what your robot is doing to the page that fixes it |
 | have a driving robot and want to do more with it | [**Tune and extend**](how-to/how-to.md): PIDF tuning, drive to a pose, PathPlanner and more |
-| are upgrading a 2026 project or a config from before 2026.8.05 | [**Upgrade to YAGSL 2027**](reference/schema-changes.md), before you do anything else |
+| are upgrading a 2026 project | [**Upgrade a 2026 project to YAGSL 2027**](reference/upgrade-from-2026.md), before you do anything else |
 | need an exact JSON field, device type or API | [**Reference**](reference/reference.md) |
 
 {% embed url="https://www.youtube.com/watch?v=4Tcyn_oj_G0&list=PLdhNPDifsCMLLe5pZoyHGXrMMVxNpJOxP" %}

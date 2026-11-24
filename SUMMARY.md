@@ -56,7 +56,8 @@
 
 ## Upgrading
 
-* [Upgrade to YAGSL 2027](reference/schema-changes.md)
+* [Upgrade a 2026 project to YAGSL 2027](reference/upgrade-from-2026.md)
+* [Schema changes](reference/schema-changes.md)
 * [Changelog](explanation/changelog.md)
 
 ## How it works

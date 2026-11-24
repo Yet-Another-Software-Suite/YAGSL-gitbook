@@ -19,5 +19,5 @@ or [Tune and extend](../how-to/how-to.md).
 - [API Reference](api-reference.md): the `swervelib` packages, the `SwerveParser` entry points, and
   where to find docs for `SwerveDrive`, `SwerveModule`, and friends (they're YAMS classes).
 
-Upgrading from an older YAGSL? See [Upgrade to YAGSL 2027](schema-changes.md) and the
+Upgrading from an older YAGSL? See [Upgrade a 2026 project to YAGSL 2027](upgrade-from-2026.md) and the
 [Changelog](../explanation/changelog.md).

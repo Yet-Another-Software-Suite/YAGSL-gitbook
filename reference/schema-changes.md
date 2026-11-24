@@ -1,4 +1,8 @@
-# Upgrade to YAGSL 2027
+# Schema changes
+
+{% hint style="info" %}
+Upgrading a robot project from the 2026 season? Follow [Upgrade a 2026 project to YAGSL 2027](upgrade-from-2026.md) instead. This page is for configurations made with the early builds of the rewritten YAGSL.
+{% endhint %}
 
 This page covers the two breaking changes to YAGSL's configuration and entry point:
 
