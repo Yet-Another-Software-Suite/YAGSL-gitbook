@@ -15,8 +15,8 @@ conflict with the other. For step-by-step instructions, see
 | Commands v3       | `YAGSL (Commands v3)` | `https://cdn.yassrobotics.com/yagsl_commands3.json` |
 
 {% hint style="warning" %}
-The old `https://yet-another-software-suite.github.io/YAGSL/yagsl.json` URL (and the
-`.../YAGSL/yagsl/yagsl.json` one before it) is the 2026 vendordep. Do not use it for a 2027
+The old `https://yet-another-software-suite.github.io/YAGSL/yagsl.json` URL is the 2026
+vendordep. Do not use it for a 2027
 project; remove `vendordeps/yagsl.json` if you are upgrading.
 {% endhint %}
 
@@ -32,10 +32,11 @@ Every [GitHub release](https://github.com/Yet-Another-Software-Suite/YAGSL/relea
 `maven` folder and a `vendordeps` folder that merge into your WPILib `2027_alpha7` home folder,
 which the WPILib installer creates:
 
-| OS            | Extract into                          |
-| ------------- | ------------------------------------- |
-| Windows       | `C:\Users\Public\wpilib\2027_alpha7`  |
-| macOS / Linux | `~/wpilib/2027_alpha7`                |
+| OS      | Extract into                                                              |
+| ------- | ------------------------------------------------------------------------- |
+| Windows | `C:\Users\Public\wpilib\2027_alpha7`                                      |
+| Linux   | `~/.local/share/wpilib/2027_alpha7`, or `$XDG_DATA_HOME/wpilib/2027_alpha7` if it is set |
+| macOS   | `~/.wpilib/2027_alpha7`                                                   |
 
 {% tabs %}
 {% tab title="Windows (PowerShell)" %}
@@ -44,9 +45,15 @@ Expand-Archive -Path "$HOME\Downloads\2026.10.09-YAGSL-Offline.zip" -Destination
 ```
 {% endtab %}
 
-{% tab title="macOS / Linux" %}
+{% tab title="Linux" %}
 ```bash
-unzip -o ~/Downloads/2026.10.09-YAGSL-Offline.zip -d ~/wpilib/2027_alpha7
+unzip -o ~/Downloads/2026.10.09-YAGSL-Offline.zip -d "${XDG_DATA_HOME:-$HOME/.local/share}/wpilib/2027_alpha7"
+```
+{% endtab %}
+
+{% tab title="macOS" %}
+```bash
+unzip -o ~/Downloads/2026.10.09-YAGSL-Offline.zip -d ~/.wpilib/2027_alpha7
 ```
 {% endtab %}
 {% endtabs %}

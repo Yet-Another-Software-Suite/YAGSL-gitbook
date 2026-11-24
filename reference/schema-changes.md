@@ -184,7 +184,7 @@ without an exception. Diff it against this page.
 
 | Old (≤ 2026.4.1)                          | New (≥ 2026.8.05)                        | Notes |
 | ------------------------------------------- | ------------------------------------------- | ------- |
-| `imu: {type, id, canbus}`                   | `gyro: {type, id, canbus}`                  | Renamed. Old `type` values like `"pigeon2"`, `"pigeon"`, `"navx"` also changed shape. See below. |
+| `imu: {type, id, canbus}`                   | `gyro: {type, id, canbus}`                  | Renamed. The `type` strings changed too, and some gyros were removed. See below. |
 | `invertedIMU: boolean`                      | `gyroInvert: boolean`                       | Renamed. |
 | *(none)*                                    | `gyroAxis: "yaw"\|"pitch"\|"roll"`          | New, optional, defaults to `"yaw"`. |
 | `modules: string[]`                         | `modules: string[]`                         | Unchanged. |
@@ -208,8 +208,10 @@ without an exception. Diff it against this page.
 }
 ```
 
-Note the `type` string itself changed too. Old bare names (`"pigeon2"`, `"pigeon"`, `"navx"`) became
-explicit `<device>_<connection>` strings (`"pigeon2_can"`). See
+The `type` strings changed too. Old bare names became `<device>_<connection>` strings, such as
+`"pigeon2"` to `"pigeon2_can"`. The original Pigeon (`"pigeon"`) and every NavX or NavX2 type
+(`"navx"` and its variants) have no new type; see
+[Hardware support that was dropped](#hardware-support-that-was-dropped-not-just-renamed). See
 [Device Type Strings](json-schema/device-types.md) for the current, complete list.
 
 ### Module JSON (e.g. `frontleft.json`)
@@ -218,9 +220,9 @@ explicit `<device>_<connection>` strings (`"pigeon2_can"`). See
 | ------------------------------------------------ | ---------------------------------------------------- | ------- |
 | `encoder: {type, id, canbus}`                     | `absoluteEncoder: {type, id, channel, canbus}`        | Renamed, and gained a `channel` field for analog/DIO-connected encoders. `type` strings changed (`"cancoder"` → `"cancoder_can"`, etc.). See [Device Type Strings](json-schema/device-types.md). |
 | `absoluteEncoderOffset: number`                   | `absoluteEncoderOffset: number`                       | Unchanged (degrees). |
-| *(none)*                                          | `absoluteEncoderInverted: boolean`                    | New, optional, defaults to `false`. |
+| `absoluteEncoderInverted: boolean`                | `absoluteEncoderInverted: boolean`                    | Unchanged, defaults to `false`. |
 | `drive` / `angle`: `{type, id, canbus}`           | Same shape, but `type` strings changed to `<controller>_<motor>` (e.g. `"sparkmax_neo"` unchanged, but `"talonfx"` alone became `"talonfx_krakenx60"` etc.; the motor is now part of the type string). | See [Device Type Strings](json-schema/device-types.md). |
-| *(module-level conversion lived only in `physicalproperties.json`)* | `gearing: {drive: {gearRatio, diameter}, angle: {gearRatio}}` (optional, per-module override) | New: a module can now override the shared gearing without touching `physicalproperties.json`. |
+| `conversionFactors: {drive: {gearRatio, diameter, factor}, angle: {gearRatio, factor}}` (optional, per-module override) | `gearing: {drive: {gearRatio, diameter}, angle: {gearRatio}}` (optional, per-module override) | Renamed, and `factor` is gone. A module's `gearing.drive` now replaces the shared drive gearing as a whole when its `gearRatio` isn't `0`, so set `diameter` there too or the module's wheel diameter is `0`. The old override fell back to the shared diameter. |
 | `inverted: {drive, angle}`                        | `inverted: {drive, angle}`                            | Unchanged. |
 | `location: {front, left}`                         | `location: {front, left}`                             | Unchanged (inches). |
 
@@ -254,13 +256,13 @@ explicit `<device>_<connection>` strings (`"pigeon2_can"`). See
 | Old (≤ 2026.4.1)                                | New (≥ 2026.8.05)                                    | Notes |
 | --------------------------------------------------- | -------------------------------------------------------- | ------- |
 | `conversionFactors: {drive: {gearRatio, diameter, factor}, angle: {gearRatio, factor}}` | `gearing: {drive: {gearRatio, diameter}, angle: {gearRatio}}` | Renamed and simplified. The precomputed `factor` override is gone; YAMS derives the conversion internally from `gearRatio`/`diameter`. |
-| `currentLimit: {drive, angle}`                       | `statorCurrentLimit: {drive, angle}`                      | Renamed. Defaults are now `40`/`20` if omitted. |
-| `friction: {drive, angle}`                           | *(removed)*                                               | No longer configurable via JSON. |
-| `steerRotationalInertia: number`                     | *(removed)*                                               | No longer configurable via JSON. |
-| `robotMass: number`                                  | *(removed)*                                               | No longer configurable via JSON. |
-| `rampRate: {drive, angle}`                            | *(removed)*                                               | No longer configurable via JSON. |
-| `wheelGripCoefficientOfFriction: number`              | *(removed)*                                               | No longer configurable via JSON. |
-| `optimalVoltage: number`                              | *(removed)*                                               | No longer configurable via JSON. |
+| `currentLimit: {drive, angle}`                       | `statorCurrentLimit: {drive, angle}`                      | Renamed. Defaults are still `40`/`20` A, but it is now a stator limit on every motor controller. It used to be a supply limit on a TalonFX or TalonFXS and the smart current limit on a SPARK. |
+| `friction: {drive, angle}`                           | *(removed)*                                               | Configured the MapleSim simulation, which is gone. |
+| `steerRotationalInertia: number`                     | *(removed)*                                               | Configured the MapleSim simulation, which is gone. |
+| `robotMass: number`                                  | *(removed)*                                               | Configured the MapleSim simulation, which is gone. |
+| `rampRate: {drive, angle}`                            | *(removed)*                                               | No ramp is applied. The old default was 0.25 s. |
+| `wheelGripCoefficientOfFriction: number`              | *(removed)*                                               | Configured the MapleSim simulation, which is gone. |
+| `optimalVoltage: number`                              | *(removed)*                                               | No voltage compensation is applied. The old default was 12 V, also used for the default drive feedforward. |
 
 **Old:**
 ```json
@@ -287,16 +289,16 @@ explicit `<device>_<connection>` strings (`"pigeon2_can"`). See
 }
 ```
 
-If your old config relied on `rampRate`, `friction`, `robotMass`, `steerRotationalInertia`, or
-`wheelGripCoefficientOfFriction` for simulation fidelity, that modeling now lives inside YAMS/the
-motor sim itself rather than being team-configurable per robot via this file.
+`friction`, `robotMass`, `steerRotationalInertia` and `wheelGripCoefficientOfFriction` configured
+the MapleSim physics simulation. MapleSim is gone: YAMS simulates each motor with its vendor's
+simulation instead, and nothing in this file replaces them.
 
 ### `modules/pidfproperties.json`
 
 | Old (≤ 2026.4.1)          | New (≥ 2026.8.05)         | Notes |
 | ---------------------------- | ---------------------------- | ------- |
 | `p`, `i`, `d`                 | `p`, `i`, `d`                 | Unchanged. |
-| `f: number`                   | *(removed, replaced by `s`/`v`/`a`)* | Old `f` was a flat feedforward multiplier; the new fields model a proper `SimpleMotorFeedforward` (`kS`, `kV`, `kA`) instead. |
+| `f: number`                   | *(removed, replaced by `s`/`v`/`a`)* | Old `f` was not a general feedforward: SPARKs and the Nova ignored it, and TalonFX and TalonFXS used it as kS. The new fields are a `SimpleMotorFeedforward` (`kS`, `kV`, `kA`). |
 | `iz: number` (integral zone)  | *(removed)*                   | No longer configurable. |
 | `output: {min, max}` (clamp)  | *(removed)*                   | No longer configurable via JSON. |
 | *(none)*                      | `s`, `v`, `a: number` (all optional) | New feedforward gains. If `drive.v` is left `0`/omitted, the parser auto-derives `kV` from the drive motor's free speed. |
@@ -317,9 +319,9 @@ motor sim itself rather than being team-configurable per robot via this file.
 }
 ```
 
-You'll need to re-tune from scratch rather than porting old `p`/`i`/`d` values directly because the old
-gains were tuned against a different internal control loop (raw `f`/`iz`) than the new
-feedforward-based one. See [How to Tune PIDF Gains](../how-to/tune-pidf-gains.md).
+You'll need to re-tune from scratch rather than porting old `p`/`i`/`d` values. The old gains were
+in each vendor's own units, such as duty cycle per degree on a SPARK. YAMS's closed loop outputs
+volts, from an error in rotations, or meters for the drive motor. See [How to Tune PIDF Gains](../how-to/tune-pidf-gains.md).
 
 ### `controllerproperties.json`: removed entirely
 
@@ -349,9 +351,10 @@ This isn't just a field-rename. Some previously-supported gyro and motor-control
 If your old config used one of these, there's no direct migration; you need different hardware or
 a custom fork:
 
-- **Gyros:** the SPI/I2C/USB-serial NavX2 (`navx`, `navx_spi`, `navx_i2c`, `navx_mxp_serial`,
-  `navx_usb`), the original Pigeon (gen 1), and SPI gyros (`adxrs450`, `adis16448`, `adis16470`)
-  are all gone. The gyro types are `pigeon2_can`, `canandgyro_can`, `navx3_can`,
+- **Gyros:** every NavX and NavX2 type (`navx`, `navx_spi`, `navx_i2c`, `navx_mxp_serial`,
+  `navx_usb`), the original Pigeon (gen 1: `pigeon`, `pigeon_via_talonsrx`), and the SPI and analog
+  gyros (`adxrs450`, `adis16448`, `adis16470`, `analog`) are all gone. There is no NavX2 library for
+  WPILib 2027 yet, and Phoenix 5, which the original Pigeon needs, has no 2027 release. The gyro types are `pigeon2_can`, `canandgyro_can`, `navx3_can`,
   `systemcore_internal` (2027) and `custom`. See [Gyroscopes](hardware/gyroscopes.md) for which of
   them are available in the current release.
 - **Motor controllers:** `talonsrx` and brushed `sparkmax_brushed` are gone. Only the five
@@ -366,11 +369,18 @@ just JSON. This is a real capability change, not a documentation gap. For a gyro
 ### Behavior changes that aren't JSON fields
 
 - **Cosine compensation** used to be toggleable per-module (`useCosineCompensator`, default `true`).
-  It's now always applied by the parser. There's no way to disable it via config.
-- **Deploy directory construction** changed from directly instantiating `SwerveDrive`/module
-  classes to `SwerveParser.parse(dir)` followed by
+  It's now always applied by the parser. There's no way to disable it via config, but robot code
+  can turn it off per module with `module.getConfig().withCosineCompensation(false)`.
+- **Creating the drive** changed from `new SwerveParser(dir).createSwerveDrive(maximumSpeed)` to
+  `SwerveParser.parse(dir)` followed by
   `SwerveParser.createSwerveDrive(new SwerveDriveConfig()...)`. See
   [Deploy and Drive](../tutorial/05-deploy-and-drive.md).
+- **No odometry thread.** The old drive updated its odometry on its own thread. Now the pose only
+  updates when you call `drive.updateTelemetry()`, so call it every loop.
+- **Maximum speed.** The old `maximumSpeed` argument is gone. YAGSL works out the maximum module
+  speed from the drive motor's free speed and gearing, but doesn't set a maximum chassis speed.
+  Without `SwerveDriveConfig.withMaximumChassisSpeed(...)`, `SwerveInputStream` scales the joysticks
+  to 4 m/s and 1 rotation per second.
 
 - **Heading correction** was a JSON-configured PID run inside `SwerveDrive.drive()`. It's now
   built in your code with `SwerveInputStream`, with gains from
@@ -400,7 +410,8 @@ just JSON. This is a real capability change, not a documentation gap. For a gyro
 4. Update every `type` string to the new `<device>_<connection>` convention. See
    [Device Type Strings](json-schema/device-types.md).
 5. Replace `conversionFactors`→`gearing` in `physicalproperties.json`, dropping any `factor`
-   override. Replace `currentLimit`→`statorCurrentLimit`.
+   override. Replace `currentLimit`→`statorCurrentLimit`. If a module file overrides the drive
+   `gearRatio`, give it a `diameter` too.
 6. Delete `controllerproperties.json`; move any heading-lock behavior into robot code via
    `SwerveInputStream`.
 7. Re-tune PIDF from scratch using the new `p`/`i`/`d`/`s`/`v`/`a` shape; old gains don't transfer.
