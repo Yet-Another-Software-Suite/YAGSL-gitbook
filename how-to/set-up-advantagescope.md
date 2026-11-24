@@ -51,7 +51,7 @@ You may need to enable your robot before AdvantageScope shows values for these f
 {% endhint %}
 
 {% hint style="info" %}
-`swerve` is the telemetry name you gave the drive with `SwerveDriveConfig.withTelemetry("swerve", ...)`; if you named it something else, look under `Mechanisms/<that name>`. The `current` fields need `TelemetryVerbosity.MID` or higher and the `desired` fields need `TelemetryVerbosity.HIGH`.
+`swerve` is the telemetry name you gave the drive with `SwerveDriveConfig.withTelemetry("swerve", ...)`; if you named it something else, look under `Mechanisms/<that name>`. All four fields are published at every `TelemetryVerbosity`, `LOW` included.
 {% endhint %}
 
 To see the robot's pose on a 2D/3D field, add a **2D Field** or **3D Field** tab instead and drag in `Mechanisms/swerve/pose`.

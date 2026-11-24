@@ -12,8 +12,10 @@ YAMS pushes swerve drive and module data to NetworkTables under `Mechanisms/<nam
 
 ```
 Mechanisms/swerve/
+├── .type                   ("SwerveDrive", so a dashboard can recognize the table)
 ├── gyro                    (degrees)
 ├── loopTime                (seconds)
+├── maxModuleVelocity       (meters per second, the fastest a module can drive)
 ├── pose                    (Pose2d struct)
 ├── chassis/
 │   ├── current             (ChassisVelocities struct, robot-relative, measured)
@@ -45,11 +47,19 @@ How much gets published is controlled by `yams.core.telemetry.enums.TelemetryVer
 
 ```java
 public enum TelemetryVerbosity {
-  LOW,   // minimal telemetry
-  MID,   // moderate telemetry
-  HIGH   // full swerve drive + module data
+  LOW,   // everything a dashboard's swerve widget needs
+  MID,   // adds the field-relative chassis speeds
+  HIGH   // adds the live tuning values
 }
 ```
+
+| Verbosity | Swerve drive fields |
+| --- | --- |
+| `LOW` | `pose`, `gyro`, `states/current`, `states/desired`, `chassis/current`, `chassis/desired` and `maxModuleVelocity` |
+| `MID` | `LOW`'s, and `chassis/field` |
+| `HIGH` | `MID`'s, and the gains and setpoints for [live tuning](../how-to/tune-pidf-gains.md) |
+
+`.type` is published at every verbosity. `maxModuleVelocity` is the maximum module speed YAGSL works out from your motors, gearing and wheel size.
 
 ```java
 var cfg = new SwerveDriveConfig()

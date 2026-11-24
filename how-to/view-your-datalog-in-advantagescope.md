@@ -77,7 +77,7 @@ If you use the shorter `withTelemetry("swerve", TelemetryVerbosity.HIGH)` overlo
 Note the DataLog tree uses a top-level `Swerve` (the name you chose, no `Mechanisms` prefix), a _different_ root than the live NetworkTables tree covered in [Telemetry, Simulation & Vision](../explanation/telemetry-and-vision.md) (`Mechanisms/swerve`, from the telemetry name). Both describe the same data; AdvantageScope shows them as two separate branches in the field tree (`Swerve` for the DataLog-only entries, `NT` for the mirrored NetworkTables ones). See the sidebar in the screenshots below.
 {% endhint %}
 
-Which fields exist depends on the `TelemetryVerbosity`: `LOW` logs the pose and gyro, `MID` adds the measured chassis speeds and module states, and `HIGH` adds the desired ones.
+Which fields exist depends on the `TelemetryVerbosity`: `LOW` logs the pose, the gyro, the measured and desired module states and robot-relative chassis speeds, and the maximum module velocity; `MID` adds the field-relative chassis speeds; and `HIGH` adds the live tuning values.
 {% endstep %}
 
 {% step %}
