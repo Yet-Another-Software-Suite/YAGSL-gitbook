@@ -190,9 +190,9 @@ with a `NullPointerException`. Don't assume an old file works because it parses.
 | `useCosineCompensator` | Removed | Cosine compensation is always on; see [Behavior changes](#behavior-changes). |
 
 {% hint style="warning" %}
-A module's `gearing.drive` replaces the shared drive gearing as a whole when its `gearRatio` isn't
-`0`. If you set `gearRatio` in a module file, set `diameter` there too, or the module's wheel
-diameter is `0`. The old `conversionFactors` override fell back to the shared diameter.
+A module's `gearing.drive` replaces the shared drive gearing when its `gearRatio` isn't `0`. A
+module that sets only `gearRatio` keeps the shared wheel diameter, as the old `conversionFactors`
+override did.
 {% endhint %}
 
 ```json
@@ -576,7 +576,8 @@ The [examples](https://github.com/Yet-Another-Software-Suite/YAGSL/tree/main/exa
 * **Idle modes.** Drive motors coast and angle motors brake.
 * **Absolute encoder feedback.** An absolute encoder attached to the angle motor controller, or a
   CANcoder with a TalonFX or TalonFXS angle motor, becomes the motor controller's feedback sensor.
-  Other encoders are read by the module.
+  The exception is `analog_attached` or `analog5v_attached` on a SPARK, which YAMS can't use as
+  feedback. Other encoders are read by the module.
 * **Gyro.** YAMS applies `gyroAxis` and `gyroInvert` to the gyro's full 3D attitude. Check that the
   heading increases counterclockwise before driving.
 * **Telemetry.** The drive publishes to NetworkTables under `Mechanisms/<telemetry name>` and logs

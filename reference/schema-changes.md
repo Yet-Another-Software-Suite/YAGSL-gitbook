@@ -222,7 +222,7 @@ The `type` strings changed too. Old bare names became `<device>_<connection>` st
 | `absoluteEncoderOffset: number`                   | `absoluteEncoderOffset: number`                       | Unchanged (degrees). |
 | `absoluteEncoderInverted: boolean`                | `absoluteEncoderInverted: boolean`                    | Unchanged, defaults to `false`. |
 | `drive` / `angle`: `{type, id, canbus}`           | Same shape, but `type` strings changed to `<controller>_<motor>` (e.g. `"sparkmax_neo"` unchanged, but `"talonfx"` alone became `"talonfx_krakenx60"` etc.; the motor is now part of the type string). | See [Device Type Strings](json-schema/device-types.md). |
-| `conversionFactors: {drive: {gearRatio, diameter, factor}, angle: {gearRatio, factor}}` (optional, per-module override) | `gearing: {drive: {gearRatio, diameter}, angle: {gearRatio}}` (optional, per-module override) | Renamed, and `factor` is gone. A module's `gearing.drive` now replaces the shared drive gearing as a whole when its `gearRatio` isn't `0`, so set `diameter` there too or the module's wheel diameter is `0`. The old override fell back to the shared diameter. |
+| `conversionFactors: {drive: {gearRatio, diameter, factor}, angle: {gearRatio, factor}}` (optional, per-module override) | `gearing: {drive: {gearRatio, diameter}, angle: {gearRatio}}` (optional, per-module override) | Renamed, and `factor` is gone. A module's `gearing.drive` replaces the shared drive gearing when its `gearRatio` isn't `0`; a module that sets only `gearRatio` keeps the shared wheel diameter, as before. |
 | `inverted: {drive, angle}`                        | `inverted: {drive, angle}`                            | Unchanged. |
 | `location: {front, left}`                         | `location: {front, left}`                             | Unchanged (inches). |
 
@@ -410,8 +410,7 @@ just JSON. This is a real capability change, not a documentation gap. For a gyro
 4. Update every `type` string to the new `<device>_<connection>` convention. See
    [Device Type Strings](json-schema/device-types.md).
 5. Replace `conversionFactors`→`gearing` in `physicalproperties.json`, dropping any `factor`
-   override. Replace `currentLimit`→`statorCurrentLimit`. If a module file overrides the drive
-   `gearRatio`, give it a `diameter` too.
+   override. Replace `currentLimit`→`statorCurrentLimit`.
 6. Delete `controllerproperties.json`; move any heading-lock behavior into robot code via
    `SwerveInputStream`.
 7. Re-tune PIDF from scratch using the new `p`/`i`/`d`/`s`/`v`/`a` shape; old gains don't transfer.
