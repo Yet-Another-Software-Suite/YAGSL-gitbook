@@ -44,7 +44,7 @@ One file per swerve module (e.g. `frontleft.json`), referenced by name from `swe
 | `inverted.angle`          | boolean                            | yes      | Invert the angle motor.                                                                                        |
 | `absoluteEncoderOffset`   | number (degrees)                   | yes      | Offset so the wheel reads "forward" when physically pointed forward with the bevel gear to the left. Determined by rotating the wheel to face forward and reading the raw absolute encoder value. |
 | `absoluteEncoderInverted` | boolean                            | no (default `false`) | Invert the absolute encoder's reading.                                                            |
-| `absoluteEncoderGearRatio` | number                            | no (default `1`) | Reduction between the absolute encoder and the module's azimuth, as the `X` in `X:1`. Leave it out when the encoder turns 1:1 with the module. Not shown in the config generator. |
+| `absoluteEncoderGearRatio` | number                            | no (default `1`) | Reduction between the absolute encoder and the module's azimuth, as the `X` in `X:1`. Leave it out when the encoder turns 1:1 with the module. In the config generator, it is under a module's **Advanced** section. |
 | `location.front`          | number (inches)                    | yes      | Distance from the robot's center to the module's center, along the front/back axis.                            |
 | `location.left`           | number (inches)                    | yes      | Distance from the robot's center to the module's center, along the left/right axis.                            |
 
