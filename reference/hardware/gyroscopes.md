@@ -90,6 +90,7 @@ config (modules, motor controllers, encoders) is still built normally from the J
 
 `withGyro()` takes a `Supplier<Rotation3d>`: the gyro's full attitude, not just a heading angle.
 Most vendor gyros and WPILib's `OnboardIMU` have a `getRotation3d()` you can pass directly.
+`withRotation(...)` is the same method under another name.
 
 This is the escape hatch for any gyro the parser doesn't build for you. The example below uses it
 for a SystemCore that is mounted vertically, since `systemcore_internal` always assumes a

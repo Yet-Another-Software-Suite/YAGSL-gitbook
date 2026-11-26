@@ -45,7 +45,7 @@ normally from the rest of the JSON.
 
 `withGyro` takes a `Supplier<Rotation3d>`: the gyro's full attitude (roll, pitch and yaw), not just
 a heading angle. YAMS reads the heading out of it, and uses the roll and pitch for anti-tipping if
-you enable it.
+you enable it. `withRotation(...)` is the same method under another name.
 
 {% tabs %}
 {% tab title="Commands v2" %}
