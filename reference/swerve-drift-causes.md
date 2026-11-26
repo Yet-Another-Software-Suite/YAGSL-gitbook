@@ -67,7 +67,7 @@ Incorrect, worn, or loose wiring produces different symptoms depending on which 
 * [ ] Controller input filtering.
 * [ ] Discretization not compensating for system delay. See `SwerveDriveConfig.withDiscretizationTime()`.
 * [ ] Vision measurement standard deviations aren't tuned. See `SwerveDrive.addVisionMeasurement()`/`setVisionMeasurementStdDevs()`.
-* [ ] Gyro offset drifted. See `SwerveDrive.zeroGyro()` / `SwerveDriveConfig.withGyroOffset()`.
+* [ ] Heading drifted. See `SwerveDrive.zeroGyro()` / `zeroOdometryHeading()` and `resetOdometry(Pose2d)`.
 
 {% hint style="info" %}
 Several runtime tuning knobs from older YAGSL versions (`setCosineCompensator`, `setHeadingCorrection`, `setAntiJitter`, `chassisVelocityCorrection`, `setMaximumSpeeds`, `replaceSwerveModuleFeedforward`, `setOdometryPeriod`, `updateCacheValidityPeriods`) no longer exist as runtime methods on `SwerveDrive`. Cosine compensation is now always enabled internally by the parser, and the rest are configured once, up front, via `SwerveDriveConfig`/`SwerveModuleConfig` (or `pidfproperties.json`'s `s`/`v`/`a` feedforward terms) rather than toggled at runtime. See the [API reference](api-reference.md) and [schema changes reference](schema-changes.md) for what replaced each.

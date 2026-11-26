@@ -8,15 +8,16 @@ description: Telemetry verbosity, simulation, and fusing vision pose estimates
 
 YAMS pushes swerve drive and module data to NetworkTables under `Mechanisms/<name>`, where `<name>` is the telemetry name you pass to `SwerveDriveConfig.withTelemetry(name, ...)`. This documentation and the YAGSL examples use `swerve`, so the paths below start with `Mechanisms/swerve`. This is the data most dashboards (Shuffleboard, Elastic, AdvantageScope) read to render swerve widgets. See the [AdvantageScope how-to guide](../how-to/set-up-advantagescope.md). Every one of these fields is also written to a WPILib DataLog automatically. See [How to view your DataLog in AdvantageScope](../how-to/view-your-datalog-in-advantagescope.md) to look at a recorded run after the fact.
 
-<figure><img src="../.gitbook/assets/yagsl-telemetry.png" alt=""><figcaption><p>The Mechanisms/swerve NetworkTables tree as seen in AdvantageScope.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/yagsl-telemetry.png" alt="AdvantageScope with Mechanisms/swerve expanded: .type reads SwerveDrive, then chassis, field, gyro (a Rotation2d) with its value, loopTime, maxModuleVelocity, modules, pose, rotation (a Rotation2d) with its value, and states. gyro/value is graphed on the left axis, rising as the robot turns counterclockwise and wrapping at plus or minus pi radians."><figcaption><p>The Mechanisms/swerve NetworkTables tree as seen in AdvantageScope.</p></figcaption></figure>
 
 ```
 Mechanisms/swerve/
 ├── .type                   ("SwerveDrive", so a dashboard can recognize the table)
-├── gyro                    (degrees)
 ├── loopTime                (seconds)
 ├── maxModuleVelocity       (meters per second, the fastest a module can drive)
 ├── pose                    (Pose2d struct)
+├── rotation                (Rotation2d struct, the robot's rotation from odometry, used for the module states)
+├── gyro                    (Rotation2d struct, the gyro's rotation)
 ├── chassis/
 │   ├── current             (ChassisVelocities struct, robot-relative, measured)
 │   ├── desired              (ChassisVelocities struct, robot-relative, commanded)
@@ -55,7 +56,7 @@ public enum TelemetryVerbosity {
 
 | Verbosity | Swerve drive fields |
 | --- | --- |
-| `LOW` | `pose`, `gyro`, `states/current`, `states/desired`, `chassis/current`, `chassis/desired` and `maxModuleVelocity` |
+| `LOW` | `pose`, `rotation`, `gyro`, `states/current`, `states/desired`, `chassis/current`, `chassis/desired` and `maxModuleVelocity` |
 | `MID` | `LOW`'s, and `chassis/field` |
 | `HIGH` | `MID`'s, and the gains and setpoints for [live tuning](../how-to/tune-pidf-gains.md) |
 

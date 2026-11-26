@@ -45,7 +45,7 @@ Once every module reads CCW+, rotate each wheel to point straight forward (bevel
 
 ## 2. Confirm the gyro reads CCW+
 
-With the robot lifted off the ground, rotate the **entire robot** counterclockwise (viewed from above) and watch `Mechanisms/swerve/gyro`.
+With the robot lifted off the ground, rotate the **entire robot** counterclockwise (viewed from above) and watch `Mechanisms/swerve/gyro`, the gyro's rotation. It's a `Rotation2d`: in AdvantageScope, expand it and graph its `value` (radians).
 
 <figure><img src="../.gitbook/assets/yagsl-gyro-ccw.gif" alt="An animation of a robot seen from above turning 90 degrees counterclockwise, twice. On the left the gyro reading goes up to 90 degrees, which is correct, so gyroInvert stays false. On the right it goes down to minus 90 degrees, so gyroInvert must be set to true."><figcaption><p>Turn the robot counterclockwise: the gyro should go up.</p></figcaption></figure>
 
