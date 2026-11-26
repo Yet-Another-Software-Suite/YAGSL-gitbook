@@ -141,8 +141,8 @@ import yams.core.mechanisms.config.enums.GyroAxis;
 | `gyroInvert`                      | `withGyroInverted(boolean)`                        |
 
 `withGyroHeadingAxis` says which axis of the gyro points up through the robot. YAMS rotates the
-whole attitude into the robot's frame for that axis, then applies the inversion (and
-`withGyroOffset(Angle)`, if you set one) to the resulting heading.
+whole attitude into the robot's frame for that axis, then applies the inversion to the resulting
+heading.
 {% endstep %}
 
 {% step %}
