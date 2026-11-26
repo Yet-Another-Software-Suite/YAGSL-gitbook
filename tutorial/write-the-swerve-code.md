@@ -287,6 +287,8 @@ public class AngularVelocityTeleop implements OpMode
 **Why bind `zeroGyro()` to a button combo?** Gyros can drift, or power on facing the wrong direction.
 A button combo (Menu + View, or both bumpers) lets the driver instantly re-align field-relative
 control without touching the Driver Station. Always bind this. It has saved matches.
+`zeroGyro()` is the same as YAMS's `zeroOdometryHeading()`: it turns the odometry's heading, which
+field-relative driving uses, to 0. The gyro itself keeps its reading.
 {% endhint %}
 
 Complete projects for both are in the
