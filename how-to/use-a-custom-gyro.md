@@ -149,7 +149,7 @@ whole attitude into the robot's frame for that axis, then applies the inversion 
 ### Verify it
 
 Follow the normal [gyro CCW+ check](determine-inversion.md#2-confirm-the-gyro-reads-ccw).
-`Mechanisms/swerve/rotation` in NetworkTables still populates and behaves exactly like a parser-built
+`Mechanisms/swerve/gyro` in NetworkTables still populates and behaves exactly like a parser-built
 gyro, since YAMS only ever sees a `Supplier<Rotation3d>` regardless of where it came from. If it
 increases while the robot rotates counter-clockwise, you're done; if not, flip
 `withGyroInverted(...)` from step 3 rather than `gyroInvert` in the JSON (which, again, is ignored).

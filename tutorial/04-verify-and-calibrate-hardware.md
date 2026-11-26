@@ -37,7 +37,7 @@ If you're using a hardware vendor client to poke at motors/encoders directly, yo
 {% step %}
 ### Pick a front and check the gyroscope
 
-**Front is whatever the gyroscope reports as `0`.** Pick a front, and expect that you may need to change it later if it turns out to be inconvenient. Then lift the robot and turn it counterclockwise (seen from above): `Mechanisms/swerve/rotation` (the gyro's `Rotation2d`) must go **up**. If it goes down, set `gyroInvert` to `true` in `swervedrive.json`.
+**Front is whatever the gyroscope reports as `0`.** Pick a front, and expect that you may need to change it later if it turns out to be inconvenient. Then lift the robot and turn it counterclockwise (seen from above): `Mechanisms/swerve/gyro` (the gyro's `Rotation2d`) must go **up**. If it goes down, set `gyroInvert` to `true` in `swervedrive.json`.
 
 <figure><img src="../.gitbook/assets/yagsl-gyro-ccw.gif" alt="An animation of a robot seen from above turning 90 degrees counterclockwise, twice. On the left the gyro reading goes up to 90 degrees, which is correct, so gyroInvert stays false. On the right it goes down to minus 90 degrees, so gyroInvert must be set to true."><figcaption><p>Turn the robot counterclockwise: the gyro should go up.</p></figcaption></figure>
 

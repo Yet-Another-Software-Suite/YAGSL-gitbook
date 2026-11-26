@@ -62,12 +62,12 @@ var cfg = new SwerveDriveConfig()
 
 `SwerveParser` then derives a DataLog name for every module and motor from that one name:
 
-* `Swerve`: the drive itself (pose, rotation, chassis speeds, module states).
+* `Swerve`: the drive itself (pose, rotation, gyro, chassis speeds, module states).
 * `Swerve/modules/<name>`: that module's absolute encoder and state.
 * `Swerve/modules/<name>/drive`: that module's drive motor.
 * `Swerve/modules/<name>/azimuth`: that module's angle/steering motor.
 
-Numeric entries have their unit inserted after that prefix, for example `Swerve/meters_per_second/maxModuleVelocity`, `Swerve/modules/frontleft/degrees/encoder`, or `Swerve/modules/frontleft/azimuth/rotations/mechanism/position`. Struct entries such as `Swerve/pose`, `Swerve/rotation` and `Swerve/states/current` do not. Tunable (live tuning) fields are never written to the DataLog.
+Numeric entries have their unit inserted after that prefix, for example `Swerve/meters_per_second/maxModuleVelocity`, `Swerve/modules/frontleft/degrees/encoder`, or `Swerve/modules/frontleft/azimuth/rotations/mechanism/position`. Struct entries such as `Swerve/pose`, `Swerve/rotation`, `Swerve/gyro` and `Swerve/states/current` do not. Tunable (live tuning) fields are never written to the DataLog.
 
 {% hint style="info" %}
 If you use the shorter `withTelemetry("swerve", TelemetryVerbosity.HIGH)` overload instead, `SwerveParser` names the drive's DataLog `Swerve` for you, but only the drive-level entries are created, not the per-module or per-motor ones. Pass a `SwerveDriveTelemetryConfig` with `withDataLogName(...)` as above to get all of them. A `SwerveDriveTelemetryConfig` without a DataLog name creates no dedicated entries at all (the `NT:` mirror is still recorded).
