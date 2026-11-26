@@ -13,10 +13,10 @@ YAMS pushes swerve drive and module data to NetworkTables under `Mechanisms/<nam
 ```
 Mechanisms/swerve/
 ├── .type                   ("SwerveDrive", so a dashboard can recognize the table)
-├── gyro                    (degrees)
 ├── loopTime                (seconds)
 ├── maxModuleVelocity       (meters per second, the fastest a module can drive)
 ├── pose                    (Pose2d struct)
+├── rotation                (Rotation2d struct, the robot's rotation from the gyro, not from odometry)
 ├── chassis/
 │   ├── current             (ChassisVelocities struct, robot-relative, measured)
 │   ├── desired              (ChassisVelocities struct, robot-relative, commanded)
@@ -55,7 +55,7 @@ public enum TelemetryVerbosity {
 
 | Verbosity | Swerve drive fields |
 | --- | --- |
-| `LOW` | `pose`, `gyro`, `states/current`, `states/desired`, `chassis/current`, `chassis/desired` and `maxModuleVelocity` |
+| `LOW` | `pose`, `rotation`, `states/current`, `states/desired`, `chassis/current`, `chassis/desired` and `maxModuleVelocity` |
 | `MID` | `LOW`'s, and `chassis/field` |
 | `HIGH` | `MID`'s, and the gains and setpoints for [live tuning](../how-to/tune-pidf-gains.md) |
 
